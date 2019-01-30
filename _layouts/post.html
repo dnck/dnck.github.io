@@ -18,8 +18,9 @@ layout: default
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
+{{- site.rawgitfiles -}}
 
-  {%- if site.disqus.shortname -%}
+  {%- if site.disqus_shortname -%}
     {%- include disqus_comments.html -%}
   {%- endif -%}
 
