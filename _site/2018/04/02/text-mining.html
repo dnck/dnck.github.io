@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>text-mining | self.merge(other.merge(self))</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="text-mining" />
+<meta name="author" content="dc" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently read a friend’s post on mining the Stanford Encyclopedia of Philosophy. I wanted to refresh my knowledge of KNN-Models and I spent some free time writing a Python script for scraping and analyzing random entries from the SEP. The image below shows the connections between the subset of the SEP that I mined. You can find the code for producing the image below, along with a table of the metrics." />
+<meta property="og:description" content="I recently read a friend’s post on mining the Stanford Encyclopedia of Philosophy. I wanted to refresh my knowledge of KNN-Models and I spent some free time writing a Python script for scraping and analyzing random entries from the SEP. The image below shows the connections between the subset of the SEP that I mined. You can find the code for producing the image below, along with a table of the metrics." />
+<link rel="canonical" href="http://localhost:4000/2018/04/02/text-mining.html" />
+<meta property="og:url" content="http://localhost:4000/2018/04/02/text-mining.html" />
+<meta property="og:site_name" content="self.merge(other.merge(self))" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-04-02T00:00:00+02:00" />
+<script type="application/ld+json">
+{"dateModified":"2018-04-02T00:00:00+02:00","datePublished":"2018-04-02T00:00:00+02:00","@type":"BlogPosting","headline":"text-mining","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/04/02/text-mining.html"},"url":"http://localhost:4000/2018/04/02/text-mining.html","author":{"@type":"Person","name":"dc"},"description":"I recently read a friend’s post on mining the Stanford Encyclopedia of Philosophy. I wanted to refresh my knowledge of KNN-Models and I spent some free time writing a Python script for scraping and analyzing random entries from the SEP. The image below shows the connections between the subset of the SEP that I mined. You can find the code for producing the image below, along with a table of the metrics.","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="self.merge(other.merge(self))" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">self.merge(other.merge(self))</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/">blog</a><a class="page-link" href="/downloads/">downloads</a><a class="page-link" href="/">about</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">text-mining</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-04-02T00:00:00+02:00" itemprop="datePublished">Apr 2, 2018
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I recently read <a href="http://juanrloaiza.blogspot.de/2017/08/whos-most-mentioned-philosopher-in-sep.html"> a friend’s post</a> on mining the Stanford Encyclopedia of Philosophy. I wanted to refresh my knowledge of KNN-Models and I spent some free time writing a Python script for scraping and analyzing random entries from the SEP. The image below shows the connections between the subset of the SEP that I mined. You can find the code for producing the image below, along with a table of the metrics.</p>
+
+<p>I will summarize what I’ve learned some time else. But, in general, this looks like a promising method to uncover similarity within linguistic corpuses.</p>
+
+<p>Note: <a href="https://github.com/dnck/dnck.github.io/blob/master/assets/data/knn_on_sep.py">if you decide to run this code, the function preprocess() is still incredibly time consuming because I suck at sanitizing text.</a></p>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<img src="http://localhost:4000/assets/images/stanfordmine.png" class="img-fluid" />
+		</div>
+	</div>
+</div>
+<p><br /></p>
+
+<p>Figure 1. Directed Graph of the nearest neighbors for 35 articles. Scroll down to see another DA with 100 articles.</p>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<img src="http://localhost:4000/assets/images/stanfordmine2.png" class="img-fluid" />
+		</div>
+	</div>
+</div>
+<p><br />
+Figure 2. Directed Graph of the nearest neighbors for 100 articles.</p>
+
+<h2 id="table-1-a-subset-of-articles-in-the-sep-along-with-their-nearest-neighbors">Table 1. A Subset of articles in the SEP along with their nearest neighbors.</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>query_label</th>
+      <th style="text-align: center">reference_label</th>
+      <th style="text-align: right">distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Social Minimum</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Social Minimum</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.886066449</td>
+    </tr>
+    <tr>
+      <td>Social Minimum</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.893912798</td>
+    </tr>
+    <tr>
+      <td>Social Minimum</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.8961885</td>
+    </tr>
+    <tr>
+      <td>Social Minimum</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.905404421</td>
+    </tr>
+    <tr>
+      <td>Ernst Cassirer</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Ernst Cassirer</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0.889126825</td>
+    </tr>
+    <tr>
+      <td>Ernst Cassirer</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.89923616</td>
+    </tr>
+    <tr>
+      <td>Ernst Cassirer</td>
+      <td style="text-align: center">The Distinction Between In…</td>
+      <td style="text-align: right">0.910329509</td>
+    </tr>
+    <tr>
+      <td>Ernst Cassirer</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.917730917</td>
+    </tr>
+    <tr>
+      <td>The Ethics and Rationality…</td>
+      <td style="text-align: center">The Ethics and Rationality…</td>
+      <td style="text-align: right">2.22E-16</td>
+    </tr>
+    <tr>
+      <td>The Ethics and Rationality…</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.907945565</td>
+    </tr>
+    <tr>
+      <td>The Ethics and Rationality…</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.933382</td>
+    </tr>
+    <tr>
+      <td>The Ethics and Rationality…</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.956323289</td>
+    </tr>
+    <tr>
+      <td>The Ethics and Rationality…</td>
+      <td style="text-align: center">Informed Consent</td>
+      <td style="text-align: right">0.968030454</td>
+    </tr>
+    <tr>
+      <td>Turing Machines</td>
+      <td style="text-align: center">Turing Machines</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Turing Machines</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.979068005</td>
+    </tr>
+    <tr>
+      <td>Turing Machines</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.985629512</td>
+    </tr>
+    <tr>
+      <td>Turing Machines</td>
+      <td style="text-align: center">Quantum Theory: von Neuman…</td>
+      <td style="text-align: right">0.986195312</td>
+    </tr>
+    <tr>
+      <td>Turing Machines</td>
+      <td style="text-align: center">Dialetheism</td>
+      <td style="text-align: right">0.987783281</td>
+    </tr>
+    <tr>
+      <td>Value Pluralism</td>
+      <td style="text-align: center">Value Pluralism</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Value Pluralism</td>
+      <td style="text-align: center">Charles Leslie Stevenson</td>
+      <td style="text-align: right">0.948372664</td>
+    </tr>
+    <tr>
+      <td>Value Pluralism</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.949139019</td>
+    </tr>
+    <tr>
+      <td>Value Pluralism</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.951399153</td>
+    </tr>
+    <tr>
+      <td>Value Pluralism</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.955464692</td>
+    </tr>
+    <tr>
+      <td>The Distinction Between In…</td>
+      <td style="text-align: center">The Distinction Between In…</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>The Distinction Between In…</td>
+      <td style="text-align: center">Behaviorism</td>
+      <td style="text-align: right">0.894853202</td>
+    </tr>
+    <tr>
+      <td>The Distinction Between In…</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.910329509</td>
+    </tr>
+    <tr>
+      <td>The Distinction Between In…</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.932283262</td>
+    </tr>
+    <tr>
+      <td>The Distinction Between In…</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.948019733</td>
+    </tr>
+    <tr>
+      <td>Sovereignty</td>
+      <td style="text-align: center">Sovereignty</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Sovereignty</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.870650203</td>
+    </tr>
+    <tr>
+      <td>Sovereignty</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.886332241</td>
+    </tr>
+    <tr>
+      <td>Sovereignty</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.905935222</td>
+    </tr>
+    <tr>
+      <td>Sovereignty</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.948555235</td>
+    </tr>
+    <tr>
+      <td>Elias</td>
+      <td style="text-align: center">Elias</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>Elias</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.953050014</td>
+    </tr>
+    <tr>
+      <td>Elias</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.959690798</td>
+    </tr>
+    <tr>
+      <td>Elias</td>
+      <td style="text-align: center">Albert the Great</td>
+      <td style="text-align: right">0.968017414</td>
+    </tr>
+    <tr>
+      <td>Elias</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.96944534</td>
+    </tr>
+    <tr>
+      <td>Gersonides</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Gersonides</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.885827927</td>
+    </tr>
+    <tr>
+      <td>Gersonides</td>
+      <td style="text-align: center">Albert the Great</td>
+      <td style="text-align: right">0.890411638</td>
+    </tr>
+    <tr>
+      <td>Gersonides</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.935804286</td>
+    </tr>
+    <tr>
+      <td>Gersonides</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.944821267</td>
+    </tr>
+    <tr>
+      <td>Quantum Theory: von Neuman…</td>
+      <td style="text-align: center">Quantum Theory: von Neuman…</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Quantum Theory: von Neuman…</td>
+      <td style="text-align: center">Singularities and Black Holes</td>
+      <td style="text-align: right">0.846729482</td>
+    </tr>
+    <tr>
+      <td>Quantum Theory: von Neuman…</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0.891706686</td>
+    </tr>
+    <tr>
+      <td>Quantum Theory: von Neuman…</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.950745344</td>
+    </tr>
+    <tr>
+      <td>Quantum Theory: von Neuman…</td>
+      <td style="text-align: center">Benjamin Peirce</td>
+      <td style="text-align: right">0.956408695</td>
+    </tr>
+    <tr>
+      <td>Singularities and Black Holes</td>
+      <td style="text-align: center">Singularities and Black Holes</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Singularities and Black Holes</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0.762704457</td>
+    </tr>
+    <tr>
+      <td>Singularities and Black Holes</td>
+      <td style="text-align: center">Quantum Theory: von Neuman…</td>
+      <td style="text-align: right">0.846729482</td>
+    </tr>
+    <tr>
+      <td>Singularities and Black Holes</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.931282974</td>
+    </tr>
+    <tr>
+      <td>Singularities and Black Holes</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.969017047</td>
+    </tr>
+    <tr>
+      <td>Transitional Justice</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Transitional Justice</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.866667716</td>
+    </tr>
+    <tr>
+      <td>Transitional Justice</td>
+      <td style="text-align: center">Sovereignty</td>
+      <td style="text-align: right">0.870650203</td>
+    </tr>
+    <tr>
+      <td>Transitional Justice</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.887859582</td>
+    </tr>
+    <tr>
+      <td>Transitional Justice</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.905404421</td>
+    </tr>
+    <tr>
+      <td>Dualism</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Dualism</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.882338477</td>
+    </tr>
+    <tr>
+      <td>Dualism</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0.886307301</td>
+    </tr>
+    <tr>
+      <td>Dualism</td>
+      <td style="text-align: center">Categories</td>
+      <td style="text-align: right">0.896618063</td>
+    </tr>
+    <tr>
+      <td>Dualism</td>
+      <td style="text-align: center">The Problem of Perception</td>
+      <td style="text-align: right">0.903920633</td>
+    </tr>
+    <tr>
+      <td>Fideism</td>
+      <td style="text-align: center">Fideism</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Fideism</td>
+      <td style="text-align: center">Pierre Bayle</td>
+      <td style="text-align: right">0.815617917</td>
+    </tr>
+    <tr>
+      <td>Fideism</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.918675784</td>
+    </tr>
+    <tr>
+      <td>Fideism</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.934754893</td>
+    </tr>
+    <tr>
+      <td>Fideism</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.935299253</td>
+    </tr>
+    <tr>
+      <td>Ancient and Medieval Empir…</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Ancient and Medieval Empir…</td>
+      <td style="text-align: center">Albert the Great</td>
+      <td style="text-align: right">0.881518682</td>
+    </tr>
+    <tr>
+      <td>Ancient and Medieval Empir…</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.882338477</td>
+    </tr>
+    <tr>
+      <td>Ancient and Medieval Empir…</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.885827927</td>
+    </tr>
+    <tr>
+      <td>Ancient and Medieval Empir…</td>
+      <td style="text-align: center">Medieval Mereology</td>
+      <td style="text-align: right">0.909565352</td>
+    </tr>
+    <tr>
+      <td>Categories</td>
+      <td style="text-align: center">Categories</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Categories</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.896618063</td>
+    </tr>
+    <tr>
+      <td>Categories</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.928751967</td>
+    </tr>
+    <tr>
+      <td>Categories</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.939257328</td>
+    </tr>
+    <tr>
+      <td>Categories</td>
+      <td style="text-align: center">Episteme and Techne</td>
+      <td style="text-align: right">0.939883182</td>
+    </tr>
+    <tr>
+      <td>Philosophy of Film</td>
+      <td style="text-align: center">Philosophy of Film</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Philosophy of Film</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.967254136</td>
+    </tr>
+    <tr>
+      <td>Philosophy of Film</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.97486587</td>
+    </tr>
+    <tr>
+      <td>Philosophy of Film</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.975322957</td>
+    </tr>
+    <tr>
+      <td>Philosophy of Film</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.978168325</td>
+    </tr>
+    <tr>
+      <td>Charles Hartshorne</td>
+      <td style="text-align: center">Charles Hartshorne</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Charles Hartshorne</td>
+      <td style="text-align: center">Fideism</td>
+      <td style="text-align: right">0.945839597</td>
+    </tr>
+    <tr>
+      <td>Charles Hartshorne</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.949117033</td>
+    </tr>
+    <tr>
+      <td>Charles Hartshorne</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.955241106</td>
+    </tr>
+    <tr>
+      <td>Charles Hartshorne</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.959512044</td>
+    </tr>
+    <tr>
+      <td>Albert the Great</td>
+      <td style="text-align: center">Albert the Great</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>Albert the Great</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.881518682</td>
+    </tr>
+    <tr>
+      <td>Albert the Great</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.890411638</td>
+    </tr>
+    <tr>
+      <td>Albert the Great</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.935281893</td>
+    </tr>
+    <tr>
+      <td>Albert the Great</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.935845122</td>
+    </tr>
+    <tr>
+      <td>The Problem of Perception</td>
+      <td style="text-align: center">The Problem of Perception</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>The Problem of Perception</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.903920633</td>
+    </tr>
+    <tr>
+      <td>The Problem of Perception</td>
+      <td style="text-align: center">Behaviorism</td>
+      <td style="text-align: right">0.951424804</td>
+    </tr>
+    <tr>
+      <td>The Problem of Perception</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.957079125</td>
+    </tr>
+    <tr>
+      <td>The Problem of Perception</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.96042406</td>
+    </tr>
+    <tr>
+      <td>Natural Law Theories</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Natural Law Theories</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.854791875</td>
+    </tr>
+    <tr>
+      <td>Natural Law Theories</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.866667716</td>
+    </tr>
+    <tr>
+      <td>Natural Law Theories</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.8961885</td>
+    </tr>
+    <tr>
+      <td>Natural Law Theories</td>
+      <td style="text-align: center">Sovereignty</td>
+      <td style="text-align: right">0.905935222</td>
+    </tr>
+    <tr>
+      <td>Xunzi</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>Xunzi</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.886066449</td>
+    </tr>
+    <tr>
+      <td>Xunzi</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.917299131</td>
+    </tr>
+    <tr>
+      <td>Xunzi</td>
+      <td style="text-align: center">Episteme and Techne</td>
+      <td style="text-align: right">0.923708702</td>
+    </tr>
+    <tr>
+      <td>Xunzi</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.924618655</td>
+    </tr>
+    <tr>
+      <td>Episteme and Techne</td>
+      <td style="text-align: center">Episteme and Techne</td>
+      <td style="text-align: right">2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Episteme and Techne</td>
+      <td style="text-align: center">Medieval Mereology</td>
+      <td style="text-align: right">0.878755061</td>
+    </tr>
+    <tr>
+      <td>Episteme and Techne</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.911243664</td>
+    </tr>
+    <tr>
+      <td>Episteme and Techne</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.923708702</td>
+    </tr>
+    <tr>
+      <td>Episteme and Techne</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.928558842</td>
+    </tr>
+    <tr>
+      <td>Informed Consent</td>
+      <td style="text-align: center">Informed Consent</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Informed Consent</td>
+      <td style="text-align: center">Decision-Making Capacity</td>
+      <td style="text-align: right">0.835186086</td>
+    </tr>
+    <tr>
+      <td>Informed Consent</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.943259231</td>
+    </tr>
+    <tr>
+      <td>Informed Consent</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.949249943</td>
+    </tr>
+    <tr>
+      <td>Informed Consent</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.950165726</td>
+    </tr>
+    <tr>
+      <td>Charles Leslie Stevenson</td>
+      <td style="text-align: center">Charles Leslie Stevenson</td>
+      <td style="text-align: right">-2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Charles Leslie Stevenson</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.933961739</td>
+    </tr>
+    <tr>
+      <td>Charles Leslie Stevenson</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.936582461</td>
+    </tr>
+    <tr>
+      <td>Charles Leslie Stevenson</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.942144503</td>
+    </tr>
+    <tr>
+      <td>Charles Leslie Stevenson</td>
+      <td style="text-align: center">Value Pluralism</td>
+      <td style="text-align: right">0.948372664</td>
+    </tr>
+    <tr>
+      <td>Benjamin Peirce</td>
+      <td style="text-align: center">Benjamin Peirce</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Benjamin Peirce</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.929544331</td>
+    </tr>
+    <tr>
+      <td>Benjamin Peirce</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.946998499</td>
+    </tr>
+    <tr>
+      <td>Benjamin Peirce</td>
+      <td style="text-align: center">Quantum Theory: von Neuman…</td>
+      <td style="text-align: right">0.956408695</td>
+    </tr>
+    <tr>
+      <td>Benjamin Peirce</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0.965199743</td>
+    </tr>
+    <tr>
+      <td>Pierre Bayle</td>
+      <td style="text-align: center">Pierre Bayle</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Pierre Bayle</td>
+      <td style="text-align: center">Fideism</td>
+      <td style="text-align: right">0.815617917</td>
+    </tr>
+    <tr>
+      <td>Pierre Bayle</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">0.924485785</td>
+    </tr>
+    <tr>
+      <td>Pierre Bayle</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0.933286716</td>
+    </tr>
+    <tr>
+      <td>Pierre Bayle</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.93427225</td>
+    </tr>
+    <tr>
+      <td>Medieval Mereology</td>
+      <td style="text-align: center">Medieval Mereology</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Medieval Mereology</td>
+      <td style="text-align: center">Episteme and Techne</td>
+      <td style="text-align: right">0.878755061</td>
+    </tr>
+    <tr>
+      <td>Medieval Mereology</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.909565352</td>
+    </tr>
+    <tr>
+      <td>Medieval Mereology</td>
+      <td style="text-align: center">Albert the Great</td>
+      <td style="text-align: right">0.936429009</td>
+    </tr>
+    <tr>
+      <td>Medieval Mereology</td>
+      <td style="text-align: center">Categories</td>
+      <td style="text-align: right">0.958510668</td>
+    </tr>
+    <tr>
+      <td>Decision-Making Capacity</td>
+      <td style="text-align: center">Decision-Making Capacity</td>
+      <td style="text-align: right">2.22E-16</td>
+    </tr>
+    <tr>
+      <td>Decision-Making Capacity</td>
+      <td style="text-align: center">Informed Consent</td>
+      <td style="text-align: right">0.835186086</td>
+    </tr>
+    <tr>
+      <td>Decision-Making Capacity</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.921007459</td>
+    </tr>
+    <tr>
+      <td>Decision-Making Capacity</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.948070092</td>
+    </tr>
+    <tr>
+      <td>Decision-Making Capacity</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0.957150923</td>
+    </tr>
+    <tr>
+      <td>Political Obligation</td>
+      <td style="text-align: center">Political Obligation</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Political Obligation</td>
+      <td style="text-align: center">Natural Law Theories</td>
+      <td style="text-align: right">0.854791875</td>
+    </tr>
+    <tr>
+      <td>Political Obligation</td>
+      <td style="text-align: center">Sovereignty</td>
+      <td style="text-align: right">0.886332241</td>
+    </tr>
+    <tr>
+      <td>Political Obligation</td>
+      <td style="text-align: center">Transitional Justice</td>
+      <td style="text-align: right">0.887859582</td>
+    </tr>
+    <tr>
+      <td>Political Obligation</td>
+      <td style="text-align: center">Social Minimum</td>
+      <td style="text-align: right">0.893912798</td>
+    </tr>
+    <tr>
+      <td>The Cambridge Platonists</td>
+      <td style="text-align: center">The Cambridge Platonists</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>The Cambridge Platonists</td>
+      <td style="text-align: center">Fideism</td>
+      <td style="text-align: right">0.918675784</td>
+    </tr>
+    <tr>
+      <td>The Cambridge Platonists</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.926492079</td>
+    </tr>
+    <tr>
+      <td>The Cambridge Platonists</td>
+      <td style="text-align: center">Pierre Bayle</td>
+      <td style="text-align: right">0.933286716</td>
+    </tr>
+    <tr>
+      <td>The Cambridge Platonists</td>
+      <td style="text-align: center">Gersonides</td>
+      <td style="text-align: right">0.935804286</td>
+    </tr>
+    <tr>
+      <td>Behaviorism</td>
+      <td style="text-align: center">Behaviorism</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>Behaviorism</td>
+      <td style="text-align: center">The Distinction Between In…</td>
+      <td style="text-align: right">0.894853202</td>
+    </tr>
+    <tr>
+      <td>Behaviorism</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.939802485</td>
+    </tr>
+    <tr>
+      <td>Behaviorism</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.946861839</td>
+    </tr>
+    <tr>
+      <td>Behaviorism</td>
+      <td style="text-align: center">The Problem of Perception</td>
+      <td style="text-align: right">0.951424804</td>
+    </tr>
+    <tr>
+      <td>Early Philosophical Interp…</td>
+      <td style="text-align: center">Early Philosophical Interp…</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Early Philosophical Interp…</td>
+      <td style="text-align: center">Singularities and Black Holes</td>
+      <td style="text-align: right">0.762704457</td>
+    </tr>
+    <tr>
+      <td>Early Philosophical Interp…</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.886307301</td>
+    </tr>
+    <tr>
+      <td>Early Philosophical Interp…</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.889126825</td>
+    </tr>
+    <tr>
+      <td>Early Philosophical Interp…</td>
+      <td style="text-align: center">Quantum Theory: von Neuman…</td>
+      <td style="text-align: right">0.891706686</td>
+    </tr>
+    <tr>
+      <td>18th Century German Philos…</td>
+      <td style="text-align: center">18th Century German Philos…</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>18th Century German Philos…</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.89923616</td>
+    </tr>
+    <tr>
+      <td>18th Century German Philos…</td>
+      <td style="text-align: center">Pierre Bayle</td>
+      <td style="text-align: right">0.924485785</td>
+    </tr>
+    <tr>
+      <td>18th Century German Philos…</td>
+      <td style="text-align: center">Xunzi</td>
+      <td style="text-align: right">0.924618655</td>
+    </tr>
+    <tr>
+      <td>18th Century German Philos…</td>
+      <td style="text-align: center">Benjamin Peirce</td>
+      <td style="text-align: right">0.929544331</td>
+    </tr>
+    <tr>
+      <td>Logical Consequence</td>
+      <td style="text-align: center">Logical Consequence</td>
+      <td style="text-align: right">1.11E-16</td>
+    </tr>
+    <tr>
+      <td>Logical Consequence</td>
+      <td style="text-align: center">Dialetheism</td>
+      <td style="text-align: right">0.893238821</td>
+    </tr>
+    <tr>
+      <td>Logical Consequence</td>
+      <td style="text-align: center">Ancient and Medieval Empir…</td>
+      <td style="text-align: right">0.954412798</td>
+    </tr>
+    <tr>
+      <td>Logical Consequence</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.96222519</td>
+    </tr>
+    <tr>
+      <td>Logical Consequence</td>
+      <td style="text-align: center">Categories</td>
+      <td style="text-align: right">0.962310752</td>
+    </tr>
+    <tr>
+      <td>Dialetheism</td>
+      <td style="text-align: center">Dialetheism</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td>Dialetheism</td>
+      <td style="text-align: center">Logical Consequence</td>
+      <td style="text-align: right">0.893238821</td>
+    </tr>
+    <tr>
+      <td>Dialetheism</td>
+      <td style="text-align: center">Episteme and Techne</td>
+      <td style="text-align: right">0.930745099</td>
+    </tr>
+    <tr>
+      <td>Dialetheism</td>
+      <td style="text-align: center">Ernst Cassirer</td>
+      <td style="text-align: right">0.936979938</td>
+    </tr>
+    <tr>
+      <td>Dialetheism</td>
+      <td style="text-align: center">Dualism</td>
+      <td style="text-align: right">0.938811062</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div><a class="u-url" href="/2018/04/02/text-mining.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">self.merge(other.merge(self))</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">self.merge(other.merge(self))</li><li><a class="u-email" href="mailto:cookdj0128@gmail.com">cookdj0128@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/dnck"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">dnck</span></a></li><li><a href="https://www.twitter.com/dan_j_cook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">dan_j_cook</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>The personal homepage of Daniel John Cook.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

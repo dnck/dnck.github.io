@@ -1,0 +1,23 @@
+---
+layout: page
+---
+
+<div class="home">
+  {{ content }}
+  {%- if site.posts.size > 0 -%}
+      {%- for post in site.posts -%}
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+
+        <br>
+        <a href="{{ post.url | relative_url }}"><strong>{{ post.title }}</strong></a><br>
+                  <span class="post-meta">
+                    {{ post.date | date: date_format }}
+                  </span>
+        {%- if post.show_excerpt -%}
+          {{ post.excerpt }}
+        {%- endif -%}
+      {%- endfor -%}
+
+    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+  {%- endif -%}
+</div>

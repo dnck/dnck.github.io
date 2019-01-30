@@ -1,0 +1,46 @@
+---
+layout: page
+---
+<div class="home">
+{{ content }}
+{% assign staticfiles = site.static_files %}
+<h2 class="post-list-heading">Code, Data, Documents</h2>
+<dl>
+{% for f in staticfiles %}
+{% if f.path contains 'assets/code' %}
+<span class="post-meta">
+<a href='{{site.url}}{{f.path}}'>{{site.url}}{{f.path}}</a>
+</span>
+<br>
+{% endif %}
+{% endfor %}
+{% for f in staticfiles %}
+{% if f.path contains 'assets/data' %}
+<span class="post-meta">
+<a href='{{site.url}}{{f.path}}'>{{site.url}}{{f.path}}</a>
+</span>
+<br>
+{% endif %}
+{% endfor %}
+{% for f in staticfiles %}
+{% if f.path contains 'assets/personelle' %}
+<span class="post-meta">
+<a href='{{site.url}}{{f.path}}'>{{site.url}}{{f.path}}</a>
+</span>
+<br>
+{% endif %}
+{% endfor %}
+</dl>
+<h2 class="post-list-heading">Pictures</h2>
+<dl>
+{% for f in staticfiles %}
+{% if f.path contains 'assets/images' %}
+<span class="post-meta">
+<a href='{{site.url}}{{f.path}}'>{{site.url}}{{f.path}}</a>
+</span>
+<br>
+{% endif %}
+{% endfor %}
+</dl>
+
+</div>

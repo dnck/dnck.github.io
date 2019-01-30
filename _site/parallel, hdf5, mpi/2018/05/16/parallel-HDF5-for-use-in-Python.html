@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Parallel computing with HDF5, MPI and Python | self.merge(other.merge(self))</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Parallel computing with HDF5, MPI and Python" />
+<meta name="author" content="dc" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="how I installed parallel HDF5 for use in Python with MPI" />
+<meta property="og:description" content="how I installed parallel HDF5 for use in Python with MPI" />
+<link rel="canonical" href="http://localhost:4000/parallel,%20hdf5,%20mpi/2018/05/16/parallel-HDF5-for-use-in-Python.html" />
+<meta property="og:url" content="http://localhost:4000/parallel,%20hdf5,%20mpi/2018/05/16/parallel-HDF5-for-use-in-Python.html" />
+<meta property="og:site_name" content="self.merge(other.merge(self))" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-16T00:00:00+02:00" />
+<script type="application/ld+json">
+{"dateModified":"2018-05-16T00:00:00+02:00","datePublished":"2018-05-16T00:00:00+02:00","@type":"BlogPosting","headline":"Parallel computing with HDF5, MPI and Python","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/parallel,%20hdf5,%20mpi/2018/05/16/parallel-HDF5-for-use-in-Python.html"},"url":"http://localhost:4000/parallel,%20hdf5,%20mpi/2018/05/16/parallel-HDF5-for-use-in-Python.html","author":{"@type":"Person","name":"dc"},"description":"how I installed parallel HDF5 for use in Python with MPI","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="self.merge(other.merge(self))" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">self.merge(other.merge(self))</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/">blog</a><a class="page-link" href="/downloads/">downloads</a><a class="page-link" href="/">about</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Parallel computing with HDF5, MPI and Python</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-05-16T00:00:00+02:00" itemprop="datePublished">May 16, 2018
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>My previous post about Tensorflow gave me some ideas.</p>
+
+<p>Let’s do parallel computing the right way. Let’s use HDF5 along with MPI for parallel processing.</p>
+
+<p>Here’s what I did to get the system up and running on my MAC OS.</p>
+
+<p>I’m sure it is a hack job, but it works!</p>
+
+<p>Step 1. Install openmpi</p>
+
+<p>I downloaded version 2.04 of openmpi from https://www.open-mpi.org/software/ompi/v2.0/</p>
+
+<p>After, I went to terminal, and did,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xf openmpi-2.0.4.tar.gz
+cd openmpi-2.0.4/
+./configure --prefix=$HOME/openmpi/
+make all
+make install
+$HOME/mpirun/mpirun --version
+</code></pre></div></div>
+
+<p>For some reason that created an opt/ folder in my $HOME path.</p>
+
+<p>Whatever. It works. The last line printed,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun (Open MPI) 2.0.4.
+</code></pre></div></div>
+
+<h2 id="step-2-install-hdf5-the-parallel-version">Step 2. install HDF5, the parallel version</h2>
+
+<p>Next, I installed the HDF5 parallel version:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CC=$HOME/mpicc ./configure --with-zlib=/usr/local/opt --disable-fortran --prefix=$HOME --enable-shared --enable-parallel
+make
+make check
+sudo make install
+h5pcc -showconfig
+</code></pre></div></div>
+
+<p>That ends up showing you some configuration variables for HDF5.</p>
+
+<p>If all goes well, you should see you got the parallel version.</p>
+
+<h2 id="step-3-install-mpi4py">Step 3. install mpi4py</h2>
+
+<p>I installed mpi4py via,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>env MPICC=$HOME/mpicc pip install mpi4py
+</code></pre></div></div>
+
+<p>That didn’t give me much, but I did have some trouble passing the right path to the MPICC. Just make sure you feed it the compiler’s path.</p>
+
+<h2 id="step-4-install-h5py">Step 4. Install h5py</h2>
+
+<p>Last, I uninstalled my older version of h5py:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip uninstall h5py
+</code></pre></div></div>
+
+<p>and then i reinstalled via,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CC="mpicc" HDF5_MPI="ON" HDF5_DIR=/usr/local/bin/ pip install --no-binary=h5py h5py
+</code></pre></div></div>
+
+<p>Again, this one gave me some trouble. I found numerous variations of the CC=, HDF5_MPI=, HDF5_DIR= commands all over the place. Anyway, this is the one that worked for me.</p>
+
+<p>How did it work?</p>
+
+<h2 id="step-5-test-it">Step 5. Test it</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from mpi4py import MPI
+print "Hello World (from process %d)" % MPI.COMM_WORLD.Get_rank()
+</code></pre></div></div>
+
+<p>The last line prints,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World (from process 0)
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import h5py
+print h5py.version.info
+</code></pre></div></div>
+
+<p>The last line prints a summary of the h5py configuration. Everything looked dandy.</p>
+
+<p><strong>Thus, next comes the real test:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rank = MPI.COMM_WORLD.rank  # The process ID (integer 0-3 for 4-process run)
+f = h5py.File('parallel_test.hdf5', 'w', driver='mpio', comm=MPI.COMM_WORLD)
+dset = f.create_dataset('test', (4,), dtype='i')
+dset[rank] = rank
+f.close()
+import os
+print os.listdir(os.getcwd())
+</code></pre></div></div>
+
+<p>The last line prints,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel_test.hdf5
+</code></pre></div></div>
+
+<p>which implies I got a hdf5 file!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Thus, it looks like the first output works as planned!</p>
+
+<p>I hope the same sort of logic will apply on the Ubuntu computer at Helix!!</p>
+
+<p>My goal is to parallelize the shit of out some massive computations I’m about to be doing. Next step. Docker containers, then Azure, then 1 billion machines running our communities code to cast an anonymous shadow over the conglomerate data broker’s flourishing gardens.</p>
+
+  </div><a class="u-url" href="/parallel,%20hdf5,%20mpi/2018/05/16/parallel-HDF5-for-use-in-Python.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">self.merge(other.merge(self))</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">self.merge(other.merge(self))</li><li><a class="u-email" href="mailto:cookdj0128@gmail.com">cookdj0128@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/dnck"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">dnck</span></a></li><li><a href="https://www.twitter.com/dan_j_cook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">dan_j_cook</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>The personal homepage of Daniel John Cook.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
