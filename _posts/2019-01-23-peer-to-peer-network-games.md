@@ -22,8 +22,8 @@ Table 1. shows the combination of player inputs and the outcomes of the game whe
 | Player B Cheats |   0  | 1  | 1  | 0  | 1  | 0  | 1  |
 | Player A is successful |   1  | 1  | 0  | 0  | 0  | 0  | 0  |
 | Player B is successful |  0  | 1  | 1  | 0  | 0  | 0  | 0  |
-| Player A Outcome/Gain | 1  | 0  | 0  | 1  |   |   | 0  |
-| Player B Outcome/Gain  | 0  | 0  | 1  | 1  |   |   | 0  |
+| Player A Outcome/Gain | 1  | 0  | 0  | 1  |  2 | 0  | 0  |
+| Player B Outcome/Gain  | 0  | 0  | 1  | 1  | 0  | 2  | 0  |
 | Player A Outcome/Loss | 0  | -1  | -1  | 0   | 0  | -2  | -2  |
 | Player B Outcome/Loss | -1  | -1  | 0  | 0  | -2  | 0  | -2  |
 
