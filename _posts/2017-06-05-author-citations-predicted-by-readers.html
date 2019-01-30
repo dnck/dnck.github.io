@@ -7,9 +7,7 @@ comments: true
 ---
 <h0 class="plotlyPlot"></h0>
 
-You can download the simulated data for the plot below <a href ="{{site.rawgitfiles}}/assets/data/test.csv" download> here</a>. You can play with the code for the plot <a href="https://codepen.io/Cookdj0128/pen/vZNQVx"> at codepen.io.</a>
-
-{{site.rawgitfiles}}
+You can download the simulated data for the plot below <a href ="https://raw.githubusercontent.com/dnck/dnck.github.io/master/assets/data/test.csv" download> here</a>. You can play with the code for the plot <a href="https://codepen.io/Cookdj0128/pen/vZNQVx"> at codepen.io.</a>
 
 Each data point represents a research article from a particular author and shows 1) how many times it was read and 2) how many authors have cited the selected article in their own work.
 
@@ -28,7 +26,7 @@ read_count = [int(np.random.lognormal(mean=4)) for i in range(140)]
 citation_count = [int(np.random.lognormal(mean=4)) for i in range(140)]
 ```
 
-After running those three lines in an interactive python session, I copied and pasted the values for the variables into two columns of an spreadsheet and I used this as my simulated data. The csv is available for download <a href ='{{site.rawgitfiles}}/assets/data/test.csv' download>here</a>.
+After running those three lines in an interactive python session, I copied and pasted the values for the variables into two columns of an spreadsheet and I used this as my simulated data. The csv is available for download <a href ='https://raw.githubusercontent.com/dnck/dnck.github.io/master/assets/data/test.csv' download>here</a>.
 
 Note that I used a lognormal distribution because I noticed that similar summary statistics maintained by Google Scholar looked a lot like they came from a exponential distribtion. I know that's not too scientific, but, this was more of an excercise in visualization, not data science, which I accomplished: I learned how to use plotly and I challenged myself to write code in javascript. As a side-benefit, I learned something about the lognormal distribution, which is worth sharing now.
 
