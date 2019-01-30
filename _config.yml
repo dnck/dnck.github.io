@@ -40,3 +40,4 @@ google_analytics: UA-97378833-1
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+rawgitfiles: "https://raw.githubusercontent.com/dnck/dnck.github.io/master/"
