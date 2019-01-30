@@ -15,3 +15,6 @@ I plan to share two blog posts today. I also have a list of future blog posts pl
 Thanks for reading.
 
 Dan
+
+
+{{-jekyll.environment-}}
