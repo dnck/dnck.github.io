@@ -17,7 +17,7 @@ title: self.merge(other.merge(self))
 email: cookdj0128@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   The personal homepage of Daniel John Cook.
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "https://www.danjcook.com" # the base hostname & protocol for your site,
 twitter_username: dan_j_cook
 github_username:  dnck
