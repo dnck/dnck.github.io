@@ -1,7 +1,6 @@
 ---
 layout: post
 title: visualizing citations predicted by reads
-scripts: assets/data/ploty_scienceopen.html
 date: 2017-06-05
 author: dc
 comments: true
@@ -46,61 +45,4 @@ np.random.lognormal()
 urllib.request.urlopen(host)
 
 
-
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script>
-(function() {
-var d3 = Plotly.d3;
-var WIDTH_IN_PERCENT_OF_PARENT = 80,
-    HEIGHT_IN_PERCENT_OF_PARENT = 60;
-var gd3 = d3.select('h0').append('div').style({
-        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
-        'margin-left': (75 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
-        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
-        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 8 + 'vh'});
-var gd = gd3.node();
-		Plotly.d3.csv("{{site.rawgitfiles}}/data/test.csv",
-			function(err, rows){
-				var YEAR = 2016;
-				var discipline = ['Discipline A', 'Discipline B', 'Discipline C', 'Discipline D', 'Discipline E'];
-				var POP_TO_PX_SIZE = 0.25;
-			function unpack(rows, key){
-				return rows.map(function(row){
-					return row[key];
-				});
-			}
-			var data = discipline.map(function(discipline){
-				var rowsFiltered =
-				rows.filter(function(row){
-					return (row.discipline === discipline) && (+row.year === YEAR);
-				});
-						return{
-								mode: 'markers',
-								name: discipline,
-								x: unpack(rowsFiltered, 'readCount'),
-								y: unpack(rowsFiltered, 'citedBy'),
-								text: unpack(rowsFiltered, 'contentTitle'),
-								marker:{sizemode: 'area', size: unpack(rowsFiltered, 'readCount'), sizeref: POP_TO_PX_SIZE},
-						};
-			});
-			var layout = {
-				font: {color: '#000000', size: 12, family: 'Open Sans, sans-serif'},
-				title: 'Cited-by Count ~ Read Count', titlefont: {
-      				color: '#000000'},
-				xaxis: {title: 'Read Count', zerolinecolor:'#000000' , linecolor: '#000000', gridcolor: '#000000', titlefont: {
-      				color: '#000000'}},
-				yaxis: {title: 'Cited by Count', zerolinecolor:'#000000', linecolor: '#000000', gridcolor: '#000000', titlefont: {
-      				color: '#000000'}},
-				margin: {t: 50},
-				autosize: true,
-				hovermode: 'closest',
-        		paper_bgcolor:'rgb(255,255,255)',
-        		plot_bgcolor:'rgb(255,255,255)'
-			};
-			Plotly.plot(gd, data, layout, {showLink: false});
-		});
-window.onresize = function() {
-    Plotly.Plots.resize(gd);
-};
-})();
-</script>
+{%- include /assets/code/plotly_scienceopen.js.html -%}

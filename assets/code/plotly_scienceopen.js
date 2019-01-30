@@ -1,4 +1,5 @@
-<script> 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
 (function() {
 var d3 = Plotly.d3;
 var WIDTH_IN_PERCENT_OF_PARENT = 80,
