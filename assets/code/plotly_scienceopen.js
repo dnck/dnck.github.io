@@ -10,7 +10,7 @@ var gd3 = d3.select('h0').append('div').style({
         height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
         'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'});
 var gd = gd3.node();
-		Plotly.d3.csv('https://raw.githubusercontent.com/dnck/learn_to_code/master/test.csv',
+		Plotly.d3.csv('https://raw.githubusercontent.com/dnck/dnck.github.io/master/assets/data/test.csv',
 			function(err, rows){
 				var YEAR = 2016;
 				var discipline = ['Discipline A', 'Discipline B', 'Discipline C', 'Discipline D', 'Discipline E'];
