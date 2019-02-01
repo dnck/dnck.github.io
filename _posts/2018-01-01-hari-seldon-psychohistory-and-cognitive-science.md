@@ -13,7 +13,11 @@ category: ssh, RPCs
 
 Imagine that we had an infinite amount time and unlimited access to any and all sources of information. What parameters or predicates would we need to account for and predict human behavior on both short and long time scales and in real-life, complex situations?
 
-Whatever parameters we select, let's call the model "The Seldon Model" after the famous fictional character, <a href="https://en.wikipedia.org/wiki/Hari_Seldon">Hari Seldon</a> from the Issac Asimov Foundation novels</a>.
+Whatever parameters we select, let's call the model "The Seldon Model" after the famous fictional character, <a href="https://en.wikipedia.org/wiki/Hari_Seldon">Hari Seldon</a> from the Issac Asimov Foundation novels.
+
+Recall that Hari Seldon was a genius psychohistorian that developed an algorithmic science that enabled him to predict in probabilistic terms the future changes, and ultimately, the demise of, civilization. Unfornunately, Seldon's model only worked for large groups of people. Nonetheless, if we pretend that the Seldon Model was real, what supplemental parameters would we include to extend the model to individuals? 
+
+Read on to learn more about some parameters already at work in the cognitive science of humans.
 
 ## Four possible paramters in the Seldon Model
 
