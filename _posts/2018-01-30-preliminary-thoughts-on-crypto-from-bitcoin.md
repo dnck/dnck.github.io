@@ -4,6 +4,7 @@ title: What is bitcoin & why should you care?
 date: 2018-01-30
 comments: true
 author: dc
+category: blog
 ---
 **Key features of Bitcoin-tech aka Blockchain**
 * It's a protocol that tells computers how to interact with each other

@@ -8,7 +8,7 @@ analytics: false
 keywords: parallel, HDF5, MPI, python
 description: how I installed parallel HDF5 for use in Python with MPI
 tag: parallel, HDF5, MPI
-category: parallel, HDF5, MPI
+category: blog
 ---
 
 My previous post about Tensorflow gave me some ideas.

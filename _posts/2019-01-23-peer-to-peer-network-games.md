@@ -7,7 +7,7 @@ comments: true
 analytics: true
 keywords:  peer-to-peer networks
 description: an imaginary game for peer to peer networks   
-category: peer-to-peer networks
+category: blog
 ---
 
 Games

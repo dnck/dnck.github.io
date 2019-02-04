@@ -8,7 +8,7 @@ analytics: true
 keywords: predictive analytics, data science
 description: What is the difference between a scientist and an engineer? What is the difference between a scientist and a developer? What is the difference between data science and engineering?
 tag: data science, engineering, development, devops, machine learning, deep learning, software, engineer, scientists, science
-category: useful distinctions
+category: blog
 ---
 
 [We're all scientists to some extent, right?](http://alisongopnik.com/Papers_Alison/sciam-Gopnik.pdf) That's the question I've been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here's my take:

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Decentralized identity management | x.merge(y.merge(x))</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Decentralized identity management" />
+<meta name="author" content="dc" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Key terms" />
+<meta property="og:description" content="Key terms" />
+<link rel="canonical" href="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html" />
+<meta property="og:url" content="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html" />
+<meta property="og:site_name" content="x.merge(y.merge(x))" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-06-01T00:00:00+02:00" />
+<script type="application/ld+json">
+{"description":"Key terms","author":{"@type":"Person","name":"dc"},"@type":"BlogPosting","url":"http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html","headline":"Decentralized identity management","dateModified":"2018-06-01T00:00:00+02:00","datePublished":"2018-06-01T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="x.merge(y.merge(x))" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">x.merge(y.merge(x))</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/">about</a><a class="page-link" href="/blog.html">blog</a><a class="page-link" href="/downloads.html">downloads</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Decentralized identity management</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-06-01T00:00:00+02:00" itemprop="datePublished">Jun 1, 2018
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Key terms</p>
+
+<p>User - a node in the network that wishes to reveal personally identifying data (pid)</p>
+
+<p><strong>Provider</strong> - a node in the network that wishes to obtain a user’s pid.</p>
+
+<p><strong>Certifier</strong> - a node in the network that both the user and the provider trust to provide reliable metadata on the user.</p>
+
+<p><strong>Personally identifying transaction (pid-tx)</strong> - a transaction representing the identity of the node</p>
+
+<p><strong>Acknowledgement transaction</strong> - a transaction representing the acknowledgement by an entity of a pid-tx by either an approver or a certifier.</p>
+
+<p><strong>Outstanding negotiation</strong> - the state of affairs in which an approver and a certifier have both issued acknowledgement transactions, and the user is notified and prompted to provide a consent transaction.</p>
+
+<p><strong>Consent transaction</strong> - a transaction representing the user’s consent to an outstanding negotiation on the user’s pid_tx.</p>
+
+<p><strong>Negotiation transaction</strong> - a transaction made by a provider representing the provider’s acceptance of the certifier as an authority for the provider’s target pid_tx.</p>
+
+<p><strong>Certification transaction</strong> - a transaction made by a certifier representing the certifiers acceptance of the terms of the provider’s acknowledge transaction, negotiation transaction, and the user’s pid_tx.</p>
+
+<p><strong>Closing transaction</strong> - a transaction made by a provider representing the provider’s acknowledge of receipt of the pid.</p>
+
+<p><img src="https://www.danjcook.com/assets/images/Untitled Diagram.png" class="img-fluid" /></p>
+
+<p><strong>Figure 1.</strong></p>
+
+<p>Let’s go through what’s going on in Figure 1.</p>
+
+<p>A user makes a personally identifying transaction (pid-tx), which represents the node’s consent to a release of pid to a provider with the assistance of an intermediary called a certifier.</p>
+
+<p>The protocol pushes a notice to the provider requesting access to the user’s pid, and a set of possible certifiers of the pid.</p>
+
+<p>Provider’s are entities wishing to obtain access to the pid_tx content. Certifiers are entities in possession of the ability to testify that the pid_tx was in fact issued by, owned by, or generated by the user.</p>
+
+<p>The providers that received the user pid_tx notification should issue an acknowledgement transaction, which acknowledges the presence of their user’s alleged pid in the pid-tx. In the event that there is only one user, the provider will reference only one transaction. In the event that there are many, the provider will reference at most K pid_txs. The provider’s transaction is a representation of their commitment to compensate at a certain amount any possible certifiers for the validation of a user’s pid_tx.</p>
+
+<p>In the presence of an acknowledgement transaction, the protocol should prompt certifiers that received the pid_tx notification to issue their own acknowledgement transaction acknowledging the presence of a user’s pid_tx for which they can offer validation, and the provider’s commitment to fulfil an obligation to the certifier upon receipt of valid pid.</p>
+
+<p>The protocol should subscribe the user to providers and certifiers that approve the user’s original pid_tx. Upon notification of an outstanding negotiation on the pid_tx, the protocol should prompt the user to issue a new consent transaction that approves the certifier’s and the provider’s acknowledgement transactions. The user’s consent transaction represents the user’s consent to the transfer between a provider and a certifier of information pertaining to the user’s identity.</p>
+
+<p>If the user approves of the provider’s and certifier’s acknowledgement transactions, then the protocol should prompt the provider to initiate finalization with a negotiation transaction that approves the certifier’s acknowledgement transaction and the user’s consent transaction. Next, the protocol should prompt to make a certification transaction, which approves of the user’s consent transaction and the provider’s negotiation transaction.</p>
+
+<p>If the certifier makes a certification transaction, then the protocol should prompt the provider to make a closing transaction, which approves the user’s consent transaction and the certifier’s certification transaction.
+Terms</p>
+
+<p>Criticism<br />
+Ok, I admit, this is not fully worked out. I will update when I come up with my own criticisms. But, any thoughts appreciated.</p>
+
+  </div><a class="u-url" href="/blog/2018/06/01/decentralized-identity-management.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">x.merge(y.merge(x))</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">x.merge(y.merge(x))</li><li><a class="u-email" href="mailto:cookdj0128@gmail.com">cookdj0128@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/dnck"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">dnck</span></a></li><li><a href="https://www.linkedin.com/in/danjohncook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">danjohncook</span></a></li><li><a href="https://www.twitter.com/dan_j_cook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">dan_j_cook</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>The personal homepage of Daniel John Cook.</p>
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+</body>
+
+</html>

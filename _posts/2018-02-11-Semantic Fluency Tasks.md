@@ -4,6 +4,7 @@ title: Semantic Fluency Tasks
 date: 2018-02-11
 author: dc
 comments: true
+category: blog
 ---
 <div class="container-fluid">
 	<div class="row">

@@ -4,6 +4,7 @@ title: launch blog
 date: 2017-05-28
 author: dc
 comments: true
+category: blog
 ---
 
 I'm launching my new personal blog/website today for three reasons.

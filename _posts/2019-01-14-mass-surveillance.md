@@ -5,9 +5,9 @@ author: dc
 date: 2019-01-14
 comments: true
 analytics: true
-keywords: surveillance, privacy, encryption
+keywords: surveillance, privacy, encryption, privacy, security
 description: A deconstructivist approach to privacy.
-category: privacy, security
+category: blog
 ---
 
 <img src="{{site.url}}/assets/images/deconstructionism-definition.png" class="img-fluid">

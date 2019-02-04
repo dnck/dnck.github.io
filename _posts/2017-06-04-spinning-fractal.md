@@ -4,6 +4,7 @@ title: spinning fractals!
 date: 2017-06-04
 comments: true
 author: dc
+category: blog
 ---
 
 <div class="container-fluid">

@@ -8,7 +8,7 @@ analytics: false
 keywords: ssh, commands
 description: simple ssh commands, no bullshit
 tag: ssh, commands, KISS
-category: ssh, RPCs
+category: blog
 ---
 
 SSH

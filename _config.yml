@@ -15,3 +15,8 @@ plugins:
 disqus_shortname: dcook
 google_analytics: UA-97378833-1
 rawgitfiles: "https://raw.githubusercontent.com/dnck/dnck.github.io/master"
+mathjax: true
+header_pages:
+  - index.md
+  - blog.md
+  - downloads.md

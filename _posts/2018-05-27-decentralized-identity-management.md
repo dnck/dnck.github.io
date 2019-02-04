@@ -5,6 +5,7 @@ author: dc
 date: 2018-06-01
 comments: true
 analytics: true
+category: blog
 ---
 
 Key terms  

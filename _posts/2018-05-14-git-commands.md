@@ -8,7 +8,7 @@ analytics: false
 keywords: git, commands
 description: simple git commands, no bullshit
 tag: git, commands, KISS
-category: git
+category: blog
 ---
 
 

@@ -4,6 +4,7 @@ title: semantic derivations
 date: 2017-05-29
 author: dc
 comments: true
+category: blog
 ---
 
 Is it possible to derive the meaning of a word from how it was originally used and how it developed through history?

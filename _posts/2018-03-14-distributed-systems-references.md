@@ -4,6 +4,7 @@ title: Distributed Systems references
 date: 2018-03-14
 author: dc
 comments: true
+category: blog
 ---
 ## Algorithms
 [Introduction to Algorithms, 3rd Edition](http://ressources.unisciel.fr/algoprog/s00aaroot/aa00module1/res/%5BCormen-AL2011%5DIntroduction_To_Algorithms-A3.pdf)

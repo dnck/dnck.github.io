@@ -9,9 +9,4 @@ title: about
           <img  src='https://www.danjcook.com/assets/images/me.png' class='hide' />
       </a>
 		</div>
-    <br>
-		<div class='row' id='na'>
-      <p>Hello world!</p>
-      <p>My name is Dan. I like to make things. <br>I also like science and technology. <br>Stay tuned while I update this page to better reflect my interests.</p>
-    </div>
   </div>

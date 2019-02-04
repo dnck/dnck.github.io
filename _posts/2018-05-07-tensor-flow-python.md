@@ -8,7 +8,7 @@ analytics: false
 keywords: numpy, scipy, arrays, memory, garbage collection
 description:
 tag: Modelling, multisensory integration, taste, psychophysics
-category: PhD study
+category: blog
 ---
 
 L.T. recently showed me how to think about **adjacency matrices** for graphs, how to build them on the fly with **numpy** arrays.
