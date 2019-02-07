@@ -1,0 +1,2 @@
+Key terms
+Cognitive science, syntax, semantics, distributed systems, peer-to-peer networks, data science, statistics, python, numpy, scipy, matplotlib
