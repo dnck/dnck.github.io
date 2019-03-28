@@ -1,6 +1,6 @@
 ---
 layout: post
-title: git commands
+title: Basic git commands
 author: dc
 date: 2018-05-14
 comments: false
@@ -11,10 +11,7 @@ tag: git, commands, KISS
 category: blog
 ---
 
-
-
 Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.
-
 
 **get a git repo**
 ```

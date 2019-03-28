@@ -15,7 +15,7 @@ Imagine that we had an infinite amount time and unlimited access to any and all 
 
 Whatever parameters we select, let's call the model "The Seldon Model" after the famous fictional character, <a href="https://en.wikipedia.org/wiki/Hari_Seldon">Hari Seldon</a> from the Issac Asimov Foundation novels.
 
-Recall that Hari Seldon was a genius psychohistorian that developed an algorithmic science that enabled him to predict in probabilistic terms the future changes, and ultimately, the demise of, civilization. Unfornunately, Seldon's model only worked for large groups of people. Nonetheless, if we pretend that the Seldon Model was real, what supplemental parameters would we include to extend the model to individuals? 
+Recall that Hari Seldon was a genius psychohistorian that developed an algorithmic science that enabled him to predict in probabilistic terms the future changes, and ultimately, the demise of, civilization. Unfornunately, Seldon's model only worked for large groups of people. Nonetheless, if we pretend that the Seldon Model was real, what supplemental parameters would we include to extend the model to individuals?
 
 Read on to learn more about some parameters already at work in the cognitive science of humans.
 
@@ -25,7 +25,7 @@ The Drift Diffusion Model (DDM) has been applied in cognitive science to observa
 
 Despite the benefits of considering the parameters at work in the DDM model, there are reasons why our Seldon Model might ignore them. Consider, for example, that the temporal deadlines for decisions in these laboratory experiments are unnatural, usually confined to the seconds range, rather than minutes, and many human decisions, like buying a car from a choice of 10 cars, or buying stock from a selection of 1000 stock, making a move in a game of chess, etc. happen on a much longer time scale. Thus, we cam return to our original question. Is there a model that can predict the variations among people for decisions that require BOTH short and long temporal ranges?
 
-## Other paramters?
+## Other parameters?
 
 This is all just speculation, but I think the Seldon Model would need to also include things like sleep quality, food intake, exercise, relationship quality, and many more variables derived from long term human behavior. However, since people differ in these variables, and since it's really difficult to track all of these datas ources (not to mention store it at scale), it's unlikely that any single scientist, organization, institution, or business could do more than speculate about which parameters are necessary in the Seldon Model.
 

@@ -2,23 +2,9 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>open peer review app | x.merge(y.merge(x))</title>
-<meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="open peer review app" />
-<meta name="author" content="dc" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="I created an app in Python that might help you find peer reviewers. You can find it here. Send me a tweet or email if you need some help with it, or you’d like to help make it better." />
-<meta property="og:description" content="I created an app in Python that might help you find peer reviewers. You can find it here. Send me a tweet or email if you need some help with it, or you’d like to help make it better." />
-<link rel="canonical" href="http://localhost:4000/blog/2017/08/06/open-peer-review-app.html" />
-<meta property="og:url" content="http://localhost:4000/blog/2017/08/06/open-peer-review-app.html" />
-<meta property="og:site_name" content="x.merge(y.merge(x))" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2017-08-06T00:00:00+02:00" />
-<script type="application/ld+json">
-{"description":"I created an app in Python that might help you find peer reviewers. You can find it here. Send me a tweet or email if you need some help with it, or you’d like to help make it better.","author":{"@type":"Person","name":"dc"},"@type":"BlogPosting","url":"http://localhost:4000/blog/2017/08/06/open-peer-review-app.html","headline":"open peer review app","dateModified":"2017-08-06T00:00:00+02:00","datePublished":"2017-08-06T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2017/08/06/open-peer-review-app.html"},"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="x.merge(y.merge(x))" /></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/main.css"></head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">x.merge(y.merge(x))</a><nav class="site-nav">
@@ -39,16 +25,45 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">open peer review app</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Processes vs Threads</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2017-08-06T00:00:00+02:00" itemprop="datePublished">Aug 6, 2017
+      <time class="dt-published" datetime="2019-02-08T00:00:00+01:00" itemprop="datePublished">Feb 8, 2019
       </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>I created an app in Python that might help you find peer reviewers. You can find it <a href="https://github.com/dnck/open_peer_review">here</a>. Send me a tweet or email if you need some help with it, or you’d like to help make it better.</p>
+    <p><strong>What is a process?</strong></p>
 
-  </div><a class="u-url" href="/blog/2017/08/06/open-peer-review-app.html" hidden></a>
+<p>A process is basically a container that holds all of the stuff that a program needs to run, including, references to the system resources available to the process.</p>
+
+<p>Each process has an address space, a list of memory locations from 0 to some maximum that the process can read from and write to. The address space is important because it contains the executable program, the program data, and a stack.</p>
+
+<p><strong>What is a thread?</strong>
+WIP</p>
+
+  </div>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+<a class="u-url" href="/python/2019/02/08/multithreading-and-multiprocessing-in-python.html" hidden></a>
 </article>
 
       </div>

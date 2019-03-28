@@ -1,4 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-04T21:37:02+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">x.merge(y.merge(x))</title><subtitle>The personal homepage of Daniel John Cook.</subtitle><entry><title type="html">Intrepretation of equations</title><link href="http://localhost:4000/blog/2019/01/30/how-I-read-equations.html" rel="alternate" type="text/html" title="Intrepretation of equations" /><published>2019-01-30T00:00:00+01:00</published><updated>2019-01-30T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/30/how-I-read-equations</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/30/how-I-read-equations.html">&lt;p&gt;Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes &lt;emphasis&gt;un&lt;emphasis&gt;intuitive.&lt;/emphasis&gt;&lt;/emphasis&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-03-28T22:35:14+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">x.merge(y.merge(x))</title><subtitle>The personal homepage of Daniel John Cook.</subtitle><entry><title type="html">OpenMPI, parallel HDF5, mpi4py, and h5py, take 2</title><link href="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html" rel="alternate" type="text/html" title="OpenMPI, parallel HDF5, mpi4py, and h5py, take 2" /><published>2019-02-21T00:00:00+01:00</published><updated>2019-02-21T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/02/21/parallel-hdf5-2</id><content type="html" xml:base="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html">&lt;p&gt;This is the second time in less than a year I’ve face the problem of configuring parallel hdf5 on a server. I don’t even know why I bother! Oh, yeah, that’s right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you’ve got any suggestions on what I’m doing wrong, please comment :().&lt;/p&gt;
+
+&lt;h3 id=&quot;what-do&quot;&gt;What do?&lt;/h3&gt;
+
+&lt;p&gt;Attempting to .configure, make, make install, OpenMpi &amp;amp; parallel-HDf5 (using the CC=mpicc option)
+Attempting to .configure, make, make install zlib
+Attempting to pip install mpi4py &amp;amp; h5py (with links to the pHDf5 library using specific options for pip)&lt;/p&gt;
+
+&lt;p&gt;See below for details on steps already taken and specific bugs:&lt;/p&gt;
+
+&lt;h3 id=&quot;openmpi&quot;&gt;OPENMPI&lt;/h3&gt;
+&lt;p&gt;Status: No bugs&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; curl -O https://download.open-mpi.org/release/open-mpi/v2.0/openmpi-2.0.4.tar.gz
+&amp;gt; tar xf openmpi-2.0.4.tar.gz
+&amp;gt; cd openmpi-2.0.4
+&amp;gt; ./configure --prefix=$HOME/.local
+&amp;gt; make all
+&amp;gt; make install
+&amp;gt; mpirun --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This compiles perfectly. All the executables are located in my .local path.&lt;/p&gt;
+
+&lt;p&gt;The last commands prints,&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; mpirun (Open MPI) 2.0.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;zlib-shared-object&quot;&gt;ZLIB (shared object)&lt;/h3&gt;
+&lt;p&gt;Status: Bugs&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; curl -O ...
+&amp;gt; tar xf ...
+&amp;gt; cd zlib-x.x.x
+&amp;gt; ./configure --prefix=$HOME/.local
+&amp;gt; make test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Everything works. The C header file is in the .local/include dir and the shared object is in the .local/lib directory.&lt;/p&gt;
+
+&lt;h3 id=&quot;zlib-python&quot;&gt;ZLIB (Python)&lt;/h3&gt;
+&lt;p&gt;Status: bugs&lt;/p&gt;
+
+&lt;p&gt;However, installation of the zlib Python module with pip fails:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; pip install zlib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This prints,&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; Collecting zlib
+&amp;gt;    Could not find a version that satisfies the requirement zlib (from versions: )
+&amp;gt;    No matching distribution found for zlib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;I tried to fix this by explicitly telling the C compiler where to find the zlib stuff.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; zlib_lib=&quot;$HOME/.local/lib&quot;
+&amp;gt; zlib_inc=&quot;$HOME/.local/include&quot;
+&amp;gt; export CPPFLAGS=&quot;-I${zlib_inc} ${CPPFLAGS}&quot;
+&amp;gt; export LD_LIBRARY_PATH=&quot;${zlib_lib}:${LD_LIBRARY_PATH}&quot;
+&amp;gt; export LDFLAGS=&quot;-L${zlib_lib} -Wl,-rpath=${zlib_lib} ${LDFLAGS}&quot;
+&amp;gt; pip install zlib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;But, this also fails and produces the same message as above from pip.&lt;/p&gt;
+
+&lt;p&gt;So, it seems I have zlib properly installed, but I do not have a working Python module called, zlib.&lt;/p&gt;
+
+&lt;p&gt;Oh, I’m running the default ubuntu Python 3.6 (not anaconda or anything.)&lt;/p&gt;
+
+&lt;h3 id=&quot;phdf5-c&quot;&gt;pHDf5 (C)&lt;/h3&gt;
+&lt;p&gt;Status: bugs&lt;/p&gt;
+
+&lt;p&gt;Downloaded from https://www.hdfgroup.org/downloads/hdf5/source-code/&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; cd hdf5-1.10.4
+&amp;gt; CC=$HOME/.local/bin/mpicc ./configure --prefix=$HOME/.local --enable-shared --enable-parallel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This seems to give me the output I want. But doing&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; make
+&amp;gt; make check
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;fails to return a positive result. Namely, the MPI_ABORT seems to be called during the parallel tests.&lt;/p&gt;
+
+&lt;p&gt;Also, I have tried to install the regular hdf5 library (with no parallel support) by doing,&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; CC=$HOME/.local/bin/mpicc ./configure --prefix=$HOME/.local --enable-shared
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;But, this also fails on the &amp;gt; make check stage.&lt;/p&gt;
+
+&lt;p&gt;Note that I have gotten this setup running before with my macbook pro 8.1 back in May 2018:
+https://www.danjcook.com/blog/2018/05/16/parallel-HDF5-for-use-in-Python.html&lt;/p&gt;
+
+&lt;p&gt;The above link might be helpful in future attempts to get this constellations of software up and running on the master-node.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">This is the second time in less than a year I’ve face the problem of configuring parallel hdf5 on a server. I don’t even know why I bother! Oh, yeah, that’s right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you’ve got any suggestions on what I’m doing wrong, please comment :().</summary></entry><entry><title type="html">Processes vs Threads</title><link href="http://localhost:4000/python/2019/02/08/multithreading-and-multiprocessing-in-python.html" rel="alternate" type="text/html" title="Processes vs Threads" /><published>2019-02-08T00:00:00+01:00</published><updated>2019-02-08T00:00:00+01:00</updated><id>http://localhost:4000/python/2019/02/08/multithreading-and-multiprocessing-in-python</id><content type="html" xml:base="http://localhost:4000/python/2019/02/08/multithreading-and-multiprocessing-in-python.html">&lt;p&gt;&lt;strong&gt;What is a process?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A process is basically a container that holds all of the stuff that a program needs to run, including, references to the system resources available to the process.&lt;/p&gt;
+
+&lt;p&gt;Each process has an address space, a list of memory locations from 0 to some maximum that the process can read from and write to. The address space is important because it contains the executable program, the program data, and a stack.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is a thread?&lt;/strong&gt;
+WIP&lt;/p&gt;</content><author><name>dc</name></author><category term="python" /><summary type="html">What is a process?</summary></entry><entry><title type="html">Intrepretation of equations</title><link href="http://localhost:4000/blog/2019/01/30/how-I-read-equations.html" rel="alternate" type="text/html" title="Intrepretation of equations" /><published>2019-01-30T00:00:00+01:00</published><updated>2019-01-30T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/30/how-I-read-equations</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/30/how-I-read-equations.html">&lt;p&gt;Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes &lt;emphasis&gt;un&lt;emphasis&gt;intuitive.&lt;/emphasis&gt;&lt;/emphasis&gt;&lt;/p&gt;
 
 &lt;p&gt;For example, consider the function $f$.&lt;/p&gt;
 
@@ -18,69 +107,7 @@
 
 &lt;h3 id=&quot;map-from-the-english-alphabet-to-the-set-s025&quot;&gt;Map from the English alphabet to the set S={0,…,25}&lt;/h3&gt;
 
-&lt;p&gt;$\forall x$ $\in S$, sort the elements of the set S and locate and return of element x by it’s relative fixed position in the newly ordered set $S’$&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes unintuitive.</summary></entry><entry><title type="html">lessons on networks in python 041</title><link href="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html" rel="alternate" type="text/html" title="lessons on networks in python 041" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html">&lt;p&gt;The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but &lt;em&gt;I DO plan to inspect all of the code that runs on my pc all of the time!&lt;/em&gt; It’s just that sometimes … deadlines.&lt;/p&gt;
-
-&lt;p&gt;Ok, now check out some cool program code:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Adapted from ...&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# https://www.packtpub.com/networking-and-servers/python-network-programming-cookbook-second-edition&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Python 3.7&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# download_data.py&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;argparse&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://www.cnn.com'&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argparse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ArgumentParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'HTTP Client Example'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--host'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;store&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This program basically does something like,&lt;/p&gt;
-
-&lt;p&gt;Step 1. Fetch some utf-8 symbols from the host, http://www.cnn.com.
-  Step 2. Decode the utf-8 symbols and print them in ascii characters on the standard output&lt;/p&gt;
-
-&lt;p&gt;Try running it for yourself.&lt;/p&gt;
-
-&lt;p&gt;It will give you some interesting stuff to read in the terminal. You can also try it with some parameters.&lt;/p&gt;
-
-&lt;p&gt;It works like this,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python download_data.py --host=http://www.danjcook.com/blog/2019-01-22-networks-in-python-lesson-041
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Did you see that ?&lt;/p&gt;
-
-&lt;p&gt;I wonder if there’s anything valuable in scrapping that data on a timely basis? Anybody wanna clean it?&lt;/p&gt;
-
-&lt;p&gt;Anyway, as I said, the urllib library is pretty powerful.&lt;/p&gt;
-
-&lt;p&gt;The program constructs an HTTPClient class. An instance of the class assigns to itself a name corresponding to an ip address of a remote host, REMOTE_SERVER_HOST. The client then has a single method that does all of the things we mentioned at the outset of the lesson. It constructs http headers, and sends them off to a server as properly formatted requests for html at the remote host. On the receiving end, it receives replies from the server of the data. Note that state changes triggered in the server app running on the host may have resulted in a complex interplay of several different peices of technology, but we do not know this. It is transparent to us.&lt;/p&gt;
-
-&lt;p&gt;Thus, we will have to follow up in the future by showing how to request from the remote host their credentials. We can then use this information to make decisions about the soundness of the response.&lt;/p&gt;
-
-&lt;p&gt;Dan’s Honorable Python Libaries, Classes, and Functions&lt;br /&gt;
-urllib.request.urlopen(host)&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but I DO plan to inspect all of the code that runs on my pc all of the time! It’s just that sometimes … deadlines.</summary></entry><entry><title type="html">P2P network games</title><link href="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" rel="alternate" type="text/html" title="P2P network games" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html">&lt;p&gt;Games&lt;/p&gt;
-
-&lt;p&gt;Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.&lt;/p&gt;
+&lt;p&gt;$\forall x$ $\in S$, sort the elements of the set S and locate and return of element x by it’s relative fixed position in the newly ordered set $S’$&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes unintuitive.</summary></entry><entry><title type="html">A conceptual sketch of a P2P network game</title><link href="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" rel="alternate" type="text/html" title="A conceptual sketch of a P2P network game" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html">&lt;p&gt;Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.&lt;/p&gt;
 
 &lt;p&gt;Table 1. shows the combination of player inputs and the outcomes of the game when the staked values are standardized to 1.&lt;/p&gt;
 
@@ -185,9 +212,13 @@ urllib.request.urlopen(host)&lt;/p&gt;</content><author><name>dc</name></author>
 
 &lt;p&gt;What can be seen from Table 1. is that the biggest gains for both players come when they do not cheat, but their partners are exposed as cheating. After that, the gains for both players are the same whether they cheat or not. Thus, the best option for both Players is to not cheat, since their biggest win comes from not cheating, their biggest loss from failed attempts to cheat, and additionally, the benefit they stand to gain from cheating and not being discovered is as large as the benefit from not cheating when their partner also does not cheat. It seems then, that this sort of game encourages cooperation among the players.&lt;/p&gt;
 
-&lt;p&gt;Now, take the same game logic and apply it to the hosts in a peer-to-peer network. The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset. What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.&lt;/p&gt;
+&lt;p&gt;Now, take the same game logic and apply it to the hosts in a peer-to-peer network.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset.
+What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;A proposal for a new game&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A proposal for a new p2p game&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Suppose that when a node wishes to broadcast a transaction, they must receive a timestamp on the transaction from one of their neighbor nodes.
 To get a timestamp from a neighbor, a sender signs a data file that contains at least, a unique transaction address, a transaction timestamp, a broadcast interval, two empty variables to be explained later, the sender id (certified host:port), and the recipient id (certified host:port). Neighbors are incentivized to accept these timestamp requests because all nodes are continually adding transactions to their local databases. We assume that some of these transactions issued by nodes are intended for a shared public database, which acts as the network’s global ledger, and that the only way into this ledger is through a network consensus approved timestamp.&lt;/p&gt;
@@ -204,7 +235,7 @@ To get a timestamp from a neighbor, a sender signs a data file that contains at 
 
 &lt;p&gt;After the sender and receiver know of the transaction and the secret, both are now free to broadcast the transaction to other nodes. During this broadcast interval, an option is selected that tells the new receivers that the transaction is already in contract.&lt;/p&gt;
 
-&lt;p&gt;Here are the rules of the broadcast interval.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Here are the rules of the broadcast interval.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;If the sender’s reveal request comes within the agreed upon broadcast interval, but the receiver does not broadcast the secret, then the sender can reveal the contents of the secret. In this case, the sender’s revelation of the secret should show that the receiver has cheated, and the receiver should be penalized by 2, and the sender rewarded by 2.&lt;/p&gt;
 
@@ -216,113 +247,87 @@ To get a timestamp from a neighbor, a sender signs a data file that contains at 
 
 &lt;p&gt;To make this system work in providing for our goal, we should use a third type of node in the game that aggregates all value bearing transactions and their metadata, and puts this information into a storage container also organized as an instance of a Directed Acyclic Graph.&lt;/p&gt;
 
-&lt;p&gt;Questions and Discussion&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Questions to discuss&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;There are many questions that need to be answered about this proposal before evaluating it. Here are just a few:&lt;/p&gt;
+&lt;p&gt;What prevents the nodes from cheating? What are the rewards for not cheating? How are punishments implemented? How can nodes cheat? What’s the purpose of having the nodes continually add transactions?&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.</summary></entry><entry><title type="html">networks in python 041</title><link href="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html" rel="alternate" type="text/html" title="networks in python 041" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html">&lt;p&gt;The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but &lt;em&gt;I DO plan to inspect all of the code that runs on my pc all of the time!&lt;/em&gt; It’s just that sometimes … deadlines.&lt;/p&gt;
 
-&lt;p&gt;First, what prevents the nodes from cheating?&lt;/p&gt;
+&lt;p&gt;Ok, now check out some cool program code:&lt;/p&gt;
 
-&lt;p&gt;Second, what are the rewards for not cheating?&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
+# Python 3.7
+# download_data.py
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;argparse&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt;
 
-&lt;p&gt;Third, how are punishments implemented?&lt;/p&gt;
+&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://www.cnn.com'&lt;/span&gt;
 
-&lt;p&gt;Fourth, how can nodes cheat?&lt;/p&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
 
-&lt;p&gt;Fifth, what’s the purpose of having the nodes continually add transactions?&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Games</summary></entry><entry><title type="html">Are you getting hacked?</title><link href="http://localhost:4000/blog/2019/01/14/mass-surveillance.html" rel="alternate" type="text/html" title="Are you getting hacked?" /><published>2019-01-14T00:00:00+01:00</published><updated>2019-01-14T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/14/mass-surveillance</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/14/mass-surveillance.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/deconstructionism-definition.png&quot; class=&quot;img-fluid&quot; /&gt;&lt;/p&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-Figure 1.  &lt;br /&gt; Recursion &lt;br /&gt; &lt;strong&gt;noun&lt;/strong&gt; &lt;em&gt;Mathematics, Computers.&lt;/em&gt;&lt;br /&gt;
-The process of defining a function or calculating a number by the repeated application of an algorithm.
-&lt;img src=&quot;http://localhost:4000/assets/images/am-i-being-hacked.png&quot; class=&quot;img-fluid&quot; /&gt;
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-Figure 2. How often do you check the address field of your web-browser after clicking a link on a webpage?&lt;/p&gt;
-&lt;div class=&quot;card&quot; style=&quot;width: 30%;&quot;&gt;
-  &lt;div class=&quot;card-body&quot; style=&quot;text-align: center;&quot;&gt;
-    &lt;h5 class=&quot;card-title&quot;&gt; This is not an advertisement.&lt;/h5&gt;
-    &lt;p class=&quot;card-text&quot;&gt; All propositions in this box are False.&lt;/p&gt;
-    &lt;a href=&quot;&quot; class=&quot;btn btn-primary&quot;&gt;Answer: Do you recognize this link?&lt;/a&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argparse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ArgumentParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'HTTP Client Example'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--host'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;store&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;This program basically does something like,&lt;/p&gt;
 
-&lt;p&gt;Figure 3. You do not know. Microsoft office has reserved the “NORMAL” style for itself. Why hasn’t open-source become the &lt;em&gt;NORM&lt;/em&gt;?
-&lt;img src=&quot;http://localhost:4000/assets/images/NORMAL-style-in-use-choose-another-style.png&quot; class=&quot;img-fluid&quot; /&gt;
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Step 1. Fetch some utf-8 symbols from the host, http://www.cnn.com.
+  Step 2. Decode the utf-8 symbols and print them in ascii characters on the standard output&lt;/p&gt;
 
-&lt;h2 id=&quot;2-the-standard&quot;&gt;2. The Standard&lt;/h2&gt;
-&lt;p&gt;What kind of poetic world are we living in when we can’t be certain that we’re not under constant surveillance? Are we all being spyed on by local governments or power companies? everywhere?&lt;/p&gt;
+&lt;p&gt;Try running it for yourself.&lt;/p&gt;
 
-&lt;p&gt;Figure 4. Complex patterns of syntactic ambiguity in natural human language can be found on the world wide web and other digital spaces accessible over the internet protocol. The definition of the word ‘surveillance’ is shown to be derived from the early 19th century French prefix sur meaning “over” and the Latin vigilare “keep watch”.&lt;br /&gt;
-&lt;img src=&quot;http://localhost:4000/assets/images/you-are-not-normal-surveillance.png&quot; class=&quot;img-fluid&quot; /&gt;&lt;br /&gt;
-What exactly is a government that spies on its own residents? In Figure 4, if the function word, “to”, were to appear in the head position of the phrase, “keep watch”, then the phrase would constitute a reference to an action, “to keep watch”. One “keeps watch” when one attentively watches someone or something. Without the function word, the phrase can act as a command: “keep watch!”&lt;/p&gt;
+&lt;p&gt;It will give you some interesting stuff to read in the terminal. You can also try it with some parameters.&lt;/p&gt;
 
-&lt;p&gt;We should all take better care of protecting the public mediums of communication and exchange, such as money, credit, and telecommunications, from unwarranted surveillance.&lt;/p&gt;
+&lt;p&gt;It works like this,&lt;/p&gt;
 
-&lt;h2 id=&quot;3-spying-is-spying&quot;&gt;3. Spying is spying.&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python download_data.py --host=http://www.danjcook.com/blog/2019-01-22-networks-in-python-lesson-041
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The program constructs an HTTPClient class. An instance of the class assigns to itself a name corresponding to an ip address of a remote host, REMOTE_SERVER_HOST. The client then has a single method that does all of the things we mentioned at the outset of the lesson. It constructs http headers, and sends them off to a server as properly formatted requests for html at the remote host. On the receiving end, it receives replies from the server of the data. Note that state changes triggered in the server app running on the host may have resulted in a complex interplay of several different peices of technology, but we do not know this. It is transparent to us.&lt;/p&gt;
 
-&lt;p&gt;Not all hacking is surveillance. Nonetheless, when we are concerned with hacking, we are typically concerned with vigilare actions directed at the self for which the self has no sense-of-agency, and which would not be legisilated by the self had the self been conscious of them.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In short, to be hacked is to have one’s own security policy – whether directed at obtaining access to oneself or one’s own property – violated by the surveillence activities, or worse, of an other agent.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/save-yourself-paterna-paternis.png&quot; /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-Figure 5. Private corporations, and concerned governments, operating under the guise of paterna paternis, are not the answer.&lt;/p&gt;
-
-&lt;h2 id=&quot;4-distribution-of-knowledge&quot;&gt;4. Distribution of knowledge&lt;/h2&gt;
-&lt;p&gt;The publisher Elsevier routinely sells scientific publications to libraries and merchents all over the world. Its catalogue in one country may be different than its catelogue in another country. There are no promises that the knowledge, wisdom and understanding sold in India is the same as is packaged and sold in the United States of America.&lt;/p&gt;
-
-&lt;p&gt;You might think that this is beause the languages in the two countries differ. However, I have observed books written in English arrive on my doorstep that clearly state,&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Not to be sold outside of India, Pakistan, Nepal, Sri Lanka and Bangladesh”.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;You might think that this is the work of a Local Government prohibiting profits from leaving a country, and not Elsevier.&lt;/p&gt;
-
-&lt;p&gt;However, the same prohibition comes with the implicit statement that it was Elsevier, the company, and not the Local Government that has prohibited the sale elsewhere, and it was the Government, and not Elsevier that would enforce the private legislation against anyone that violates the decree.&lt;/p&gt;
-
-&lt;p&gt;Figure 6. What is it to be a criminal in the age of hacking? Was Barack Obama a criminal when he claimed that it would have been better had the subjects of possible surveillance been kept ignorant? What would have happened had Barack Obama, instead of encouraging ignorance, pushed for more well-informed citizens when it came down to information security and privacy?
-&lt;img src=&quot;http://localhost:4000/assets/images/it-is-NOT-better-to-NOT-know-WHO-CONTROLS-THE-KNOWLEDGE.png&quot; class=&quot;img-fluid&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, more than ever, we need education for the people about information security and privacy. Can we trust publishers to distribute knowledge?&lt;/p&gt;
-
-&lt;h1 id=&quot;1-reconstruction&quot;&gt;&lt;strong&gt;1. RECONSTRUCTION&lt;/strong&gt;&lt;/h1&gt;
-&lt;p&gt;Paraphrasing from &lt;a href=&quot;http://www.dodccrp.org/files/Alberts_Defensive.pdf&quot;&gt;DR. DAVID S. ALBERTS&lt;/a&gt;, here are six items we need to discuss for enhanced information security:&lt;/p&gt;
-
-&lt;p&gt;First, we neeed to create awareness of the problem posed by information security and privacy in all of its complexities. We should foster civil open discussion and cooperation among the diverse groups and organizations that are required to be a part of this effort.&lt;/p&gt;
-
-&lt;p&gt;Second, we must develop a well-defined vision that clearly lays out what we are trying to achieve and the appropriate role of the Government.&lt;/p&gt;
-
-&lt;p&gt;Third, the “rules of the game” need to be developed and promulgated. Many of our current laws and regulations have not caught up with the realities of the Information Age. A set of rules needs to address the establishment of information security standards, or a minimum level of defense to be associated with different kinds of data and information services. These would be similar to the recent development of privacy standards.&lt;/p&gt;
-
-&lt;p&gt;Fourth, self-interest, even enlightened self-interest and the desire of individuals and organizations to be good citizens, are not enough to ensure that appropriate actions and defenses will be developed and employed.&lt;/p&gt;
-
-&lt;p&gt;Resources need to be provided for government organizations to help implement a comprehensive framework for information security. We also need to provide incentives that encourage public sector organizations to do what is collectively needed. In some specific cases, the Government will need to actually provide funds to private sector organizations to implement enhanced security.&lt;/p&gt;
-
-&lt;p&gt;Fifth, the solution to this problem depends on the cooperation of many different groups and organizations. Mechanisms to facilitate and enhance cooperation need to be developed.&lt;/p&gt;
-
-&lt;p&gt;Sixth, we need to fix responsibility for the many tasks involved in defensive information warfare. We need to decide questions of jurisdiction. We need to make liabilities known and well defined.&lt;/p&gt;
-
-&lt;p&gt;Finally, we need to clearly establish the responsibility of each organization.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html"></summary></entry><entry><title type="html">What’s the difference between a scientist, an engineer, and a developer?</title><link href="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html" rel="alternate" type="text/html" title="What's the difference between a scientist, an engineer, and a developer?" /><published>2018-09-13T00:00:00+02:00</published><updated>2018-09-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/09/13/scientists-engineers-developers</id><content type="html" xml:base="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html">&lt;p&gt;&lt;a href=&quot;http://alisongopnik.com/Papers_Alison/sciam-Gopnik.pdf&quot;&gt;We’re all scientists to some extent, right?&lt;/a&gt; That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:&lt;/p&gt;
+&lt;p&gt;Thus, we will have to follow up in the future by showing how to request from the remote host their credentials. We can then use this information to make decisions about the soundness of the response.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but I DO plan to inspect all of the code that runs on my pc all of the time! It’s just that sometimes … deadlines.</summary></entry><entry><title type="html">Scientist vs engineer vs developer</title><link href="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html" rel="alternate" type="text/html" title="Scientist vs engineer vs developer" /><published>2018-09-13T00:00:00+02:00</published><updated>2018-09-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/09/13/scientists-engineers-developers</id><content type="html" xml:base="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html">&lt;p&gt;&lt;a href=&quot;http://alisongopnik.com/Papers_Alison/sciam-Gopnik.pdf&quot;&gt;We’re all scientists to some extent, right?&lt;/a&gt; That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:&lt;/p&gt;
 
 &lt;p&gt;A scientist is just a person that approaches problems in a &lt;strong&gt;scientific way&lt;/strong&gt;. According to me, the scientific way to approach problems is to begin with careful deductive and inductive reasoning, and follow up conclusions with experiments The goal of experimenting is to provide evidence against a &lt;strong&gt;general&lt;/strong&gt; conclusion, and to provide &lt;strong&gt;specific&lt;/strong&gt; details about the context under which a valid conclusion is sound. Some scientists go the extra step and create public reports on their conclusions. Their reports might be verbal or written, it doesn’t matter. What really matters is that the scientist records the details of their reasoning processes and the experimental procedures that were used to infer to their conclusions.&lt;/p&gt;
 
 &lt;p&gt;Engineers are a lot like scientists in that they approach problems scientifically. However, unlike a scientist, engineers work with (usually) a specific subset of all of the possible conclusions that are known to have a basis in reality, and they do so under certain experimental conditions. In so doing, engineers end up designing structures that maintain the truth of a conclusion in adverse or even independent experimental conditions. Thus, an engineer is a like scientist that’s learned experimental procedures, learned what parameters control a specific object, and usually, have some experience in designing and building new structures and contexts for objects to work in. &lt;/p&gt;
 
-&lt;p&gt;Finally, a developer. What. the. fuck. A developer is someone that implements solutions to well-defined problems.  Developer have experience implementing structures designed by engineers that are useful or desired by other people, including the developer. Developers may be scientific, but - in my opinion - they ought not be made responsible to the same demands as scientists or engineers. Most importantly, developers should know how to implement, and they should be able to do it quickly. That’s, I think the main distinction: time. When I’ve got some more of that, I’ll follow up by telling you how I think time &amp;amp; money factor into the distinctions I’ve made.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="data science, engineering, development, devops, machine learning, deep learning, software, engineer, scientists, science" /><summary type="html">We’re all scientists to some extent, right? That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:</summary></entry><entry><title type="html">Decentralized identity management</title><link href="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html" rel="alternate" type="text/html" title="Decentralized identity management" /><published>2018-06-01T00:00:00+02:00</published><updated>2018-06-01T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/06/01/decentralized-identity-management</id><content type="html" xml:base="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html">&lt;p&gt;Key terms&lt;/p&gt;
+&lt;p&gt;Finally, a developer. A developer is someone that implements solutions to well-defined problems.  Developer have experience implementing structures designed by engineers that are useful or desired by other people, including the developer. Developers may be scientific, but - in my opinion - they ought not be made responsible to the same demands as scientists or engineers. Most importantly, developers should know how to implement, and they should be able to do it quickly. That’s, I think the main distinction: time. When I’ve got some more of that, I’ll follow up by telling you how I think time &amp;amp; money factor into the distinctions I’ve made.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="data science, engineering, development, devops, machine learning, deep learning, software, engineer, scientists, science" /><summary type="html">We’re all scientists to some extent, right? That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:</summary></entry><entry><title type="html">How to decentralize identity management - an outline</title><link href="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html" rel="alternate" type="text/html" title="How to decentralize identity management - an outline" /><published>2018-06-01T00:00:00+02:00</published><updated>2018-06-01T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/06/01/decentralized-identity-management</id><content type="html" xml:base="http://localhost:4000/blog/2018/06/01/decentralized-identity-management.html">&lt;p&gt;&lt;img src=&quot;https://www.danjcook.com/assets/images/Untitled Diagram.png&quot; class=&quot;img-fluid&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;User - a node in the network that wishes to reveal personally identifying data (pid)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Figure 1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s go through what’s going on in Figure 1 starting with the first user node on the left. See the &lt;a href=&quot;#key-terms&quot;&gt;key terms below if you get lost&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A user makes a personally identifying transaction (pid-tx), which represents the node’s consent to a release of pid to a provider with the assistance of an intermediary called a certifier.&lt;/p&gt;
+
+&lt;p&gt;The protocol pushes a notice to the provider requesting access to the user’s pid, and a set of possible certifiers of the pid.&lt;/p&gt;
+
+&lt;p&gt;Provider’s are entities wishing to obtain access to the pid_tx content. Certifiers are entities in possession of the ability to testify that the pid_tx was in fact issued by, owned by, or generated by the user.&lt;/p&gt;
+
+&lt;p&gt;The providers that received the user pid_tx notification should issue an acknowledgement transaction, which acknowledges the presence of their user’s alleged pid in the pid-tx. In the event that there is only one user, the provider will reference only one transaction. In the event that there are many, the provider will reference at most K pid_txs. The provider’s transaction is a representation of their commitment to compensate at a certain amount any possible certifiers for the validation of a user’s pid_tx.&lt;/p&gt;
+
+&lt;p&gt;In the presence of an acknowledgement transaction, the protocol should prompt certifiers that received the pid_tx notification to issue their own acknowledgement transaction acknowledging the presence of a user’s pid_tx for which they can offer validation, and the provider’s commitment to fulfil an obligation to the certifier upon receipt of valid pid.&lt;/p&gt;
+
+&lt;p&gt;The protocol should subscribe the user to providers and certifiers that approve the user’s original pid_tx. Upon notification of an outstanding negotiation on the pid_tx, the protocol should prompt the user to issue a new consent transaction that approves the certifier’s and the provider’s acknowledgement transactions. The user’s consent transaction represents the user’s consent to the transfer between a provider and a certifier of information pertaining to the user’s identity.&lt;/p&gt;
+
+&lt;p&gt;If the user approves of the provider’s and certifier’s acknowledgement transactions, then the protocol should prompt the provider to initiate finalization with a negotiation transaction that approves the certifier’s acknowledgement transaction and the user’s consent transaction. Next, the protocol should prompt to make a certification transaction, which approves of the user’s consent transaction and the provider’s negotiation transaction.&lt;/p&gt;
+
+&lt;p&gt;If the certifier makes a certification transaction, then the protocol should prompt the provider to make a closing transaction, which approves the user’s consent transaction and the certifier’s certification transaction.&lt;/p&gt;
+
+&lt;h1 id=&quot;key-terms&quot;&gt;key-terms&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;User&lt;/strong&gt; - a node in the network that wishes to reveal personally identifying data (pid)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Provider&lt;/strong&gt; - a node in the network that wishes to obtain a user’s pid.&lt;/p&gt;
 
@@ -340,64 +345,33 @@ Figure 5. Private corporations, and concerned governments, operating under the g
 
 &lt;p&gt;&lt;strong&gt;Certification transaction&lt;/strong&gt; - a transaction made by a certifier representing the certifiers acceptance of the terms of the provider’s acknowledge transaction, negotiation transaction, and the user’s pid_tx.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Closing transaction&lt;/strong&gt; - a transaction made by a provider representing the provider’s acknowledge of receipt of the pid.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Closing transaction&lt;/strong&gt; - a transaction made by a provider representing the provider’s acknowledge of receipt of the pid.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html"></summary></entry><entry><title type="html">OpenMPI, parallel HDF5, mpi4py, and h5py</title><link href="http://localhost:4000/blog/2018/05/16/parallel-HDF5.html" rel="alternate" type="text/html" title="OpenMPI, parallel HDF5, mpi4py, and h5py" /><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/16/parallel-HDF5</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/16/parallel-HDF5.html">&lt;p&gt;Here’s the steps I took to set up pHDF5, MPI and Python on my macOS.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://www.danjcook.com/assets/images/Untitled Diagram.png&quot; class=&quot;img-fluid&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Openmpi&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Figure 1.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s go through what’s going on in Figure 1.&lt;/p&gt;
-
-&lt;p&gt;A user makes a personally identifying transaction (pid-tx), which represents the node’s consent to a release of pid to a provider with the assistance of an intermediary called a certifier.&lt;/p&gt;
-
-&lt;p&gt;The protocol pushes a notice to the provider requesting access to the user’s pid, and a set of possible certifiers of the pid.&lt;/p&gt;
-
-&lt;p&gt;Provider’s are entities wishing to obtain access to the pid_tx content. Certifiers are entities in possession of the ability to testify that the pid_tx was in fact issued by, owned by, or generated by the user.&lt;/p&gt;
-
-&lt;p&gt;The providers that received the user pid_tx notification should issue an acknowledgement transaction, which acknowledges the presence of their user’s alleged pid in the pid-tx. In the event that there is only one user, the provider will reference only one transaction. In the event that there are many, the provider will reference at most K pid_txs. The provider’s transaction is a representation of their commitment to compensate at a certain amount any possible certifiers for the validation of a user’s pid_tx.&lt;/p&gt;
-
-&lt;p&gt;In the presence of an acknowledgement transaction, the protocol should prompt certifiers that received the pid_tx notification to issue their own acknowledgement transaction acknowledging the presence of a user’s pid_tx for which they can offer validation, and the provider’s commitment to fulfil an obligation to the certifier upon receipt of valid pid.&lt;/p&gt;
-
-&lt;p&gt;The protocol should subscribe the user to providers and certifiers that approve the user’s original pid_tx. Upon notification of an outstanding negotiation on the pid_tx, the protocol should prompt the user to issue a new consent transaction that approves the certifier’s and the provider’s acknowledgement transactions. The user’s consent transaction represents the user’s consent to the transfer between a provider and a certifier of information pertaining to the user’s identity.&lt;/p&gt;
-
-&lt;p&gt;If the user approves of the provider’s and certifier’s acknowledgement transactions, then the protocol should prompt the provider to initiate finalization with a negotiation transaction that approves the certifier’s acknowledgement transaction and the user’s consent transaction. Next, the protocol should prompt to make a certification transaction, which approves of the user’s consent transaction and the provider’s negotiation transaction.&lt;/p&gt;
-
-&lt;p&gt;If the certifier makes a certification transaction, then the protocol should prompt the provider to make a closing transaction, which approves the user’s consent transaction and the certifier’s certification transaction.
-Terms&lt;/p&gt;
-
-&lt;p&gt;Criticism&lt;br /&gt;
-Ok, I admit, this is not fully worked out. I will update when I come up with my own criticisms. But, any thoughts appreciated.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Key terms</summary></entry><entry><title type="html">Parallel computing with HDF5, MPI and Python</title><link href="http://localhost:4000/blog/2018/05/16/parallel-HDF5-for-use-in-Python.html" rel="alternate" type="text/html" title="Parallel computing with HDF5, MPI and Python" /><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/16/parallel-HDF5-for-use-in-Python</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/16/parallel-HDF5-for-use-in-Python.html">&lt;p&gt;My previous post about Tensorflow gave me some ideas.&lt;/p&gt;
-
-&lt;p&gt;Let’s do parallel computing the right way. Let’s use HDF5 along with MPI for parallel processing.&lt;/p&gt;
-
-&lt;p&gt;Here’s what I did to get the system up and running on my MAC OS.&lt;/p&gt;
-
-&lt;p&gt;I’m sure it is a hack job, but it works!&lt;/p&gt;
-
-&lt;p&gt;Step 1. Install openmpi&lt;/p&gt;
-
-&lt;p&gt;I downloaded version 2.04 of openmpi from https://www.open-mpi.org/software/ompi/v2.0/&lt;/p&gt;
-
-&lt;p&gt;After, I went to terminal, and did,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar xf openmpi-2.0.4.tar.gz
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -O https://download.open-mpi.org/release/open-mpi/v2.0/openmpi-2.0.4.tar.gz
+tar xf openmpi-2.0.4.tar.gz
 cd openmpi-2.0.4/
-./configure --prefix=$HOME/openmpi/
+./configure --prefix=usr/local/openmpi
 make all
 make install
-$HOME/mpirun/mpirun --version
+usr/local/openmpi/mpirun/mpirun --version
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For some reason that created an opt/ folder in my $HOME path.&lt;/p&gt;
-
-&lt;p&gt;Whatever. It works. The last line printed,&lt;/p&gt;
+&lt;p&gt;If successful, the last line prints,&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpirun (Open MPI) 2.0.4.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;step-2-install-hdf5-the-parallel-version&quot;&gt;Step 2. install HDF5, the parallel version&lt;/h2&gt;
+&lt;p&gt;Notes&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Get the link for the openmpi download from https://www.open-mpi.org/&lt;/li&gt;
+  &lt;li&gt;This installs to the usr/local directory&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Next, I installed the HDF5 parallel version:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;HDF5, the parallel version&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Download parallel HDF5 to &lt;code class=&quot;highlighter-rouge&quot;&gt;usr/local/&lt;/code&gt;, unzip, and cd&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC=$HOME/mpicc ./configure --with-zlib=/usr/local/opt --disable-fortran --prefix=$HOME --enable-shared --enable-parallel
 make
@@ -410,32 +384,26 @@ h5pcc -showconfig
 
 &lt;p&gt;If all goes well, you should see you got the parallel version.&lt;/p&gt;
 
-&lt;h2 id=&quot;step-3-install-mpi4py&quot;&gt;Step 3. install mpi4py&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;mpi4py&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I installed mpi4py via,&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;env MPICC=$HOME/mpicc pip install mpi4py
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;env MPICC=usr/local/openmpi/mpicc pip install mpi4py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;That didn’t give me much, but I did have some trouble passing the right path to the MPICC. Just make sure you feed it the compiler’s path.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;h5py&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;step-4-install-h5py&quot;&gt;Step 4. Install h5py&lt;/h2&gt;
-
-&lt;p&gt;Last, I uninstalled my older version of h5py:&lt;/p&gt;
+&lt;p&gt;I uninstalled my older version of h5py:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip uninstall h5py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;and then i reinstalled via,&lt;/p&gt;
+&lt;p&gt;and I reinstalled via,&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC=&quot;mpicc&quot; HDF5_MPI=&quot;ON&quot; HDF5_DIR=/usr/local/bin/ pip install --no-binary=h5py h5py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Again, this one gave me some trouble. I found numerous variations of the CC=, HDF5_MPI=, HDF5_DIR= commands all over the place. Anyway, this is the one that worked for me.&lt;/p&gt;
-
-&lt;p&gt;How did it work?&lt;/p&gt;
-
-&lt;h2 id=&quot;step-5-test-it&quot;&gt;Step 5. Test it&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Test&lt;/strong&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from mpi4py import MPI
 print &quot;Hello World (from process %d)&quot; % MPI.COMM_WORLD.Get_rank()
@@ -452,7 +420,7 @@ print h5py.version.info
 
 &lt;p&gt;The last line prints a summary of the h5py configuration. Everything looked dandy.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Thus, next comes the real test:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Also,&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rank = MPI.COMM_WORLD.rank  # The process ID (integer 0-3 for 4-process run)
 f = h5py.File('parallel_test.hdf5', 'w', driver='mpio', comm=MPI.COMM_WORLD)
@@ -468,15 +436,7 @@ print os.listdir(os.getcwd())
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;parallel_test.hdf5
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;which implies I got a hdf5 file!&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Thus, it looks like the first output works as planned!&lt;/p&gt;
-
-&lt;p&gt;I hope the same sort of logic will apply on the Ubuntu computer at Helix!!&lt;/p&gt;
-
-&lt;p&gt;My goal is to parallelize the shit of out some massive computations I’m about to be doing. Next step. Docker containers, then Azure, then 1 billion machines running our communities code to cast an anonymous shadow over the conglomerate data broker’s flourishing gardens.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="parallel, HDF5, MPI" /><summary type="html">My previous post about Tensorflow gave me some ideas.</summary></entry><entry><title type="html">git commands</title><link href="http://localhost:4000/blog/2018/05/14/git-commands.html" rel="alternate" type="text/html" title="git commands" /><published>2018-05-14T00:00:00+02:00</published><updated>2018-05-14T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/14/git-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/14/git-commands.html">&lt;p&gt;Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.&lt;/p&gt;
+&lt;p&gt;which implies you got a hdf5 file.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="parallel, HDF5, MPI" /><summary type="html">Here’s the steps I took to set up pHDF5, MPI and Python on my macOS.</summary></entry><entry><title type="html">Basic git commands</title><link href="http://localhost:4000/blog/2018/05/14/basic-git-commands.html" rel="alternate" type="text/html" title="Basic git commands" /><published>2018-05-14T00:00:00+02:00</published><updated>2018-05-14T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/14/basic-git-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/14/basic-git-commands.html">&lt;p&gt;Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;get a git repo&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/HelixNetwork/helix-whitepaper.git
@@ -516,137 +476,60 @@ git push
 When you make changes, you usually want to send them back &lt;strong&gt;upstream&lt;/strong&gt; so [your changes] make it into [the] repository […] that everyone [is] pulling from […] This is mostly a social issue of how everyone can coordinate their work rather than a technical requirement of source control. You want to get your changes into the main project so you’re not tracking divergent lines of development.” &lt;a href=&quot;https://stackoverflow.com/users/230468/dilithiummatrix&quot;&gt;-Stackoverflow user&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;The point here is that, if you clone a repo, and start making changes on a local branch you’ve set up, you’re probably gonna wanna set the upstream remote as the git repo at some web address, and then send the work you’re doing to that upstream.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="git, commands, KISS" /><summary type="html">Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.</summary></entry><entry><title type="html">Memory consumption in python programs</title><link href="http://localhost:4000/blog/2018/05/07/tensor-flow-python.html" rel="alternate" type="text/html" title="Memory consumption in python programs" /><published>2018-05-07T00:00:00+02:00</published><updated>2018-05-07T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/07/tensor-flow-python</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/07/tensor-flow-python.html">&lt;p&gt;L.T. recently showed me how to think about &lt;strong&gt;adjacency matrices&lt;/strong&gt; for graphs, how to build them on the fly with &lt;strong&gt;numpy&lt;/strong&gt; arrays.&lt;/p&gt;
+&lt;p&gt;The point here is that, if you clone a repo, and start making changes on a local branch you’ve set up, you’re probably gonna wanna set the upstream remote as the git repo at some web address, and then send the work you’re doing to that upstream.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="git, commands, KISS" /><summary type="html">Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.</summary></entry><entry><title type="html">Basic SSH commands</title><link href="http://localhost:4000/blog/2018/04/12/basic-ssh-commands.html" rel="alternate" type="text/html" title="Basic SSH commands" /><published>2018-04-12T00:00:00+02:00</published><updated>2018-04-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/04/12/basic-ssh-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/04/12/basic-ssh-commands.html">&lt;p&gt;You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run programs, etc. All of the commands below assume you’re using a mac/unix like terminal with the ssh executable on your path.&lt;/p&gt;
 
-&lt;p&gt;But, now I got a problem. In a nutshell, I think that Python’s transparent handling of memory allocation ain’t so good for what I’m doing. For example, according to  O.F., Python doesn’t have something called a &lt;strong&gt;Garbage Collector&lt;/strong&gt;, which AFAIK frees up memory after a variable gets deleted from the current workspace. Instead, Python frees the space, but saves only for new variables that fit into the size of the freed up region. So, like, if I got a 200mb array, delete it, then, that space would be available, but only for something that’s 200mb in size. That’s pretty shitty, right?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Log in &amp;amp; out&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;Here’s my current bottleneck. Maybe someone out there in lalaland can help.&lt;/p&gt;
-
-&lt;p&gt;I’m working with really big tables of numpy arrays (e.g. n x n, where n = 100,000,000).&lt;/p&gt;
-
-&lt;p&gt;First, I allocate space by creating this big empty table. Afterwards, I run functions in a loop, which add values to the cells in the table.&lt;/p&gt;
-
-&lt;p&gt;Some functions are relatively simple. For example, one function just puts a random number in some cells of a row.&lt;/p&gt;
-
-&lt;p&gt;Other functions are a bit more complicated.&lt;/p&gt;
-
-&lt;p&gt;For example, one function, call it a “random walk function”, does something like,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1) Start at this_row in the database
-2) Check if an adjacent_row to this_row has some value in it, and if so, then
-3) Move to that adjacent_row, and
-4) Repeat 1-3 until there is a good reason to stop (e.g. check the row for some criterion value).
+&lt;p&gt;&lt;strong&gt;Login and connect to the root directory of a server machine:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh username@server-address
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Alternative login method:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh username@ip-address
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;When I run the above logic, Python seems to eat up my computer’s memory.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Log out&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;crtl + D
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;I tried running a memory_profiler in Python, and it confirmed my intuition. The random walk function uses up a lot of my computer’s memory. But, I don’t have a solution. I suspect I’m missing some critical piece of knowledge or skill that would help me here.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Upload files and directories&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Here’s a few suggestions I’ve gotten already:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Transfer a single file from local machine to remote server&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp absolute/path/to/file.fileEnding username@server-address:/path/on/the/server/file.fileEnding
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Use Tensorflow&lt;/li&gt;
-  &lt;li&gt;Use parallel programming&lt;/li&gt;
-  &lt;li&gt;Use distributed programming&lt;/li&gt;
-  &lt;li&gt;Make your code more efficient&lt;/li&gt;
-  &lt;li&gt;Use C&lt;/li&gt;
-  &lt;li&gt;Go for a walk and come back later&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Transfer an entire directory from local machine to server&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r absolute/path/to/the/directory usernameu@server-address:/path/on/the/remote/server/file.fileEnding]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;Problem is – I dunno which path to pursue.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Download and directories&lt;/strong&gt;
+&lt;strong&gt;Download a single file from some directory of the remote server&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp username@server-address:/file.fileending /absolute/path/on/local/machine/file.fileending
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Download a single file from a subdirectory of the remote server&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp username@server-address:/subdirectory/sub-subdirectory/file.fileending /abs/path/on/local/machine/file.fileending
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Got any suggestions?&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="Modelling, multisensory integration, taste, psychophysics" /><summary type="html">L.T. recently showed me how to think about adjacency matrices for graphs, how to build them on the fly with numpy arrays.</summary></entry><entry><title type="html">SSH commands</title><link href="http://localhost:4000/blog/2018/04/12/ssh-commands.html" rel="alternate" type="text/html" title="SSH commands" /><published>2018-04-12T00:00:00+02:00</published><updated>2018-04-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/04/12/ssh-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/04/12/ssh-commands.html">&lt;p&gt;SSH
-You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run code interpreters, etc. All of the commands below assume you’re using a mac/unix like terminal with ssh in executable from some /bin folder.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Download a single subdirectory and its contents from the server&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r username@server-address:/home/ /abs/local/path/for/new/directory/on/local/machine
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;1) Login via SSH &lt;br /&gt;
-A) Connect to the root directory of a server machine:&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Download everything within the root directory&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r username@server-address:/ /abs/local/path/for/new/directory/on/local/machine
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-$ ssh username@server-address
-$ password: ************
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Some reminders&lt;/strong&gt;&lt;br /&gt;
+Permissions for downloading files and directories can be accessed in SSH or FileZilla and changed.&lt;/p&gt;
 
-&lt;p&gt;B) Alternative login method:***&lt;/p&gt;
+&lt;p&gt;The userID on the server for SSH access will belong to a group. It’s a good idea to check your group assignment.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-$ ssh username@ip-address
-$ password: ************
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
+&lt;p&gt;View files and directory permissions on SSH with:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ls -la
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can log out by typing,&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-crtl + D
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;2) Upload files and directories&lt;/p&gt;
-
-&lt;p&gt;A) Transfer a single file from local machine to remote server:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-$ scp absolute/path/to/file.fileEnding username@server-address:/path/on/the/server/file.fileEnding
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;B) Transfer an entire directory from local machine to server:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-$ scp -r absolute/path/to/the/directory usernameu@server-address:/path/on/the/remote/server/file.fileEnding]
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;3) Download and directories&lt;/p&gt;
-
-&lt;p&gt;A) Download a single file from some directory of the remote server:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;
-$ scp username@server-address:/file.fileending /absolute/path/on/local/machine/file.fileending
-```
-B) Download a single file from a subdirectory of the remote server:
-&lt;code&gt;
-&lt;pre&gt;
-$ scp username@server-address:/subdirectory/sub-subdirectory/file.fileending /abs/path/on/local/machine/file.fileending
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-C) Download a single subdirectory and its contents from the server:
-&lt;code&gt;
-&lt;pre&gt;
-$ scp -r username@server-address:/home/ /abs/local/path/for/new/directory/on/local/machine
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-D) Download everything within the root directory:
-&lt;code&gt;
-&lt;pre&gt;
-$ scp -r username@server-address:/ /abs/local/path/for/new/directory/on/local/machine
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-NOTES
-Permissions for downloading files and directories can be accessed in SSH or FileZilla and changed.
-
-The userID on the server for SSH access will belong to a group. It's probably a good idea to check your group assignment.
-
-View files and directory permissions on SSH with:
-
-&lt;code&gt;
-&lt;pre&gt;
-$ ls -la
-&amp;lt;/code&amp;gt;
-&lt;/pre&gt;
-
-Most shared hosting services suck.
-
-The root directory of a username on a shared hosting server will end up as root for the username. Anything lower than that in the hierarchy will usually be unreadable. Just check on the group assigned as owner, and you will find out whether you can change it with the CHMOD commands above. What this means in practice is that access to any of the server side scripting languages, e.g. python, ruby, etc., pretty much anything other than php, will be impossible without paying the shitty host server (READ: Godaddy).
-&lt;/code&gt;&lt;/code&gt;&lt;/code&gt;&lt;/code&gt;&lt;/pre&gt;</content><author><name>dc</name></author><category term="blog" /><category term="ssh, commands, KISS" /><summary type="html">SSH You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run code interpreters, etc. All of the commands below assume you’re using a mac/unix like terminal with ssh in executable from some /bin folder.</summary></entry></feed>
+&lt;p&gt;The root directory of a username on a shared hosting server will end up as root for the username. Anything lower than that in the hierarchy will usually be unreadable. Just check on the group assigned as owner, and you will find out whether you can change it with the CHMOD commands above. What this means in practice is that access to any of the server side scripting languages, e.g. python, ruby, etc., pretty much anything other than php, will be impossible without paying the shitty host server (READ: Godaddy).&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="ssh, commands, KISS" /><summary type="html">You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run programs, etc. All of the commands below assume you’re using a mac/unix like terminal with the ssh executable on your path.</summary></entry></feed>

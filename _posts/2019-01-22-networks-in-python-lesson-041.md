@@ -1,6 +1,6 @@
 ---
 layout: post
-title: lessons on networks in python 041
+title: networks in python 041
 author: dc
 date: 2019-01-22
 comments: true
@@ -16,8 +16,6 @@ Ok, now check out some cool program code:
 
 ```
 #!/usr/bin/env python
-# Adapted from ...
-# https://www.packtpub.com/networking-and-servers/python-network-programming-cookbook-second-edition
 # Python 3.7
 # download_data.py
 
@@ -60,16 +58,6 @@ It works like this,
 ```
 python download_data.py --host=http://www.danjcook.com/blog/2019-01-22-networks-in-python-lesson-041
 ```
-
-Did you see that ?
-
-I wonder if there's anything valuable in scrapping that data on a timely basis? Anybody wanna clean it?
-
-Anyway, as I said, the urllib library is pretty powerful.
-
 The program constructs an HTTPClient class. An instance of the class assigns to itself a name corresponding to an ip address of a remote host, REMOTE_SERVER_HOST. The client then has a single method that does all of the things we mentioned at the outset of the lesson. It constructs http headers, and sends them off to a server as properly formatted requests for html at the remote host. On the receiving end, it receives replies from the server of the data. Note that state changes triggered in the server app running on the host may have resulted in a complex interplay of several different peices of technology, but we do not know this. It is transparent to us.
 
 Thus, we will have to follow up in the future by showing how to request from the remote host their credentials. We can then use this information to make decisions about the soundness of the response.
-
-Dan's Honorable Python Libaries, Classes, and Functions  
-urllib.request.urlopen(host)

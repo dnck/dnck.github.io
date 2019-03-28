@@ -1,6 +1,6 @@
 ---
 layout: post
-title: P2P network games
+title: A conceptual sketch of a P2P network game
 author: dc
 date: 2019-01-22
 comments: true
@@ -9,8 +9,6 @@ keywords:  peer-to-peer networks
 description: an imaginary game for peer to peer networks   
 category: blog
 ---
-
-Games
 
 Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.
 
@@ -31,11 +29,11 @@ The way to read Table 1. is to start in the left most column. Reading down row-w
 
 What can be seen from Table 1. is that the biggest gains for both players come when they do not cheat, but their partners are exposed as cheating. After that, the gains for both players are the same whether they cheat or not. Thus, the best option for both Players is to not cheat, since their biggest win comes from not cheating, their biggest loss from failed attempts to cheat, and additionally, the benefit they stand to gain from cheating and not being discovered is as large as the benefit from not cheating when their partner also does not cheat. It seems then, that this sort of game encourages cooperation among the players.
 
-Now, take the same game logic and apply it to the hosts in a peer-to-peer network. The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset. What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.
+Now, take the same game logic and apply it to the hosts in a peer-to-peer network.
+> The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset.
+What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.
 
-
-A proposal for a new game
-
+**A proposal for a new p2p game**
 
 Suppose that when a node wishes to broadcast a transaction, they must receive a timestamp on the transaction from one of their neighbor nodes.
 To get a timestamp from a neighbor, a sender signs a data file that contains at least, a unique transaction address, a transaction timestamp, a broadcast interval, two empty variables to be explained later, the sender id (certified host:port), and the recipient id (certified host:port). Neighbors are incentivized to accept these timestamp requests because all nodes are continually adding transactions to their local databases. We assume that some of these transactions issued by nodes are intended for a shared public database, which acts as the network's global ledger, and that the only way into this ledger is through a network consensus approved timestamp.
@@ -52,7 +50,7 @@ The returned shared secret will also be associated with an interval of time call
 
 After the sender and receiver know of the transaction and the secret, both are now free to broadcast the transaction to other nodes. During this broadcast interval, an option is selected that tells the new receivers that the transaction is already in contract.
 
-Here are the rules of the broadcast interval.
+**Here are the rules of the broadcast interval.**
 
 If the sender's reveal request comes within the agreed upon broadcast interval, but the receiver does not broadcast the secret, then the sender can reveal the contents of the secret. In this case, the sender's revelation of the secret should show that the receiver has cheated, and the receiver should be penalized by 2, and the sender rewarded by 2.
 
@@ -64,16 +62,6 @@ Recall now that the goal of this game is to provide consistent timestamps for ma
 
 To make this system work in providing for our goal, we should use a third type of node in the game that aggregates all value bearing transactions and their metadata, and puts this information into a storage container also organized as an instance of a Directed Acyclic Graph.
 
-Questions and Discussion
+**Questions to discuss**
 
-There are many questions that need to be answered about this proposal before evaluating it. Here are just a few:
-
-First, what prevents the nodes from cheating?
-
-Second, what are the rewards for not cheating?
-
-Third, how are punishments implemented?
-
-Fourth, how can nodes cheat?
-
-Fifth, what's the purpose of having the nodes continually add transactions?
+What prevents the nodes from cheating? What are the rewards for not cheating? How are punishments implemented? How can nodes cheat? What's the purpose of having the nodes continually add transactions?

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/main.css"></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">x.merge(y.merge(x))</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/">about</a><a class="page-link" href="/blog.html">blog</a><a class="page-link" href="/downloads.html">downloads</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">OpenMPI, parallel HDF5, mpi4py, and h5py, take 2</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-02-21T00:00:00+01:00" itemprop="datePublished">Feb 21, 2019
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>This is the second time in less than a year I’ve face the problem of configuring parallel hdf5 on a server. I don’t even know why I bother! Oh, yeah, that’s right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you’ve got any suggestions on what I’m doing wrong, please comment :().</p>
+
+<h3 id="what-do">What do?</h3>
+
+<p>Attempting to .configure, make, make install, OpenMpi &amp; parallel-HDf5 (using the CC=mpicc option)
+Attempting to .configure, make, make install zlib
+Attempting to pip install mpi4py &amp; h5py (with links to the pHDf5 library using specific options for pip)</p>
+
+<p>See below for details on steps already taken and specific bugs:</p>
+
+<h3 id="openmpi">OPENMPI</h3>
+<p>Status: No bugs</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; curl -O https://download.open-mpi.org/release/open-mpi/v2.0/openmpi-2.0.4.tar.gz
+&gt; tar xf openmpi-2.0.4.tar.gz
+&gt; cd openmpi-2.0.4
+&gt; ./configure --prefix=$HOME/.local
+&gt; make all
+&gt; make install
+&gt; mpirun --version
+</code></pre></div></div>
+<p>This compiles perfectly. All the executables are located in my .local path.</p>
+
+<p>The last commands prints,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; mpirun (Open MPI) 2.0.4
+</code></pre></div></div>
+<h3 id="zlib-shared-object">ZLIB (shared object)</h3>
+<p>Status: Bugs</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; curl -O ...
+&gt; tar xf ...
+&gt; cd zlib-x.x.x
+&gt; ./configure --prefix=$HOME/.local
+&gt; make test
+</code></pre></div></div>
+
+<p>Everything works. The C header file is in the .local/include dir and the shared object is in the .local/lib directory.</p>
+
+<h3 id="zlib-python">ZLIB (Python)</h3>
+<p>Status: bugs</p>
+
+<p>However, installation of the zlib Python module with pip fails:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; pip install zlib
+</code></pre></div></div>
+<p>This prints,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; Collecting zlib
+&gt;    Could not find a version that satisfies the requirement zlib (from versions: )
+&gt;    No matching distribution found for zlib
+</code></pre></div></div>
+<p>I tried to fix this by explicitly telling the C compiler where to find the zlib stuff.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; zlib_lib="$HOME/.local/lib"
+&gt; zlib_inc="$HOME/.local/include"
+&gt; export CPPFLAGS="-I${zlib_inc} ${CPPFLAGS}"
+&gt; export LD_LIBRARY_PATH="${zlib_lib}:${LD_LIBRARY_PATH}"
+&gt; export LDFLAGS="-L${zlib_lib} -Wl,-rpath=${zlib_lib} ${LDFLAGS}"
+&gt; pip install zlib
+</code></pre></div></div>
+<p>But, this also fails and produces the same message as above from pip.</p>
+
+<p>So, it seems I have zlib properly installed, but I do not have a working Python module called, zlib.</p>
+
+<p>Oh, I’m running the default ubuntu Python 3.6 (not anaconda or anything.)</p>
+
+<h3 id="phdf5-c">pHDf5 (C)</h3>
+<p>Status: bugs</p>
+
+<p>Downloaded from https://www.hdfgroup.org/downloads/hdf5/source-code/</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cd hdf5-1.10.4
+&gt; CC=$HOME/.local/bin/mpicc ./configure --prefix=$HOME/.local --enable-shared --enable-parallel
+</code></pre></div></div>
+<p>This seems to give me the output I want. But doing</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; make
+&gt; make check
+</code></pre></div></div>
+<p>fails to return a positive result. Namely, the MPI_ABORT seems to be called during the parallel tests.</p>
+
+<p>Also, I have tried to install the regular hdf5 library (with no parallel support) by doing,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; CC=$HOME/.local/bin/mpicc ./configure --prefix=$HOME/.local --enable-shared
+</code></pre></div></div>
+<p>But, this also fails on the &gt; make check stage.</p>
+
+<p>Note that I have gotten this setup running before with my macbook pro 8.1 back in May 2018:
+https://www.danjcook.com/blog/2018/05/16/parallel-HDF5-for-use-in-Python.html</p>
+
+<p>The above link might be helpful in future attempts to get this constellations of software up and running on the master-node.</p>
+
+  </div><a class="u-url" href="/blog/2019/02/21/parallel-hdf5-2.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">x.merge(y.merge(x))</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">x.merge(y.merge(x))</li><li><a class="u-email" href="mailto:cookdj0128@gmail.com">cookdj0128@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/dnck"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">dnck</span></a></li><li><a href="https://www.linkedin.com/in/danjohncook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">danjohncook</span></a></li><li><a href="https://www.twitter.com/dan_j_cook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">dan_j_cook</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>The personal homepage of Daniel John Cook.</p>
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+</body>
+
+</html>

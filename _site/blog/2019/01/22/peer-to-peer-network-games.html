@@ -2,23 +2,9 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>P2P network games | x.merge(y.merge(x))</title>
-<meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="P2P network games" />
-<meta name="author" content="dc" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="an imaginary game for peer to peer networks" />
-<meta property="og:description" content="an imaginary game for peer to peer networks" />
-<link rel="canonical" href="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" />
-<meta property="og:url" content="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" />
-<meta property="og:site_name" content="x.merge(y.merge(x))" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-01-22T00:00:00+01:00" />
-<script type="application/ld+json">
-{"description":"an imaginary game for peer to peer networks","author":{"@type":"Person","name":"dc"},"@type":"BlogPosting","url":"http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html","headline":"P2P network games","dateModified":"2019-01-22T00:00:00+01:00","datePublished":"2019-01-22T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html"},"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="x.merge(y.merge(x))" /></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/main.css"></head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">x.merge(y.merge(x))</a><nav class="site-nav">
@@ -39,16 +25,14 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">P2P network games</h1>
+    <h1 class="post-title p-name" itemprop="name headline">A conceptual sketch of a P2P network game</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2019-01-22T00:00:00+01:00" itemprop="datePublished">Jan 22, 2019
       </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Games</p>
-
-<p>Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.</p>
+    <p>Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.</p>
 
 <p>Table 1. shows the combination of player inputs and the outcomes of the game when the staked values are standardized to 1.</p>
 
@@ -153,9 +137,13 @@
 
 <p>What can be seen from Table 1. is that the biggest gains for both players come when they do not cheat, but their partners are exposed as cheating. After that, the gains for both players are the same whether they cheat or not. Thus, the best option for both Players is to not cheat, since their biggest win comes from not cheating, their biggest loss from failed attempts to cheat, and additionally, the benefit they stand to gain from cheating and not being discovered is as large as the benefit from not cheating when their partner also does not cheat. It seems then, that this sort of game encourages cooperation among the players.</p>
 
-<p>Now, take the same game logic and apply it to the hosts in a peer-to-peer network. The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset. What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.</p>
+<p>Now, take the same game logic and apply it to the hosts in a peer-to-peer network.</p>
+<blockquote>
+  <p>The hosts in the network will implement a permissionless many-read-once-write database consisting of timestamped records of the existence of a digital asset.
+What we would like to offer all participants in the network is the guarantee that the timestamp of a transaction is equal to the first timestamp on the transaction when its read from a local instantiation of the shared database, and plus, the information can be advertised by the autonomous agent that originally broadcasted the transaction. We can do this by building the above game logic into our software design.</p>
+</blockquote>
 
-<p>A proposal for a new game</p>
+<p><strong>A proposal for a new p2p game</strong></p>
 
 <p>Suppose that when a node wishes to broadcast a transaction, they must receive a timestamp on the transaction from one of their neighbor nodes.
 To get a timestamp from a neighbor, a sender signs a data file that contains at least, a unique transaction address, a transaction timestamp, a broadcast interval, two empty variables to be explained later, the sender id (certified host:port), and the recipient id (certified host:port). Neighbors are incentivized to accept these timestamp requests because all nodes are continually adding transactions to their local databases. We assume that some of these transactions issued by nodes are intended for a shared public database, which acts as the network’s global ledger, and that the only way into this ledger is through a network consensus approved timestamp.</p>
@@ -172,7 +160,7 @@ To get a timestamp from a neighbor, a sender signs a data file that contains at 
 
 <p>After the sender and receiver know of the transaction and the secret, both are now free to broadcast the transaction to other nodes. During this broadcast interval, an option is selected that tells the new receivers that the transaction is already in contract.</p>
 
-<p>Here are the rules of the broadcast interval.</p>
+<p><strong>Here are the rules of the broadcast interval.</strong></p>
 
 <p>If the sender’s reveal request comes within the agreed upon broadcast interval, but the receiver does not broadcast the secret, then the sender can reveal the contents of the secret. In this case, the sender’s revelation of the secret should show that the receiver has cheated, and the receiver should be penalized by 2, and the sender rewarded by 2.</p>
 
@@ -184,19 +172,9 @@ To get a timestamp from a neighbor, a sender signs a data file that contains at 
 
 <p>To make this system work in providing for our goal, we should use a third type of node in the game that aggregates all value bearing transactions and their metadata, and puts this information into a storage container also organized as an instance of a Directed Acyclic Graph.</p>
 
-<p>Questions and Discussion</p>
+<p><strong>Questions to discuss</strong></p>
 
-<p>There are many questions that need to be answered about this proposal before evaluating it. Here are just a few:</p>
-
-<p>First, what prevents the nodes from cheating?</p>
-
-<p>Second, what are the rewards for not cheating?</p>
-
-<p>Third, how are punishments implemented?</p>
-
-<p>Fourth, how can nodes cheat?</p>
-
-<p>Fifth, what’s the purpose of having the nodes continually add transactions?</p>
+<p>What prevents the nodes from cheating? What are the rewards for not cheating? How are punishments implemented? How can nodes cheat? What’s the purpose of having the nodes continually add transactions?</p>
 
   </div><a class="u-url" href="/blog/2019/01/22/peer-to-peer-network-games.html" hidden></a>
 </article>
