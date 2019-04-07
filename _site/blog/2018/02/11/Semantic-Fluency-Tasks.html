@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/main.css"></head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">x.merge(y.merge(x))</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+
+        <label for="nav-trigger">
+
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/">home</a><a class="page-link" href="/about.html">about</a><a class="page-link" href="/blog.html">blog</a><a class="page-link" href="/downloads.html">downloads</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Semantic Fluency Tasks</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-02-11T00:00:00+01:00" itemprop="datePublished">Feb 11, 2018
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">dc</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+ <img src="http://localhost:4000/assets/images/linear.png" class="img-fluid" />
+ <br />
+ <strong>Figure 1. Linear naming in the Semantic Fluency Task.</strong>
+	    </div>
+	    <div class="col-md-6">
+         <img src="http://localhost:4000/assets/images/hierarchical.png" class="img-fluid" />
+    <strong>Figure 2.  Hierarchical clustering in the Semantic Fluency Task. </strong><br /><br />
+     In the Semantic Fluency Task, you hear a word like "fruit", and then you need to name as many words as possible that belong to that category, relying only on your memory.
+<br /><br />
+    When you do this, do you activate all the words you know at once? Or maybe, some large set of related words? And then iterate over the words in the list, naming them one by one? (Figure 2.) Or do you activate one item, name it, and then continue to name the next item? (Figure 1.)
+<br /><br />
+    At an even more abstract level, do you use a parallel processing or a serial processing strategy to complete the semantic fluency task?
+<br /><br />
+    If you dont' know, a Parallel Processing means that a task can be divided into distinct processing threads, and each thread can occur independently of the other thread. Serial processing, on the other hand, implies that the task requires a single thread, and processing has to happen in stages of the single thread.
+    <br /><br />
+For the Semantic Fluency Task, Troyer and Moscovitch (1997) review evidence that people use a combination of parallel and serial processing. In their account, you'd activate a list of related items all at once, iterate over the list, and then, you'd switch to the next list. So, in Figure 2., you might see the word, "Fruit", and then you'd activate a bunch of different dictionaries like,
+<br />
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"> <span class="p">{</span><span class="s">"Citrus"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Oranges"</span><span class="p">,</span> <span class="s">"limes"</span><span class="p">,</span> <span class="s">"grapefuit"</span><span class="p">,</span> <span class="s">"lemons"</span><span class="p">]}</span> </code></pre></figure>
+
+iterate over the values in the dictionary, and then go to the next dictionary, <br /> 
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span><span class="s">"Berries"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Blueberries"</span><span class="p">,</span> <span class="s">"blackberries"</span><span class="p">,</span> <span class="s">"strawberries"</span><span class="p">,</span> <span class="s">"lemons"</span><span class="p">]}</span></code></pre></figure>
+
+and repeat.
+        </div>
+    </div>
+ </div>
+<p>This combined strategy accounts for the common observation that participants pause between burst of semantically related lists of items. But the most important point is that dictionary keys might be activated by a thread that runs in parallel to the thread that produces items from the dictionary, which runs, of course, in serial. Interestingly, serialization is imposed by an external constraint: subjects must name all items in time. So while access to items might occur all at once, the fact that we have a serial iteration of items is just a result of our computation unfolding in time.</p>
+
+<p>An alternative to this story is depicted in Figure 3.</p>
+
+<p><img src="http://localhost:4000/assets/images/hierarchical2.png" class="img-fluid" />
+     <br /><br />
+ <strong> Figure 3. Red edges show simultaneous activation of items. Green edges show serial iteration through nodes in a cluster. Black edges show priming from node to cluster. <strong></strong></strong></p>
+
+<p>Here we still have activation of a single key value, which activates clusters, but after iterating through a cluster, the most recent item primes the next cluster (from oranges to berries), which gives rise to the next dictionary (e.g. cluster of related items). What’s parallel about this strategy is that there may be a thread that gets updated while another thread is iterating through items in a cluster. As the thread updates, it starts to weigh more heavily toward a new key target (e.g. a target for the next key in a cluster). In Figure 4., I show this explicitly with blue edges, and a ? node.</p>
+
+<p><img src="http://localhost:4000/assets/images/hierarchical3.png" class="img-fluid" />
+      <br /><br />
+      <strong>Figure 4. Blue edges denote an updating process for the prime</strong></p>
+
+<p>So here, the question node (?) gets updated in parallel (Blue edges) to the thread that iterates over the nodes in a cluster (Green edges). The ? node, whatever it is, then serves as the prime for the next target for a key in a cluster (Black edges).</p>
+
+<p>Personally, I think this is what happens in the Semantic Fluency task, and I think Figure 4. goes a step in the right direction toward formalizing what is involved in the task at a cognitive / functional level.</p>
+
+<p><strong>References</strong>
+<br />
+Troyer, A. K., Moscovitch, M., &amp; Winocur, G. (1997). Clustering and switching as two components of verbal fluency: Evidence from younger and older healthy adults. Neuropsychology, 11, 138–146.</p>
+
+  </div><a class="u-url" href="/blog/2018/02/11/Semantic-Fluency-Tasks.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">x.merge(y.merge(x))</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Daniel J. Cook</li><li><a class="u-email footer-link" href="mailto:cookdj0128@gmail.com">cookdj0128@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/dnck"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username footer-link">dnck</span></a></li><li><a href="https://www.linkedin.com/in/danjohncook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username footer-link">danjohncook</span></a></li><li><a href="https://www.twitter.com/dan_j_cook"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username footer-link">dan_j_cook</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Thoughts on cognitive science from a guy that studied philosophy, psychology, neuroscience, linguistics, &amp; computer science</p>
+      </div>
+    </div>
+
+  </div></footer>
+</body>
+</html>

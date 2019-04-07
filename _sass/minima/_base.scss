@@ -105,6 +105,7 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: $brand-color;
   text-decoration: none;
+  font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
 
   &:visited {
     color: darken($brand-color, 15%);
@@ -123,6 +124,8 @@ a {
     }
   }
 }
+
+
 
 
 /**
@@ -212,7 +215,7 @@ pre {
     width: 16px;
     height: 16px;
     display: inline-block;
-    fill: #{$grey-color};
+    fill: #{$antiquewhite-color};
     padding-right: 5px;
     vertical-align: text-top;
 }

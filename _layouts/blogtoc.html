@@ -4,10 +4,11 @@ layout: page
 
 <div class="home">
   {{ content }}
+<h2 class="post-list-heading">Blog entries</h2>
+
   {%- if site.posts.size > 0 -%}
       {%- for post in site.posts -%}
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-
         <br>
         <a href="{{ post.url | relative_url }}"><strong>{{ post.title }}</strong></a><br>
                   <span class="post-meta">

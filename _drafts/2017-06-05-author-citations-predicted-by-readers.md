@@ -37,12 +37,4 @@ The numpy function np.random.lognormal() takes three parameters:
 2) the standard deviation of the underlying normal distribution
 3) and the array shape.
 
-Anyway, that's all for now. In future posts, I'll be writing more about my research of research articles, culture, textual analytics, semantics, and the cognition of language.
-
-
-Dan's Honorable Python Libaries, Classes, and Functions
-np.random.lognormal()
-urllib.request.urlopen(host)
-
-
-{%- include /assets/code/plotly_scienceopen.js.html -%}
+<script src="https://www.danjcook.com/assets/code/plotly_scienceopen.js"></script>

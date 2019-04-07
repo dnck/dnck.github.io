@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-03-28T23:06:59+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">x.merge(y.merge(x))</title><subtitle>The personal homepage of Daniel John Cook.</subtitle><entry><title type="html">OpenMPI, parallel HDF5, mpi4py, and h5py, take 2</title><link href="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html" rel="alternate" type="text/html" title="OpenMPI, parallel HDF5, mpi4py, and h5py, take 2" /><published>2019-02-21T00:00:00+01:00</published><updated>2019-02-21T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/02/21/parallel-hdf5-2</id><content type="html" xml:base="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html">&lt;p&gt;This is the second time in less than a year I’ve face the problem of configuring parallel hdf5 on a server. I don’t even know why I bother! Oh, yeah, that’s right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you’ve got any suggestions on what I’m doing wrong, please comment :().&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-07T23:55:46+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">x.merge(y.merge(x))</title><subtitle>Thoughts on cognitive science from a guy that studied philosophy, psychology, neuroscience, linguistics, &amp; computer science</subtitle><author><name>Daniel J. Cook</name></author><entry><title type="html">Timing attacks</title><link href="http://localhost:4000/blog/2019/04/03/timing-attacks.html" rel="alternate" type="text/html" title="Timing attacks" /><published>2019-04-03T00:00:00+02:00</published><updated>2019-04-03T00:00:00+02:00</updated><id>http://localhost:4000/blog/2019/04/03/timing-attacks</id><content type="html" xml:base="http://localhost:4000/blog/2019/04/03/timing-attacks.html">&lt;p&gt;A nice blog post on &lt;a href=&quot;https://codahale.com/a-lesson-in-timing-attacks/&quot;&gt;Timing attacks&lt;/a&gt; that says,&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Every time you compare two values, ask yourself: what could someone do if they knew either of these values?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If the answer is, they could exploit my program, then you might want to make sure your code executes at a constant time. For example, if you’re checking whether two strings are equal to one another, you might be tempted to do something like this,&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def checkEquality(pass1, pass2, pass_size = 64):
+  for i in range(pass_size):
+    if pass1[i] != pass2[i]:
+      return False # passwords do not match
+  return True # passwords match
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The problem with the code above is explained in the blog. If you can’t think of a reason not to use that code, then I encourage you to read it in full. But, if you get already that the code finishes in varying amounts of time for non-matches, and that this fact can be used to guess the match, then you can go on to look at the the alternative method,&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def is_equal(a, b):
+    if len(a) != len(b):
+        return False
+
+    result = 0
+    for x, y in zip(a, b):
+        result |= x ^ y
+    return result == 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">A nice blog post on Timing attacks that says, Every time you compare two values, ask yourself: what could someone do if they knew either of these values?</summary></entry><entry><title type="html">Logical operators in Python</title><link href="http://localhost:4000/blog/2019/04/03/logical-operators-in-Python.html" rel="alternate" type="text/html" title="Logical operators in Python" /><published>2019-04-03T00:00:00+02:00</published><updated>2019-04-03T00:00:00+02:00</updated><id>http://localhost:4000/blog/2019/04/03/logical-operators-in-Python</id><content type="html" xml:base="http://localhost:4000/blog/2019/04/03/logical-operators-in-Python.html">&lt;p&gt;This post is a work in progress. It serves mainly as a reference to be updated occasionally on Python. I may in the future update this to include the equivalents in Java.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;OR (Inclusive) := |&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;True | True == True
+False | True == True
+True | False == True
+False | False == False
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;OR (Exclusive) := ^&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;True ^ True == False
+False ^ True == True
+True ^ False == True
+False ^ False == False
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">This post is a work in progress. It serves mainly as a reference to be updated occasionally on Python. I may in the future update this to include the equivalents in Java.</summary></entry><entry><title type="html">OpenMPI, parallel HDF5, mpi4py, and h5py, take 2</title><link href="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html" rel="alternate" type="text/html" title="OpenMPI, parallel HDF5, mpi4py, and h5py, take 2" /><published>2019-02-21T00:00:00+01:00</published><updated>2019-02-21T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/02/21/parallel-hdf5-2</id><content type="html" xml:base="http://localhost:4000/blog/2019/02/21/parallel-hdf5-2.html">&lt;p&gt;This is the second time in less than a year I’ve face the problem of configuring parallel hdf5 on a server. I don’t even know why I bother! Oh, yeah, that’s right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you’ve got any suggestions on what I’m doing wrong, please comment :().&lt;/p&gt;
 
 &lt;h3 id=&quot;what-do&quot;&gt;What do?&lt;/h3&gt;
 
@@ -107,7 +141,55 @@ WIP&lt;/p&gt;</content><author><name>dc</name></author><category term="python" /
 
 &lt;h3 id=&quot;map-from-the-english-alphabet-to-the-set-s025&quot;&gt;Map from the English alphabet to the set S={0,…,25}&lt;/h3&gt;
 
-&lt;p&gt;$\forall x$ $\in S$, sort the elements of the set S and locate and return of element x by it’s relative fixed position in the newly ordered set $S’$&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes unintuitive.</summary></entry><entry><title type="html">A conceptual sketch of a P2P network game</title><link href="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" rel="alternate" type="text/html" title="A conceptual sketch of a P2P network game" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html">&lt;p&gt;Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.&lt;/p&gt;
+&lt;p&gt;$\forall x$ $\in S$, sort the elements of the set S and locate and return of element x by it’s relative fixed position in the newly ordered set $S’$&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes unintuitive.</summary></entry><entry><title type="html">networks in python 041</title><link href="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html" rel="alternate" type="text/html" title="networks in python 041" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html">&lt;p&gt;The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but &lt;em&gt;I DO plan to inspect all of the code that runs on my pc all of the time!&lt;/em&gt; It’s just that sometimes … deadlines.&lt;/p&gt;
+
+&lt;p&gt;Ok, now check out some cool program code:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
+# Python 3.7
+# download_data.py
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;argparse&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://www.cnn.com'&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argparse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ArgumentParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'HTTP Client Example'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--host'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;store&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This program basically does something like,&lt;/p&gt;
+
+&lt;p&gt;Step 1. Fetch some utf-8 symbols from the host, http://www.cnn.com.
+  Step 2. Decode the utf-8 symbols and print them in ascii characters on the standard output&lt;/p&gt;
+
+&lt;p&gt;Try running it for yourself.&lt;/p&gt;
+
+&lt;p&gt;It will give you some interesting stuff to read in the terminal. You can also try it with some parameters.&lt;/p&gt;
+
+&lt;p&gt;It works like this,&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python download_data.py --host=http://www.danjcook.com/blog/2019-01-22-networks-in-python-lesson-041
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The program constructs an HTTPClient class. An instance of the class assigns to itself a name corresponding to an ip address of a remote host, REMOTE_SERVER_HOST. The client then has a single method that does all of the things we mentioned at the outset of the lesson. It constructs http headers, and sends them off to a server as properly formatted requests for html at the remote host. On the receiving end, it receives replies from the server of the data. Note that state changes triggered in the server app running on the host may have resulted in a complex interplay of several different peices of technology, but we do not know this. It is transparent to us.&lt;/p&gt;
+
+&lt;p&gt;Thus, we will have to follow up in the future by showing how to request from the remote host their credentials. We can then use this information to make decisions about the soundness of the response.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but I DO plan to inspect all of the code that runs on my pc all of the time! It’s just that sometimes … deadlines.</summary></entry><entry><title type="html">A conceptual sketch of a P2P network game</title><link href="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html" rel="alternate" type="text/html" title="A conceptual sketch of a P2P network game" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/peer-to-peer-network-games.html">&lt;p&gt;Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.&lt;/p&gt;
 
 &lt;p&gt;Table 1. shows the combination of player inputs and the outcomes of the game when the staked values are standardized to 1.&lt;/p&gt;
 
@@ -249,55 +331,7 @@ To get a timestamp from a neighbor, a sender signs a data file that contains at 
 
 &lt;p&gt;&lt;strong&gt;Questions to discuss&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;What prevents the nodes from cheating? What are the rewards for not cheating? How are punishments implemented? How can nodes cheat? What’s the purpose of having the nodes continually add transactions?&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.</summary></entry><entry><title type="html">networks in python 041</title><link href="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html" rel="alternate" type="text/html" title="networks in python 041" /><published>2019-01-22T00:00:00+01:00</published><updated>2019-01-22T00:00:00+01:00</updated><id>http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041</id><content type="html" xml:base="http://localhost:4000/blog/2019/01/22/networks-in-python-lesson-041.html">&lt;p&gt;The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but &lt;em&gt;I DO plan to inspect all of the code that runs on my pc all of the time!&lt;/em&gt; It’s just that sometimes … deadlines.&lt;/p&gt;
-
-&lt;p&gt;Ok, now check out some cool program code:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env python
-# Python 3.7
-# download_data.py
-&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;argparse&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://www.cnn.com'&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argparse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ArgumentParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'HTTP Client Example'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--host'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;store&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REMOTE_SERVER_HOST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTTPClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This program basically does something like,&lt;/p&gt;
-
-&lt;p&gt;Step 1. Fetch some utf-8 symbols from the host, http://www.cnn.com.
-  Step 2. Decode the utf-8 symbols and print them in ascii characters on the standard output&lt;/p&gt;
-
-&lt;p&gt;Try running it for yourself.&lt;/p&gt;
-
-&lt;p&gt;It will give you some interesting stuff to read in the terminal. You can also try it with some parameters.&lt;/p&gt;
-
-&lt;p&gt;It works like this,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python download_data.py --host=http://www.danjcook.com/blog/2019-01-22-networks-in-python-lesson-041
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The program constructs an HTTPClient class. An instance of the class assigns to itself a name corresponding to an ip address of a remote host, REMOTE_SERVER_HOST. The client then has a single method that does all of the things we mentioned at the outset of the lesson. It constructs http headers, and sends them off to a server as properly formatted requests for html at the remote host. On the receiving end, it receives replies from the server of the data. Note that state changes triggered in the server app running on the host may have resulted in a complex interplay of several different peices of technology, but we do not know this. It is transparent to us.&lt;/p&gt;
-
-&lt;p&gt;Thus, we will have to follow up in the future by showing how to request from the remote host their credentials. We can then use this information to make decisions about the soundness of the response.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">The urllib is really powerful. It can wrap your input data in headers and send them off to a server as properly formatted html request objects at a remote host. Saying this entails that we distinguish between the concept of a host and a server. Whereas a host is the suite of protocols that define the goals of a target operating system, a server is a program that runs on a host. Many people do not make this distinction. They do not realize that their pcs and smartphones can be configured to run as server apps. This should not be surprising, given the news about hacking and all, but it may seem surprising to some. For those of you who are concerned that your computer is participating in computations not under your control, I have to say, I sympathize with you, but I DO plan to inspect all of the code that runs on my pc all of the time! It’s just that sometimes … deadlines.</summary></entry><entry><title type="html">Scientist vs engineer vs developer</title><link href="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html" rel="alternate" type="text/html" title="Scientist vs engineer vs developer" /><published>2018-09-13T00:00:00+02:00</published><updated>2018-09-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/09/13/scientists-engineers-developers</id><content type="html" xml:base="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html">&lt;p&gt;&lt;a href=&quot;http://alisongopnik.com/Papers_Alison/sciam-Gopnik.pdf&quot;&gt;We’re all scientists to some extent, right?&lt;/a&gt; That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:&lt;/p&gt;
+&lt;p&gt;What prevents the nodes from cheating? What are the rewards for not cheating? How are punishments implemented? How can nodes cheat? What’s the purpose of having the nodes continually add transactions?&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><summary type="html">Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.</summary></entry><entry><title type="html">Scientist vs engineer vs developer</title><link href="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html" rel="alternate" type="text/html" title="Scientist vs engineer vs developer" /><published>2018-09-13T00:00:00+02:00</published><updated>2018-09-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/09/13/scientists-engineers-developers</id><content type="html" xml:base="http://localhost:4000/blog/2018/09/13/scientists-engineers-developers.html">&lt;p&gt;&lt;a href=&quot;http://alisongopnik.com/Papers_Alison/sciam-Gopnik.pdf&quot;&gt;We’re all scientists to some extent, right?&lt;/a&gt; That’s the question I’ve been asking myself lately as I try to navigate the distinction between being a scientist, an engineer, and a software developer. Have you ever wondered if these distinctions are arbitrary, or if they reflect some deeper reality? Here’s my take:&lt;/p&gt;
 
 &lt;p&gt;A scientist is just a person that approaches problems in a &lt;strong&gt;scientific way&lt;/strong&gt;. According to me, the scientific way to approach problems is to begin with careful deductive and inductive reasoning, and follow up conclusions with experiments The goal of experimenting is to provide evidence against a &lt;strong&gt;general&lt;/strong&gt; conclusion, and to provide &lt;strong&gt;specific&lt;/strong&gt; details about the context under which a valid conclusion is sound. Some scientists go the extra step and create public reports on their conclusions. Their reports might be verbal or written, it doesn’t matter. What really matters is that the scientist records the details of their reasoning processes and the experimental procedures that were used to infer to their conclusions.&lt;/p&gt;
 
@@ -436,100 +470,4 @@ print os.listdir(os.getcwd())
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;parallel_test.hdf5
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;which implies you got a hdf5 file.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="parallel, HDF5, MPI" /><summary type="html">Here’s the steps I took to set up pHDF5, MPI and Python on my macOS.</summary></entry><entry><title type="html">Basic git commands</title><link href="http://localhost:4000/blog/2018/05/14/basic-git-commands.html" rel="alternate" type="text/html" title="Basic git commands" /><published>2018-05-14T00:00:00+02:00</published><updated>2018-05-14T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/05/14/basic-git-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/05/14/basic-git-commands.html">&lt;p&gt;Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;get a git repo&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/HelixNetwork/helix-whitepaper.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Show local AND remote branches&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;checkout and/or create your local branch&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout branch_name
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;checkout branch from the remote NOT just your local possibly new branch&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout origin/branch_name
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;basic flow to add changes to the current branch your working on&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add *
-git commit -m &quot;message&quot;
-git push
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Using the * means all all your changes&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;update the repo to the most recent commits&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git pull
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;delete remote branch after done your work on it&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push origin --delete branch_name
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;What is the difference between upstream and downstream?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“You’re &lt;strong&gt;downstream&lt;/strong&gt; when you &lt;strong&gt;copy&lt;/strong&gt; (&lt;strong&gt;clone&lt;/strong&gt;, &lt;strong&gt;checkout&lt;/strong&gt;, etc) from a repository. Information flowed &lt;strong&gt;downstream&lt;/strong&gt; to you. &lt;br /&gt;
-When you make changes, you usually want to send them back &lt;strong&gt;upstream&lt;/strong&gt; so [your changes] make it into [the] repository […] that everyone [is] pulling from […] This is mostly a social issue of how everyone can coordinate their work rather than a technical requirement of source control. You want to get your changes into the main project so you’re not tracking divergent lines of development.” &lt;a href=&quot;https://stackoverflow.com/users/230468/dilithiummatrix&quot;&gt;-Stackoverflow user&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The point here is that, if you clone a repo, and start making changes on a local branch you’ve set up, you’re probably gonna wanna set the upstream remote as the git repo at some web address, and then send the work you’re doing to that upstream.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="git, commands, KISS" /><summary type="html">Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.</summary></entry><entry><title type="html">Basic SSH commands</title><link href="http://localhost:4000/blog/2018/04/12/basic-ssh-commands.html" rel="alternate" type="text/html" title="Basic SSH commands" /><published>2018-04-12T00:00:00+02:00</published><updated>2018-04-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/2018/04/12/basic-ssh-commands</id><content type="html" xml:base="http://localhost:4000/blog/2018/04/12/basic-ssh-commands.html">&lt;p&gt;You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run programs, etc. All of the commands below assume you’re using a mac/unix like terminal with the ssh executable on your path.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Log in &amp;amp; out&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Login and connect to the root directory of a server machine:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh username@server-address
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Alternative login method:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh username@ip-address
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Log out&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;crtl + D
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Upload files and directories&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Transfer a single file from local machine to remote server&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp absolute/path/to/file.fileEnding username@server-address:/path/on/the/server/file.fileEnding
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Transfer an entire directory from local machine to server&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r absolute/path/to/the/directory usernameu@server-address:/path/on/the/remote/server/file.fileEnding]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Download and directories&lt;/strong&gt;
-&lt;strong&gt;Download a single file from some directory of the remote server&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp username@server-address:/file.fileending /absolute/path/on/local/machine/file.fileending
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Download a single file from a subdirectory of the remote server&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp username@server-address:/subdirectory/sub-subdirectory/file.fileending /abs/path/on/local/machine/file.fileending
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Download a single subdirectory and its contents from the server&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r username@server-address:/home/ /abs/local/path/for/new/directory/on/local/machine
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Download everything within the root directory&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp -r username@server-address:/ /abs/local/path/for/new/directory/on/local/machine
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;Some reminders&lt;/strong&gt;&lt;br /&gt;
-Permissions for downloading files and directories can be accessed in SSH or FileZilla and changed.&lt;/p&gt;
-
-&lt;p&gt;The userID on the server for SSH access will belong to a group. It’s a good idea to check your group assignment.&lt;/p&gt;
-
-&lt;p&gt;View files and directory permissions on SSH with:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ls -la
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The root directory of a username on a shared hosting server will end up as root for the username. Anything lower than that in the hierarchy will usually be unreadable. Just check on the group assigned as owner, and you will find out whether you can change it with the CHMOD commands above. What this means in practice is that access to any of the server side scripting languages, e.g. python, ruby, etc., pretty much anything other than php, will be impossible without paying the shitty host server (READ: Godaddy).&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="ssh, commands, KISS" /><summary type="html">You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run programs, etc. All of the commands below assume you’re using a mac/unix like terminal with the ssh executable on your path.</summary></entry></feed>
+&lt;p&gt;which implies you got a hdf5 file.&lt;/p&gt;</content><author><name>dc</name></author><category term="blog" /><category term="parallel, HDF5, MPI" /><summary type="html">Here’s the steps I took to set up pHDF5, MPI and Python on my macOS.</summary></entry></feed>

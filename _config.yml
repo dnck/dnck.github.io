@@ -1,8 +1,9 @@
+author: Daniel J. Cook
 title: x.merge(y.merge(x))
 email: cookdj0128@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  The personal homepage of Daniel John Cook.
-baseurl: "/" # the subpath of your site, e.g. /blog
+  Thoughts on cognitive science from a guy that studied philosophy, psychology, neuroscience, linguistics, & computer science
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.danjcook.com" # the base hostname & protocol for your site,
 twitter_username: dan_j_cook
 github_username:  dnck
@@ -16,7 +17,13 @@ disqus_shortname: dcook
 google_analytics: UA-97378833-1
 rawgitfiles: "https://raw.githubusercontent.com/dnck/dnck.github.io/master"
 mathjax: true
+pages:
+  - index.md
+  - about.md
+  - blog.md
+  - downloads.md
 header_pages:
   - index.md
+  - about.md
   - blog.md
   - downloads.md

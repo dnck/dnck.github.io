@@ -2,12 +2,12 @@
  * Site header
  */
 .site-header {
-  border-top: 5px solid $grey-color-dark;
-  border-bottom: 1px solid $grey-color-light;
+  border-top: 5px solid $turquoise-color-dark;
+  border-bottom: 1px solid $turquoise-color-dark;
   min-height: $spacing-unit * 1.865;
-
   // Positioning context for the mobile navigation icon
   position: relative;
+  background-color: $turquoise-color-dark;
 }
 
 .site-title {
@@ -20,9 +20,13 @@
 
   &,
   &:visited {
-    color: $grey-color-dark;
+    color: $antiquewhite-color;
   }
 }
+
+
+
+
 
 .site-nav {
   float: right;
@@ -30,6 +34,7 @@
 
   .nav-trigger {
       display: none;
+
   }
 
   .menu-icon {
@@ -37,12 +42,14 @@
   }
 
   .page-link {
-    color: $text-color;
+    //color: $text-color;
+    color: $antiquewhite-color;
+    //font-weight: bold;
     line-height: $base-line-height;
 
     // Gaps between nav items, but not on the last one
     &:not(:last-child) {
-      margin-right: 20px;
+      margin-right: 10px;
     }
   }
 
@@ -104,11 +111,16 @@
  * Site footer
  */
 .site-footer {
-  border-top: 1px solid $grey-color-light;
+  border-top: 5px solid $turquoise-color-dark;
+  border-bottom: 5px solid $turquoise-color-dark;
   padding: $spacing-unit 0;
+  background-color: $turquoise-color-dark;
 }
 
+
+
 .footer-heading {
+  color: $antiquewhite-color;
   @include relative-font-size(1.125);
   margin-bottom: $spacing-unit / 2;
 }
@@ -130,11 +142,19 @@
   float: left;
   margin-bottom: $spacing-unit / 2;
   padding-left: $spacing-unit / 2;
+  font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
+  color: $antiquewhite-color;
 }
 
 .footer-col-1 {
   width: -webkit-calc(35% - (#{$spacing-unit} / 2));
   width:         calc(35% - (#{$spacing-unit} / 2));
+  color: $antiquewhite-color;
+
+}
+
+.footer-link{
+  color: $antiquewhite-color;
 }
 
 .footer-col-2 {
