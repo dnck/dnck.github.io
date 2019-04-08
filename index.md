@@ -5,4 +5,6 @@ d3: True
 js: frontpage.js
 ---
 <div id="example"></div>
-<p><big>Color the tiles!</big></p>
+<div class="typewriter">
+  <a href="#"><h1>Tile the plane a-gain, robot ⟲ </h1></a>
+</div>
