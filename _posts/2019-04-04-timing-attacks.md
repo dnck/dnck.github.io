@@ -5,7 +5,7 @@ author: dc
 date: 2019-04-03
 comments: true
 analytics: true
-keywords: python, java, concurrency,security 
+keywords: python, java, concurrency,security
 description:
 category: blog
 ---
@@ -21,7 +21,7 @@ def checkEquality(pass1, pass2, pass_size = 64):
       return False # passwords do not match
   return True # passwords match
 ```
-The problem with the code above is explained in the blog. If you can't think of a reason not to use that code, then I encourage you to read it in full. But, if you get already that the code finishes in varying amounts of time for non-matches, and that this fact can be used to guess the match, then you can go on to look at the the alternative method,
+The problem with the code above is explained in the blog. If you can't think of a reason not to use that code, then I encourage you to read it in full. But, if you get already that the code finishes in varying amounts of time for non-matches, and that this fact can be used to guess the match, then you can go on to look at the alternative method,
 ```
 def is_equal(a, b):
     if len(a) != len(b):
@@ -32,3 +32,4 @@ def is_equal(a, b):
         result |= x ^ y
     return result == 0
 ```
+Thanks to the original poster. I learned something, and I'll be using that improved code in my projects.
