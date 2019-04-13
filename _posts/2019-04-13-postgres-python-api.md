@@ -41,7 +41,7 @@ You can also set up some things with the database for speed and optimization. Fo
 
 * ```ALTER ROLE user SET timezone TO 'UTC';```
 
-If you don't know what they mean, you should probably take a step back and read a bit about distributed systems, esp. concurrency control. I recommend the book, (Distributed Systems by author A. Tanenbaum)[https://www.distributed-systems.net/index.php/books/distributed-systems-3rd-edition-2017/].
+If you don't know what they mean, you should probably take a step back and read a bit about distributed systems, esp. concurrency control. I recommend the book, [Distributed Systems by author A. Tanenbaum](https://www.distributed-systems.net/index.php/books/distributed-systems-3rd-edition-2017/).
 
 * Give the username all access on the db: ```GRANT ALL PRIVILEGES ON DATABASE projectname TO user;```
 
