@@ -12,13 +12,14 @@ category: blog
 Here's are some commands you might find useful for dealing with PostgreSQL and interacting with it via the python api psycopg2:
 
 ## PostgreSQL
-**Installation of postgresql on ubuntu / linux with & python bindings:**
+**Installation of postgresql on ubuntu / linux with python bindings:**
 
 ```
 apt-get install postgresql-10
 pip install psycopg2-binary
 ```
-** Configure postgresql for linux-like distributions including macos:**
+
+**Configure postgresql for linux-like distributions including macos:**
 * login to the default postgres username with ```sudo su - postgres```, then enter ```psql```
 
 On MacOSX, you need to export the the bin directory of the psql command when you log in to postgres user. You can find this in the pg installation notes. I do this every time I login to the postgres user with ```export PATH=/Library/PostgreSQL/11/bin:$PATH```
