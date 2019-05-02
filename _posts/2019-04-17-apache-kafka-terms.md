@@ -2,7 +2,7 @@
 layout: post
 title: Apache Kafka - Chapter 1
 author: dc
-date: 2019-17-04
+date: 2019-04-17
 comments: true
 analytics: true
 keywords:  

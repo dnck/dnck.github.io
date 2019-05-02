@@ -2,7 +2,7 @@
 layout: post
 title: How to XMLRPC Server & Client on AWS
 author: dc
-date: 2017-01-01
+date: 2017-05-01
 comments: true
 analytics: true
 keywords:  
@@ -94,4 +94,4 @@ if __name__ == '__main__':
 ```
 
 ## Notes
-To get the above going, just set host and port to the EC2 public host and port (8080). 
+To get the above going, just set host and port to the EC2 public host and port (8080).
