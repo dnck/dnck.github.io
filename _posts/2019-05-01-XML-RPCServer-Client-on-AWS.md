@@ -2,7 +2,7 @@
 layout: post
 title: How to XMLRPC Server & Client on AWS
 author: dc
-date: 2017-05-01
+date: 2019-05-01
 comments: true
 analytics: true
 keywords:  
