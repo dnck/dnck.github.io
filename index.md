@@ -1,10 +1,10 @@
 ---
 layout: default
 title: home
-d3: True
-js: frontpage.js
 ---
 <div id="tiles"></div>
-<div class="typewriter">
+<!-- <div class="typewriter">
   <h1>Hello world!</h1>
-</div>
+</div> -->
+<h1> Hello world!</h1>
+{% include_relative assets/code/tile_boxes1.js %}
