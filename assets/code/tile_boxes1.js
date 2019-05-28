@@ -53,10 +53,10 @@
 
         var svgContainer = d3.select("#tiles")
                              .append("svg")
-                             .attr('width', 800)
-                             .attr('height', 300);
-                             //.attr("viewBox", "0 0 750 250")
-                             //.attr("xmlns", "http://www.w3.org/2000/svg");
+                             // .attr('width', 800)
+                             // .attr('height', 300);
+                             .attr("viewBox", "0 0 750 250")
+                             .attr("xmlns", "http://www.w3.org/2000/svg");
 
         var circles = svgContainer.selectAll("circle")
                                  .data(dataset)

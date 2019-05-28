@@ -10,7 +10,7 @@
 
   myfunc = function() {
 
-    var size = 20//randomSize()
+    var size = 25//randomSize()
 
     window.onload = function() {
         var dataset;
