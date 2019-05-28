@@ -1,1 +1,16 @@
-*_site/
+_site
+.DS_Store
+.jekyll
+.bundle
+.sass-cache
+Gemfile
+Gemfile.lock
+node_modules
+package.json
+reset.sh 
+
+# Jekyll stuff
+/_site/
+_site/
+.sass-cache/
+.jekyll-metadata
