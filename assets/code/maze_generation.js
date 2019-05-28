@@ -1,22 +1,22 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script>
 
-var width = 750,
-    height = 550;
+var width = 160,
+    height = 400;
 
 var N = 1 << 0,
     S = 1 << 1,
     W = 1 << 2,
     E = 1 << 3;
 
-var cellSize = 5,
-    cellSpacing = 5,
+var cellSize = 4,
+    cellSpacing = 2,
     cellWidth = Math.floor((width - cellSpacing) / (cellSize + cellSpacing)),
     cellHeight = Math.floor((height - cellSpacing) / (cellSize + cellSpacing)),
     cells = new Array(cellWidth * cellHeight), // each cell’s edge bits
     frontier = [];
 
-var canvas = d3.select("body").append("canvas")
+var canvas = d3.select("maze").append("canvas")
     .attr("width", width)
     .attr("height", height);
 
@@ -28,18 +28,23 @@ context.translate(
   Math.round((height - cellHeight * cellSize - (cellHeight + 1) * cellSpacing) / 2)
 );
 
-context.fillStyle = "#FF00FF";
+context.fillStyle = "#008080";
 
 // Add a random cell and two initial edges.
 var start = (cellHeight - 1) * cellWidth;
+
 cells[start] = 0;
+
 fillCell(start);
+
 frontier.push({index: start, direction: N});
+
 frontier.push({index: start, direction: E});
 
 // Explore the frontier until the tree spans the graph.
 d3.timer(function() {
-  var done, k = 0;
+  var done
+  k = 0;
   while (++k < 25 && !(done = exploreFrontier()));
   return done;
 });
@@ -50,7 +55,7 @@ function exploreFrontier() {
   var edge,
       i0 = edge.index,
       d0 = edge.direction,
-      i1 = i0 + (d0 === N ? -cellWidth : d0 === S ? cellWidth : d0 === W ? -1 : +1),
+      i1 = i0 + (d0 === N ? -cellWidth : d0 === S ? cellWidth : d0 === W ? -2 : +1),
       x0 = i0 % cellWidth,
       y0 = i0 / cellWidth | 0,
       x1,
@@ -80,12 +85,12 @@ function exploreFrontier() {
 
 function fillCell(index) {
   var i = index % cellWidth, j = index / cellWidth | 0;
-  context.fillRect(i * cellSize + (i + 1) * cellSpacing, j * cellSize + (j + 1) * cellSpacing, cellSize, cellSize);
+  context.fillRect(i * cellSize + (i + 1) * cellSpacing, j * cellSize + (j + 2) * cellSpacing, cellSize, cellSize);
 }
 
 function fillEast(index) {
   var i = index % cellWidth, j = index / cellWidth | 0;
-  context.fillRect((i + 1) * (cellSize + cellSpacing), j * cellSize + (j + 1) * cellSpacing, cellSpacing, cellSize);
+  context.fillRect((i + 1) * (cellSize + cellSpacing), j * cellSize + (j + 2) * cellSpacing, cellSpacing, cellSize);
 }
 
 function fillSouth(index) {

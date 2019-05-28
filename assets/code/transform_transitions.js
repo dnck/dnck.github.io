@@ -13,7 +13,7 @@ var svg = d3.select("#tiles")
 
 svg.selectAll("rect")
     .data(d3.range(x * y))
-  .enter().append("rect")
+    .enter().append("rect")
     .attr("transform", translate)
     .attr("width", z)
     .attr("height", z)
@@ -32,6 +32,7 @@ function mouseover(d) {
     .transition()
       .duration(750)
       .attr("transform", "translate(480,480)scale(23)rotate(180)")
+      
     .transition()
       .delay(250)
       .attr("transform", "translate(240,240)scale(0)")
