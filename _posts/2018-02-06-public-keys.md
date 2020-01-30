@@ -7,7 +7,69 @@ author: dc
 category: blog
 ---
 
-## Send personal messages to:
+The following keys correspond to my online identities. You can find my keys in the ubuntu keyserver as well. Please use them for secure communication, or 
+checking any signed messages/files I send you.
+
+## Visualix email
+<img src="{{site.url}}/assets/images/visualix_email.png" class="img-fluid">
+
+{% highlight python %}
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+QKmovCW0k5b8e5hK
+=4MSr
+-----END PGP PUBLIC KEY BLOCK-----
+{% endhighlight %}
+
+## Personal email
+**Note I'm not checking this email often anymore**
 
 <img src="{{site.url}}/assets/images/protonmail.png" class="img-fluid">
 
@@ -66,8 +128,8 @@ Y/veBQD4
 -----END PGP PUBLIC KEY BLOCK-----
 {% endhighlight %}
 
-
-## Send business related messages to:
+## Helix Cognitive Computing 
+**Note: I do not us this email any longer, but the key may still exists in some keyservers, so I leave it up.**
 
 <img src="{{site.url}}/assets/images/dc_hlx_email.png" class="img-fluid">
 
