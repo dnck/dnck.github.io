@@ -11,6 +11,7 @@ The following keys correspond to my online identities. You can find my keys in t
 checking any signed messages/files I send you.
 
 ## Visualix email
+
 <img src="{{site.url}}/assets/images/visualix_email.png" class="img-fluid">
 
 {% highlight python %}
@@ -69,6 +70,7 @@ QKmovCW0k5b8e5hK
 {% endhighlight %}
 
 ## Personal email 1
+
 <img src="{{site.url}}/assets/images/gmail.png" class="img-fluid">
 
 {% highlight python %}
