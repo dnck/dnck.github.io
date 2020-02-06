@@ -71,7 +71,7 @@ QKmovCW0k5b8e5hK
 
 ## Personal email 1
 
-<img src="{{site.url}}/assets/images/gmail.png" class="img-fluid">
+<img src="{{site.url}}/assets/images/cook_gmail.png" class="img-fluid">
 
 {% highlight python %}
 -----BEGIN PGP PUBLIC KEY BLOCK-----
