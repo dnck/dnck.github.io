@@ -5,7 +5,7 @@ author: dc
 date: 2020-03-02
 comments: true
 analytics: true
-keywords:
+keywords: python
 description: Python modules I know and love: argparse
 category: blog
 ---
