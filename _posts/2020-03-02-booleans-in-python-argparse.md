@@ -1,7 +1,7 @@
 ---
 layout: post
 title: booleans-in-python-argparse
-author: dnck
+author: dc
 date: 2020-03-02
 comments: true
 analytics: true
