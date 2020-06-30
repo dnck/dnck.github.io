@@ -2,6 +2,6 @@
 layout: default
 title: home
 ---
-<div id="tiles">
+<div class = "col-md-6">
+<img src="{{site.url}}/assets/images/fractal.gif" class="img-fluid">
 </div>
-{% include_relative assets/code/tile_boxes1.js %}

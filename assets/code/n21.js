@@ -1,3 +1,5 @@
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
 var nodes = [
   {id: "0", group: 0, label: "N0", level: 2 },
   {id: "1", group: 0, label: "N1", level: 1},
@@ -804,3 +806,4 @@ simulation.nodes(nodes).on('tick', () => {
 // // getNodeDelays('0', endpoint_averages)
 
 simulation.force("link").links(links)
+</script>

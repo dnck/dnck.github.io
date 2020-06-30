@@ -2,12 +2,12 @@
  * Site header
  */
 .site-header {
-  border-top: 5px solid $turquoise-color-dark;
-  border-bottom: 1px solid $turquoise-color-dark;
+  border-top: 5px solid $black-color;
+  border-bottom: 1px solid $black-color;
   min-height: $spacing-unit * 1.865;
   // Positioning context for the mobile navigation icon
   position: relative;
-  background-color: $turquoise-color-dark;
+  background-color: $black-color;
 }
 
 .site-title {
@@ -42,7 +42,7 @@
   }
 
   .page-link {
-    //color: $turquoise-color-dark;
+    //color: $black-color;
     color: $antiquewhite-color;
     //font-weight: bold;
     line-height: $base-line-height;
@@ -99,7 +99,7 @@
     .page-link {
       display: block;
       padding: 5px 10px;
-      color: $turquoise-color-dark;
+      color: $black-color;
 
       &:not(:last-child) {
         margin-right: 0;
@@ -113,10 +113,10 @@
  * Site footer
  */
 .site-footer {
-  border-top: 5px solid $turquoise-color-dark;
-  border-bottom: 5px solid $turquoise-color-dark;
+  border-top: 5px solid $black-color;
+  border-bottom: 5px solid $black-color;
   padding: $spacing-unit 0;
-  background-color: $turquoise-color-dark;
+  background-color: $black-color;
 }
 
 .footer-heading {

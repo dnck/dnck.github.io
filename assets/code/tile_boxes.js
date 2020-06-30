@@ -37,8 +37,14 @@
                               .attr("x", function (d){return d[0];})
 
         d3.selectAll("rect").transition()
-                            .delay(function(d, i) { return i * 100; })
-                            .attr("fill", function(d) {return randomColor();})
+                            .delay(
+                              function(d, i){
+                                return i * 100;
+                              }
+                            )
+                            .attr("fill", function(d){
+                              return randomColor();
+                            })
 
 
         // hello = ["H", "E", "L", "L", "O", " ", "W", "O", "R", "L", "D", "!"]

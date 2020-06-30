@@ -1,4 +1,6 @@
 _site
+_drafts
+_theme
 .DS_Store
 .jekyll
 .bundle
@@ -7,8 +9,7 @@ Gemfile
 Gemfile.lock
 node_modules
 package.json
-reset.sh 
-
+reset.sh
 # Jekyll stuff
 /_site/
 _site/

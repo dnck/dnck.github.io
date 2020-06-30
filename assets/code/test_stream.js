@@ -1,3 +1,4 @@
+<script>
 // Store reference to lists, paragraph and button
 const list1 = document.querySelector('.input ul');
 const list2 = document.querySelector('.output ul');
@@ -67,3 +68,4 @@ function readStream(){
   return reader.read().then(processText);
 });
 }
+</script>

@@ -495,17 +495,22 @@ $on-laptop:        800px !default;
 
 // Import partials.
 @import
-  "minima/base",
-  "minima/layout",
-  "minima/syntax-highlighting"
+  "iiibit/base",
+  "iiibit/layout",
+  "iiibit/syntax-highlighting"
 ;
 
 /* --------------------*/
 /* page specific css */
-.hover_image:hover {text-decoration: none}
-.hide {display:none}
+.hover_image:hover {
+    text-decoration: none
+}
+.hide {
+  display:none
+}
 .hover_image:hover img:first-child{display:none}
 .hover_image:hover img:last-child{display:inline-block}
+
 .center-justified {
   text-align: justify;
   margin: 0 auto;
