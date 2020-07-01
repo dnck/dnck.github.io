@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-  color: $brand-color;
+  color: $link-color;
   text-decoration: none;
   font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
 
@@ -132,8 +132,8 @@ a {
  * Blockquotes
  */
 blockquote {
-  color: $grey-color;
-  border-left: 4px solid $grey-color-light;
+  color: $grey;
+  border-left: 4px solid $grey-light;
   padding-left: $spacing-unit / 2;
   @include relative-font-size(1.125);
   letter-spacing: -1px;
@@ -151,14 +151,15 @@ blockquote {
  */
 pre,
 code {
-  @include relative-font-size(0.9375);
-  border: 1px solid $grey-color-light;
-  border-radius: 3px;
-  background-color: #eef;
+  @include relative-font-size(0.8);
+  //border: 1px solid $black;
+  //border-radius: 3px;
+  background-color: $grey;
+  color: $lime;
 }
 
 code {
-  padding: 1px 5px;
+  padding: 2px 2px;
 }
 
 pre {
@@ -215,7 +216,7 @@ pre {
     width: 20px;
     height: 20px;
     display: inline-block;
-    fill: #{$antiquewhite-color};
+    fill: #{$lime};
     padding-right: 5px;
     vertical-align: text-top;
 }
@@ -261,21 +262,21 @@ table {
   text-align: $table-text-align;
   color: lighten($text-color, 18%);
   border-collapse: collapse;
-  border: 1px solid $grey-color-light;
+  border: 1px solid $grey-light;
   tr {
     &:nth-child(even) {
-      background-color: lighten($grey-color-light, 6%);
+      background-color: lighten($grey-light, 6%);
     }
   }
   th, td {
     padding: ($spacing-unit / 3) ($spacing-unit / 2);
   }
   th {
-    background-color: lighten($grey-color-light, 3%);
-    border: 1px solid darken($grey-color-light, 4%);
-    border-bottom-color: darken($grey-color-light, 12%);
+    background-color: lighten($grey-light, 3%);
+    border: 1px solid darken($grey-light, 4%);
+    border-bottom-color: darken($grey-light, 12%);
   }
   td {
-    border: 1px solid $grey-color-light;
+    border: 1px solid $grey-light;
   }
 }

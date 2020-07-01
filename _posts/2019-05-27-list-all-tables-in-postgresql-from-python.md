@@ -10,9 +10,10 @@ description:
 category: blog
 ---
 
-## List all tables in a postgresql database from python
-
-```
+```python
+"""
+List all tables in a postgresql database from python
+"""
 import psycopg2 as pg
 import pandas.io.sql as sqlio
 pd.set_option('display.float_format', lambda x: '%.4f' %x)

@@ -7,10 +7,16 @@ author: dc
 category: blog
 ---
 
-The following keys correspond to my online identities. You can find my keys in the ubuntu keyserver as well. Please use them for secure communication, or 
+The following keys correspond to my online identities. You can find my keys in the ubuntu keyserver as well. Please use them for secure communication, or
 checking any signed messages/files I send you.
 
 ## Visualix email
+
+<style>
+img {
+  filter: invert(100%);
+}
+</style>
 
 <img src="{{site.url}}/assets/images/visualix_email.png" class="img-fluid">
 
@@ -187,7 +193,7 @@ Y/veBQD4
 -----END PGP PUBLIC KEY BLOCK-----
 {% endhighlight %}
 
-## Helix Cognitive Computing 
+## Helix Cognitive Computing
 **Note: I do not us this email any longer, but the key may still exists in some keyservers, so I leave it up.**
 
 <img src="{{site.url}}/assets/images/dc_hlx_email.png" class="img-fluid">

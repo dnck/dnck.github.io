@@ -92,7 +92,7 @@ The time is 2019-05-04 14:20:57.035891
 which is the time according to the server.
 
 ## UDP TIME SERVER WITH CLIENT
-```
+```python
 #!/usr/bin/env python3
 import argparse, socket
 from datetime import datetime
@@ -175,7 +175,7 @@ Here's another example, of an XMLRPC server on the EC2 instance. Here, you can s
 
 
 ## Minimal RPC Server for Aws Ec2
-```
+```python
 import argparse
 import xmlrpc
 from base64 import b64decode
@@ -230,8 +230,8 @@ if __name__ == '__main__':
     run_server(host, port, username, password)
 ```
 
-## Minimal RPC Client for Aws Ec2 
-```
+## Minimal RPC Client for Aws Ec2
+```python
 import argparse
 import xmlrpc
 # Python 3.6

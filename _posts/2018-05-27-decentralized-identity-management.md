@@ -7,6 +7,11 @@ comments: true
 analytics: true
 category: blog
 ---
+<style>
+img {
+  filter: invert(100%);
+}
+</style>
 
 <img src="https://www.danjcook.com/assets/images/Untitled Diagram.png" class="img-fluid">
 

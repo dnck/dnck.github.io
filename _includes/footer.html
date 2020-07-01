@@ -19,13 +19,14 @@
       </div>
       <div class="footer-col footer-col-2">
         <!-- {%- include social.html -%} -->
-          {%- if site.github_username -%}<p><a href="https://github.com/{{ site.github_username| cgi_escape | escape }}"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg></a>{%- endif -%} <span style="color:black">__</span>
-          {%- if site.linkedin_username -%}<a href="https://www.linkedin.com/in/{{ site.linkedin_username| cgi_escape | escape }}"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#linkedin' | relative_url }}"></use></svg> </a>{%- endif -%} <span style="color:black">__</span>
-          {%- if site.twitter_username -%}<a href="https://www.twitter.com/{{ site.twitter_username| cgi_escape | escape }}"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#twitter' | relative_url }}"></use></svg> </a>{%- endif -%}
-          </p>
+          {%- if site.github_username -%}<a href="https://github.com/{{ site.github_username| cgi_escape | escape }}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg></a>{%- endif -%} <span style="color:black">_</span>
+          {%- if site.linkedin_username -%}<a href="https://www.linkedin.com/in/{{ site.linkedin_username| cgi_escape | escape }}" target="_blank" ><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#linkedin' | relative_url }}"></use></svg> </a>{%- endif -%} <span style="color:black">_</span>
+          {%- if site.so_username -%}<a href="https://stackexchange.com/users/{{ site.so_username| cgi_escape | escape }}" target="_blank" ><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#stackoverflow' | relative_url }}"></use></svg> </a>{%- endif -%}
       </div>
       <div class="footer-col footer-col-3">
-        <p>{{- site.description | escape -}}</p>
+        {%- if site.twitter_username -%}<a href="https://www.twitter.com/{{ site.twitter_username| cgi_escape | escape }}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#twitter' | relative_url }}"></use></svg> </a>{%- endif -%} <span style="color:black">_</span>
+        {%- if site.fb_username -%}<a href="https://www.facebook.com/{{ site.fb_username| cgi_escape | escape }}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#facebook' | relative_url }}"></use></svg> </a>{%- endif -%} <span style="color:black">_</span>
+        {%- if site.ig_username -%}<a href="https://www.instagram.com/{{ site.ig_username| cgi_escape | escape }}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#instagram' | relative_url }}"></use></svg> </a>{%- endif -%}
       </div>
     </div>
   </div>

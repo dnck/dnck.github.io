@@ -24,14 +24,14 @@ pip install psycopg2-binary
 
 On mac, you need to export the /bin directory where the ```psql``` command lives when you log in as the postgres user. You can find this in the pg installation notes. For me, this means I do this every time I login to the postgres user: ```export PATH=/Library/PostgreSQL/11/bin:$PATH```
 
-* Remember, each new project needs its own database. So create it. 
+* Remember, each new project needs its own database. So create it.
 
 * Once logged into postgres, create the database for the project with ```CREATE DATABASE projectname;```
 
 * Create a user with ```CREATE USER user WITH PASSWORD 'password';```
 
   * Yes, you need the quotes around the password you enter.
-  * You, remembert to add the ; to the end of the psql command. 
+  * You, remembert to add the ; to the end of the psql command.
 
 You can also set up some things with the database for speed and optimization. For example,
 
@@ -48,16 +48,16 @@ If you don't know what they mean, you should probably take a step back and read 
 * Exit psql with ```\q``` and then ```exit```
 
 ## Python, psycopg2
-Let's do a run through of some basic commands using the python api. 
+Let's do a run through of some basic commands using the python api.
 
-Make sure you did, ```pip install psycopg2-binary```. 
+Make sure you did, ```pip install psycopg2-binary```.
 
-Then, 
+Then,
 
-```
+```python
 import psycopg2 as pg
 
-# replace below w info you created with psql 
+# replace below w info you created with psql
 dname = "template0"
 pguser = "username"
 pass = "password"
@@ -110,4 +110,4 @@ And that's that.
 
 One important take away is that the stuff you return from postgres to your interpreter could possibly be python objects, e.g. like a ```datetime.datetime``` class. If so, then you'll be able to call ordinary methods of the class plus get any attributes of the class in the ordinary Pythonic way! That means, postgres is pretty powerful indeed :)
 
-Last thing: you might also be interested in the Django tutorials which go through creating a basic webapp which uses postgres. I think there's something on my github with the walk through notes, but I couldn't be bothered to link you to it. Sorry ;) 
+Last thing: you might also be interested in the Django tutorials which go through creating a basic webapp which uses postgres. I think there's something on my github with the walk through notes, but I couldn't be bothered to link you to it. Sorry ;)

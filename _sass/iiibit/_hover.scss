@@ -1,0 +1,15 @@
+.hover_image:hover {
+    text-decoration: none
+}
+.hide {
+  display:none
+}
+
+.hover_image:hover img:first-child{display:none}
+.hover_image:hover img:last-child{display:inline-block}
+
+.center-justified {
+  text-align: justify;
+  margin: 0 auto;
+  width: 30em;
+}

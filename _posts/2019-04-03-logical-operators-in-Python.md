@@ -13,14 +13,14 @@ category: blog
 This post is a work in progress. It serves mainly as a reference to be updated occasionally on Python. I may in the future update this to include the equivalents in Java.
 
 **OR (Inclusive) := |**
-```
+```python
 True | True == True
 False | True == True
 True | False == True
 False | False == False
 ```
 **OR (Exclusive) := ^**
-```
+```python
 True ^ True == False
 False ^ True == True
 True ^ False == True

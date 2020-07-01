@@ -28,6 +28,6 @@ After only a few moments, this definition is easy to grasp. But, it's not so eas
 
 Did you try it? Let me know if you did. Here's my own account:
 
-### Map from the English alphabet to the set S={0,...,25}
+**Map from the English alphabet to the set S={0,...,25}**
 
 $\forall x$ $\in S$, sort the elements of the set S and locate and return of element x by it's relative fixed position in the newly ordered set $S'$

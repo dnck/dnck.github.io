@@ -4,16 +4,19 @@ layout: page
 
 <div class="home">
   {{ content }}
-<h2 class="post-list-heading">Blog entries</h2>
-
+<!-- <h2 class="post-list-heading">Blog entries</h2> -->
   {%- if site.posts.size > 0 -%}
       {%- for post in site.posts -%}
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <br>
-        <a href="{{ post.url | relative_url }}"><strong>{{ post.title }}</strong></a><br>
-                  <span class="post-meta">
-                    {{ post.date | date: date_format }}
-                  </span>
+        <a href="{{ post.url | relative_url }}" class="blogtoc-item"><strong>{{ post.title }}, </strong></a><span class="post-meta">{{ post.date | date: date_format }}</span>
+
+        <!-- {%- if post.tag -%}
+              {%- for t in post.tag -%}
+                <p>{{ t }}</p>
+              {%- endfor -%}
+            {%- endif -%}
+        -->
+
         {%- if post.show_excerpt -%}
           {{ post.excerpt }}
         {%- endif -%}

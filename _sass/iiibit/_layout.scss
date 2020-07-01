@@ -2,51 +2,44 @@
  * Site header
  */
 .site-header {
-  border-top: 5px solid $black-color;
-  border-bottom: 1px solid $black-color;
+  border-top: 5px solid $black;
+  border-bottom: 1px solid $black;
   min-height: $spacing-unit * 1.865;
   // Positioning context for the mobile navigation icon
   position: relative;
-  background-color: $black-color;
+  background-color: $black;
 }
 
 .site-title {
   @include relative-font-size(1.50);
   font-weight: 300;
+  font-family: $header-font-family;
   line-height: $base-line-height * $base-font-size * 2.25;
   letter-spacing: 0px;
   margin-bottom: 0;
   float: left;
-
   &,
   &:visited {
-    color: $antiquewhite-color;
+    color: $lime;
   }
 }
 
-
-
-
-
 .site-nav {
-  float: right;
-  line-height: $base-line-height * $base-font-size * 2.25;
 
+  float: right;
+  padding-right: $spacing-unit * 6.0;
+  line-height: $base-line-height * $base-font-size * 2.25;
   .nav-trigger {
       display: none;
-
   }
-
   .menu-icon {
     display: none;
   }
-
   .page-link {
-    //color: $black-color;
-    color: $antiquewhite-color;
-    //font-weight: bold;
+    font-family: $header-font-family;
+    color: $lime;
+    font-weight: bold;
     line-height: $base-line-height;
-
     // Gaps between nav items, but not on the last one
     &:not(:last-child) {
       margin-right: 10px;
@@ -58,8 +51,9 @@
     position: absolute;
     top: 9px;
     right: $spacing-unit / 2;
+    padding-right: $spacing-unit * 0.0;
     background-color: $background-color;
-    border: 1px solid $grey-color-light;
+    border: 1px solid $grey-light;
     border-radius: 5px;
     text-align: right;
 
@@ -82,7 +76,7 @@
       text-align: center;
 
       > svg {
-        fill: $grey-color-dark;
+        fill: $grey-dark;
       }
     }
 
@@ -99,7 +93,7 @@
     .page-link {
       display: block;
       padding: 5px 10px;
-      color: $black-color;
+      color: $lime;
 
       &:not(:last-child) {
         margin-right: 0;
@@ -113,14 +107,14 @@
  * Site footer
  */
 .site-footer {
-  border-top: 5px solid $black-color;
-  border-bottom: 5px solid $black-color;
+  border-top: 5px solid $black;
+  border-bottom: 5px solid $black;
   padding: $spacing-unit 0;
-  background-color: $black-color;
+  background-color: $black;
 }
 
 .footer-heading {
-  color: $antiquewhite-color;
+  color: $lime;
   @include relative-font-size(1.125);
   margin-bottom: $spacing-unit / 2;
 }
@@ -133,7 +127,7 @@
 
 .footer-col-wrapper {
   @include relative-font-size(0.9375);
-  color: $grey-color;
+  color: $grey;
   margin-left: -$spacing-unit / 2;
   @extend %clearfix;
 }
@@ -143,28 +137,28 @@
   margin-bottom: $spacing-unit / 2;
   padding-left: $spacing-unit / 2;
   font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
-  color: $antiquewhite-color;
+  color: $lime;
 }
 
 .footer-col-1 {
   width: -webkit-calc(35% - (#{$spacing-unit} / 2));
   width:         calc(35% - (#{$spacing-unit} / 2));
-  color: $antiquewhite-color;
+  color: $lime;
 
 }
 
 .footer-link{
-  color: $antiquewhite-color;
+  color: $lime;
 }
 
 .footer-col-2 {
-  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-  width:         calc(20% - (#{$spacing-unit} / 2));
+  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
+  width:         calc(25% - (#{$spacing-unit} / 2));
 }
 
 .footer-col-3 {
-  width: -webkit-calc(45% - (#{$spacing-unit} / 2));
-  width:         calc(45% - (#{$spacing-unit} / 2));
+  width: -webkit-calc(40% - (#{$spacing-unit} / 2));
+  width:         calc(40% - (#{$spacing-unit} / 2));
 }
 
 @include media-query($on-laptop) {
@@ -203,6 +197,7 @@
 }
 
 .post-list-heading {
+  font-family: $header-font-family;
   @include relative-font-size(1.75);
 }
 
@@ -217,7 +212,7 @@
 
 .post-meta {
   font-size: $small-font-size;
-  color: $grey-color;
+  color: $grey;
 }
 
 .post-link {
@@ -225,12 +220,15 @@
   @include relative-font-size(1.5);
 }
 
-
+.blogtoc-item {
+  font-family: $header-font-family;
+}
 
 /**
  * Posts
  */
 .post-header {
+  font-family: $header-font-family;
   margin-bottom: $spacing-unit;
 }
 
