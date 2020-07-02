@@ -11,13 +11,17 @@ $base-font-weight: 400 !default;
 $small-font-size:  $base-font-size * 0.875 !default;
 $base-line-height: 1.5 !default;
 
-$spacing-unit:     30px !default;
-$text-color:       $lime !default;
+$spacing-unit:     25px !default;
+$text-color:       $lavender !default;
 $background-color: $black !default;
-$brand-color:      $lime !default;
-$link-color: $blueviolet !default;
+$brand-color:      $limegreen !default;
+
+$link-color:       $magenta-light !default;
+$link-color-visited: $magenta-dark !default;
 
 $header-font-family: 'Orbitron', sans-serif;
+$header-font-color: $deepskyblue !default;
+$footer-font-color: $deepskyblue !default;
 
 $table-text-align: left !default;
 

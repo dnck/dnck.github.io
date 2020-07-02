@@ -58,7 +58,9 @@ img {
   max-width: 100%;
   vertical-align: middle;
 }
-
+.img-container {
+  text-align: center;
+}
 
 
 /**
@@ -108,7 +110,7 @@ a {
   font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
 
   &:visited {
-    color: darken($brand-color, 15%);
+    color: $link-color-visited;
   }
 
   &:hover {
@@ -138,13 +140,10 @@ blockquote {
   @include relative-font-size(1.125);
   letter-spacing: -1px;
   font-style: italic;
-
   > :last-child {
     margin-bottom: 0;
   }
 }
-
-
 
 /**
  * Code formatting
@@ -152,8 +151,6 @@ blockquote {
 pre,
 code {
   @include relative-font-size(0.8);
-  //border: 1px solid $black;
-  //border-radius: 3px;
   background-color: $grey;
   color: $lime;
 }
@@ -165,7 +162,6 @@ code {
 pre {
   padding: 8px 12px;
   overflow-x: auto;
-
   > code {
     border: 0;
     padding-right: 0;
@@ -195,8 +191,6 @@ pre {
   }
 }
 
-
-
 /**
  * Clearfix
  */
@@ -206,18 +200,16 @@ pre {
   clear: both;
 }
 
-
-
 /**
  * Icons
  */
-
 .svg-icon {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: inline-block;
-    fill: #{$lime};
-    padding-right: 5px;
+    fill: #{$footer-font-color};
+    padding-right: 10px;
+    
     vertical-align: text-top;
 }
 
@@ -236,7 +228,7 @@ pre {
     float: left;
     width: 50%;
     padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    // height: 300px; /* Should be removed. Only for demonstration */
 }
 
 /* Clear floats after the columns */
@@ -260,19 +252,19 @@ table {
   margin-bottom: $spacing-unit;
   width: 100%;
   text-align: $table-text-align;
-  color: lighten($text-color, 18%);
+  // color: lighten($text-color, 18%);
   border-collapse: collapse;
   border: 1px solid $grey-light;
-  tr {
-    &:nth-child(even) {
-      background-color: lighten($grey-light, 6%);
-    }
-  }
+  // tr {
+  //   &:nth-child(even) {
+  //     background-color: lighten($grey-light, 6%);
+  //   }
+  // }
   th, td {
     padding: ($spacing-unit / 3) ($spacing-unit / 2);
   }
   th {
-    background-color: lighten($grey-light, 3%);
+    // background-color: lighten($grey-light, 3%);
     border: 1px solid darken($grey-light, 4%);
     border-bottom-color: darken($grey-light, 12%);
   }

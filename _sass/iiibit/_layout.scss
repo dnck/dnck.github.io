@@ -2,12 +2,11 @@
  * Site header
  */
 .site-header {
-  border-top: 5px solid $black;
-  border-bottom: 1px solid $black;
-  min-height: $spacing-unit * 1.865;
-  // Positioning context for the mobile navigation icon
-  position: relative;
   background-color: $black;
+  border-top: 1px solid $black;
+  border-bottom: 1px dotted $grey;
+  min-height: $spacing-unit * 2.0;
+  position: relative;
 }
 
 .site-title {
@@ -18,17 +17,17 @@
   letter-spacing: 0px;
   margin-bottom: 0;
   float: left;
+  color: $header-font-color;
   &,
   &:visited {
-    color: $lime;
+    color: $header-font-color;
   }
 }
 
 .site-nav {
-
   float: right;
-  padding-right: $spacing-unit * 6.0;
-  line-height: $base-line-height * $base-font-size * 2.25;
+  // padding-right: $spacing-unit * 6.0;
+  line-height: $base-line-height * $base-font-size * 2.0;
   .nav-trigger {
       display: none;
   }
@@ -37,23 +36,21 @@
   }
   .page-link {
     font-family: $header-font-family;
-    color: $lime;
+    color: $header-font-color;
     font-weight: bold;
     line-height: $base-line-height;
-    // Gaps between nav items, but not on the last one
     &:not(:last-child) {
       margin-right: 10px;
     }
   }
 
   @include media-query($on-palm) {
-
     position: absolute;
     top: 9px;
     right: $spacing-unit / 2;
     padding-right: $spacing-unit * 0.0;
     background-color: $background-color;
-    border: 1px solid $grey-light;
+    border: 2px solid $grey;
     border-radius: 5px;
     text-align: right;
 
@@ -74,7 +71,6 @@
       line-height: 0;
       padding-top: 10px;
       text-align: center;
-
       > svg {
         fill: $grey-dark;
       }
@@ -93,8 +89,7 @@
     .page-link {
       display: block;
       padding: 5px 10px;
-      color: $lime;
-
+      color: $header-font-color;
       &:not(:last-child) {
         margin-right: 0;
       }
@@ -107,59 +102,80 @@
  * Site footer
  */
 .site-footer {
-  border-top: 5px solid $black;
-  border-bottom: 5px solid $black;
-  padding: $spacing-unit 0;
+  border-top: 1px dotted $grey;
+  border-bottom: 1px solid $black;
+  min-height: $spacing-unit * 2.0;
+  position: relative;
   background-color: $black;
 }
-
-.footer-heading {
-  color: $lime;
-  @include relative-font-size(1.125);
-  margin-bottom: $spacing-unit / 2;
-}
-
-.contact-list,
-.social-media-list {
-  list-style: none;
-  margin-left: 0;
-}
-
-.footer-col-wrapper {
-  @include relative-font-size(0.9375);
-  color: $grey;
-  margin-left: -$spacing-unit / 2;
-  @extend %clearfix;
-}
-
-.footer-col {
-  float: left;
+.footer-container {
+  // float: left;
   margin-bottom: $spacing-unit / 2;
   padding-left: $spacing-unit / 2;
   font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
-  color: $lime;
+  color: $footer-font-color;
+  text-align: center;
 }
 
+
+
+
+.footer-heading {
+  color: $footer-font-color;
+  @include relative-font-size(1.125);
+  margin-bottom: $spacing-unit / 2;
+}
+.footer-col-wrapper {
+  @include relative-font-size(1.0);
+  // margin-left: -$spacing-unit / 2;
+  @extend %clearfix;
+}
+.footer-link {
+  @include relative-font-size(0.8);
+  color: $footer-font-color;
+  font-family: $header-font-family;
+}
 .footer-col-1 {
-  width: -webkit-calc(35% - (#{$spacing-unit} / 2));
-  width:         calc(35% - (#{$spacing-unit} / 2));
-  color: $lime;
-
+  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
+  width:         calc(20% - (#{$spacing-unit} / 2));
+  // color: $footer-font-color;;;s
 }
-
-.footer-link{
-  color: $lime;
-}
-
 .footer-col-2 {
-  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
-  width:         calc(25% - (#{$spacing-unit} / 2));
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
 }
-
 .footer-col-3 {
-  width: -webkit-calc(40% - (#{$spacing-unit} / 2));
-  width:         calc(40% - (#{$spacing-unit} / 2));
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
 }
+.footer-col-4 {
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
+}
+.footer-col-5 {
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
+}
+.footer-col-6 {
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
+}
+.footer-col-7 {
+  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+  width:         calc(10% - (#{$spacing-unit} / 2));
+}
+.footer-col-8 {
+  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
+  width:         calc(20% - (#{$spacing-unit} / 2));
+}
+// .footer-col-9 {
+//   width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+//   width:         calc(10% - (#{$spacing-unit} / 2));
+// }
+// .footer-col-10 {
+//   width: -webkit-calc(10% - (#{$spacing-unit} / 2));
+//   width:         calc(10% - (#{$spacing-unit} / 2));
+// }
 
 @include media-query($on-laptop) {
   .footer-col-1,
@@ -183,6 +199,11 @@
 }
 
 
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin-left: 0;
+}
 
 /**
  * Page content
@@ -228,17 +249,18 @@
  * Posts
  */
 .post-header {
-  font-family: $header-font-family;
+  // font-family: $header-font-family;
   margin-bottom: $spacing-unit;
 }
 
 .post-title {
-  @include relative-font-size(2.625);
+  @include relative-font-size(2.0);
   letter-spacing: -1px;
   line-height: 1;
-
+  font-family: $header-font-family;
+  color: $brand-color;
   @include media-query($on-laptop) {
-    @include relative-font-size(2.25);
+    @include relative-font-size(2.0);
   }
 }
 
@@ -246,24 +268,27 @@
   margin-bottom: $spacing-unit;
 
   h2 {
-    @include relative-font-size(2);
-
+    @include relative-font-size(1.75);
+    font-family: $header-font-family;
+    color: $brand-color;
     @include media-query($on-laptop) {
       @include relative-font-size(1.75);
     }
   }
 
   h3 {
-    @include relative-font-size(1.625);
-
+    @include relative-font-size(1.5);
+    font-family: $header-font-family;
+    color: $brand-color;
     @include media-query($on-laptop) {
-      @include relative-font-size(1.375);
+      @include relative-font-size(1.5);
     }
   }
 
   h4 {
     @include relative-font-size(1.25);
-
+    font-family: $header-font-family;
+    color: $brand-color;
     @include media-query($on-laptop) {
       @include relative-font-size(1.125);
     }
