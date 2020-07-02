@@ -5,6 +5,8 @@ date: 2018-02-06
 comments: true
 author: dc
 category: blog
+show_excerpt: true
+excerpt: The following keys correspond to my online identities. 
 ---
 
 The following keys correspond to my online identities. You can find my keys in the ubuntu keyserver as well. Please use them for secure communication, or

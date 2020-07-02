@@ -10,7 +10,7 @@ layout: page
         <a href="{{ post.url | relative_url }}" class="blogtoc-item"><strong>{{ post.title }}, </strong></a>
         <span class="post-meta">{{ post.date | date: date_format }}</span><br>
         {%- if post.show_excerpt -%}
-          {{ post.excerpt }}
+          {{ post.excerpt }}<br>
         {%- endif -%}
       {%- endfor -%}
     <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>

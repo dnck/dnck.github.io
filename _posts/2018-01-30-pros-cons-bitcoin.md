@@ -5,6 +5,8 @@ date: 2018-01-30
 comments: true
 author: dc
 category: blog
+show_excerpt: true
+excerpt: Blockchain and bitcoin for 5 year olds.
 ---
 
 **Key features of Bitcoin-tech aka Blockchain**

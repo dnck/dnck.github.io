@@ -8,6 +8,8 @@ analytics: true
 keywords:  HDF5
 description: installation of parallel hdf5 on ubuntu server
 category: blog
+show_excerpt: true
+excerpt: Failed step-by-step instructions to install parallel hdf5. Take 2.
 ---
 
 This is the second time in less than a year I've face the problem of configuring parallel hdf5 on a server. I don't even know why I bother! Oh, yeah, that's right, I thought hdf5 was cool when I was first introduced to it, and I wanted to make it even more complicated by introducing concurrent i/o. Anyway, what follows is my catalogue of errors when trying to install on an ubuntu server. If you've got any suggestions on what I'm doing wrong, please comment :().

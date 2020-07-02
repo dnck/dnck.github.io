@@ -5,6 +5,8 @@ date: 2017-05-28
 author: dc
 comments: true
 category: blog
+show_excerpt: true
+excerpt: All about me!
 ---
 
 I'm a pragmatic, technologically-oriented, cognitive scientist working on computer networks and distributed systems.

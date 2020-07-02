@@ -9,6 +9,8 @@ keywords: ssh, commands
 description: simple ssh commands, no bullshit
 tag: ssh, commands, KISS
 category: blog
+show_excerpt: true
+excerpt: Some basic ssh commands to get you going...
 ---
 
 You can use SSH to log into a different machines from your local machine. After you log in, you can access files, run programs, etc. All of the commands below assume you're using a mac/unix like terminal with the ssh executable on your path.

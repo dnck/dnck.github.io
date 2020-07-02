@@ -8,9 +8,10 @@ analytics: true
 keywords: java, concurrency
 description:
 category: blog
+show_excerpt: true
+excerpt: The logical distinction between the OR operator in Python.
 ---
 
-This post is a work in progress. It serves mainly as a reference to be updated occasionally on Python. I may in the future update this to include the equivalents in Java.
 
 **OR (Inclusive) := |**
 ```python

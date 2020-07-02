@@ -8,6 +8,8 @@ analytics: true
 keywords: python, java, concurrency,security
 description:
 category: blog
+show_excerpt: true
+excerpt: Be careful when you write server code! If it can be timed, it can possibly be attacked!
 ---
 
 A nice blog post on [Timing attacks](https://codahale.com/a-lesson-in-timing-attacks/) that says,

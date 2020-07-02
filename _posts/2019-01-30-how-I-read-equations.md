@@ -9,6 +9,8 @@ mathjax: true
 keywords:  linear algebra
 description: How to read an equation
 category: blog
+show_excerpt: true
+excerpt: Why thinking in English words doesn't help mathematical thinking....
 ---
 Math often feels difficult to me because I try to put all of my understandings into plain English sentences, and mathematical understanding is sometimes <emphasis>un<emphasis>intuitive.
 

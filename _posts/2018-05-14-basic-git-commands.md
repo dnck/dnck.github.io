@@ -9,6 +9,8 @@ keywords: git, commands
 description: simple git commands, no bullshit
 tag: git, commands, KISS
 category: blog
+show_excerpt: true
+excerpt: Some basic git commands to get you going...
 ---
 
 Here are some of the common git commands, or questions that I find myself googling a lot. Maybe they help you.

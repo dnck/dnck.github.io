@@ -8,6 +8,8 @@ analytics: true
 keywords:  
 description:
 category: blog
+show_excerpt: true
+excerpt: Interact with a postgres server via the python module psycopg2 
 ---
 Here's are some commands you might find useful for dealing with PostgreSQL and interacting with it via the python api psycopg2:
 

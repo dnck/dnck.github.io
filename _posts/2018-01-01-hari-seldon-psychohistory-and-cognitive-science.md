@@ -9,6 +9,8 @@ keywords: predictive analytics, data science
 description:
 tag: ssh, commands, KISS
 category: blog
+show_excerpt: true
+excerpt: Cognitive Science has some really wild aspirations!
 ---
 
 Imagine that we had an infinite amount time and unlimited access to any and all sources of information. What parameters or predicates would we need to account for and predict human behavior on both short and long time scales and in real-life, complex situations?

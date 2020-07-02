@@ -5,6 +5,8 @@ date: 2018-04-02
 author: dc
 comments: true
 category: blog
+show_excerpt: true
+excerpt: I wrote some code to scrap the Stanford Encyclopedia of Philosophy and do text analysis on the contents.
 ---
 
 I recently read <a href = "http://juanrloaiza.blogspot.de/2017/08/whos-most-mentioned-philosopher-in-sep.html"> a friend's post</a> on mining the Stanford Encyclopedia of Philosophy. I wanted to refresh my knowledge of KNN-Models and I spent some free time writing a Python script for scraping and analyzing random entries from the SEP. The image below shows the connections between the subset of the SEP that I mined. You can find the code for producing the image below, along with a table of the metrics.

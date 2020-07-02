@@ -8,10 +8,15 @@ analytics: true
 keywords: python
 description: Python modules I know and love -- argparse
 category: blog
+show_excerpt: true
+excerpt: How to deal with boolean flags passed to the argparse module in python.
 ---
 
-The `argparse` module in the python standard library is useful for building
-command line tools. It allows you to run a python script and pass in some name options. Here's an very simple example,
+The `argparse` module in the Python standard library is useful for building
+command line tools. One "gotcha", however, is parsing Boolean values from the user's
+input.
+
+Here's an very simple example,
 
 ```py
 # -*- coding: utf-8 -*-
@@ -41,12 +46,18 @@ if __name__ == "__main__":
     print(args.message)
 ```
 
-On limit that I've found with argparse is when it comes to passing booleans on
-the command line. For example, passing ```--capitalize True``` in the above
-program does not result in the correct output.
+Passing ```--capitalize True``` to the above program would produce an unexpected
+output. That's because `argparse` doesn't handle booleans. One alternative would
+be to use the excellent `click` module instead of `argparse`.
 
-You can get around this by defining the variable as a lambda expression. Thus,
-we replace the argument ```capitalize``` in the above program like so,
+But, what if you're just writing something simple, and you want to get the job
+done quickly?
+
+Here's a nice Pythonic solution: define the type of your input parameter as a
+lambda expression that parses the expected (and common variants) input.
+
+Thus, to get a boolean parameter using the `argparse` module, simply make the type
+of your argument like so,
 
 ```python
 parser.add_argument("message",
@@ -57,10 +68,10 @@ parser.add_argument("message",
 )
 ```
 
-So, now, this will always parse the command line passed strings:
+Now, this will parse the command line passed strings:
 
 [ True, true, T, t, yes, Yes, 1]
 
 as the Python boolean ```True```.
 
-Happy coding!
+Hope this helps. Happy coding!

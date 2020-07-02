@@ -5,10 +5,12 @@ date: 2018-05-16
 author: dc
 comments: true
 analytics: false
-keywords: OpenMPI, parallel, HDF5, mpi4py, and h5py, pythong 
+keywords: OpenMPI, parallel, HDF5, mpi4py, and h5py, pythong
 description: how I installed parallel HDF5 for use in Python with MPI
 tag: parallel, HDF5, MPI
 category: blog
+show_excerpt: true
+excerpt: Step-by-step install instructions for parallel big-data processing 
 ---
 
 Here's the steps I took to set up pHDF5, MPI and Python on my macOS.

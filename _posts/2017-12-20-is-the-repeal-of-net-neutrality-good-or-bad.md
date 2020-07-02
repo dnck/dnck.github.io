@@ -5,6 +5,8 @@ date: 2017-12-20
 comments: true
 author: dc
 category: blog
+show_excerpt: true
+excerpt: The US gov decided that it can't classify ISPs as common carriers. That's a problem.
 ---
 
 With the repeal of Net Neutrality, the US government decided that it can't classify Internet Service Providers (ISPs) as <a href="https://www.law.cornell.edu/uscode/text/47/chapter-5/subchapter-II">common carriers.</a> What this means in practice is that ISPs are no longer under operating under the previous regulations enacted by the US Government. Instead, ISPs can now operate as contract carriers. As contract carriers, ISPs can charge different amounts of money to carry different data types, and they can even refuse to carry certain data types into your home. *Why would the US Gov do that?*

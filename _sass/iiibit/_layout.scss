@@ -117,9 +117,6 @@
   text-align: center;
 }
 
-
-
-
 .footer-heading {
   color: $footer-font-color;
   @include relative-font-size(1.125);
@@ -134,75 +131,6 @@
   @include relative-font-size(0.8);
   color: $footer-font-color;
   font-family: $header-font-family;
-}
-.footer-col-1 {
-  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-  width:         calc(20% - (#{$spacing-unit} / 2));
-  // color: $footer-font-color;;;s
-}
-.footer-col-2 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-3 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-4 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-5 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-6 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-7 {
-  width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-  width:         calc(10% - (#{$spacing-unit} / 2));
-}
-.footer-col-8 {
-  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-  width:         calc(20% - (#{$spacing-unit} / 2));
-}
-// .footer-col-9 {
-//   width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-//   width:         calc(10% - (#{$spacing-unit} / 2));
-// }
-// .footer-col-10 {
-//   width: -webkit-calc(10% - (#{$spacing-unit} / 2));
-//   width:         calc(10% - (#{$spacing-unit} / 2));
-// }
-
-@include media-query($on-laptop) {
-  .footer-col-1,
-  .footer-col-2 {
-    width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-    width:         calc(50% - (#{$spacing-unit} / 2));
-  }
-
-  .footer-col-3 {
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
-  }
-}
-
-@include media-query($on-palm) {
-  .footer-col {
-    float: none;
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
-  }
-}
-
-
-.contact-list,
-.social-media-list {
-  list-style: none;
-  margin-left: 0;
 }
 
 /**

@@ -8,6 +8,8 @@ analytics: true
 keywords:  
 description:
 category: blog
+show_excerpt: true
+excerpt: How we move the data becomes nearly as important as the data itself
 ---
 
 > Every byte of data has a story to tell, something of importance that will inform the next thing to be done

@@ -8,6 +8,8 @@ analytics: true
 keywords:  peer-to-peer networks
 description: an imaginary game for peer to peer networks   
 category: blog
+show_excerpt: true
+excerpt: How can we encourage cooperation among competitive players?
 ---
 
 Let us think about a special two player game in which if one player successfully cheats, then the other player losses the value gained by the former. On the other hand, if the cheater is detected, then the cheater losses a staked value to the non-cheater. Finally, in this game, both players will gain some value from cooperating and not cheating.

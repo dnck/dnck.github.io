@@ -5,6 +5,8 @@ date: 2017-06-04
 comments: true
 author: dc
 category: blog
+show_excerpt: true
+excerpt: Sometimes I make art on the computer...
 ---
 
 <div class="container-fluid">
@@ -14,4 +16,4 @@ category: blog
 	</div>
 	<div class = "col-md-6">
 <h5>Computer Generated Art</h5>
-I used a combination of tools to create the spinning fractal on the left: 1) <a href="https://www.nodebox.net/code/index.php/Home">Nodebox</a>, 2) typical python modules like PIL, and lastly 3) <a href="http://ffmpeg.org/">FFmpeg</a>.  If you like it, I can create you one! Just let me know. I've got plans to create another one that changes colors and expands and contracts. It's too bad it takes a while to load.
+I used a combination of tools to create the spinning fractal on the left: 1) <a href="https://www.nodebox.net/code/index.php/Home">Nodebox</a>, 2) typical python modules like PIL, and lastly 3) <a href="http://ffmpeg.org/">FFmpeg</a>.  If you like it, I can create you one! Just let me know. 

@@ -5,6 +5,8 @@ date: 2017-05-29
 author: dc
 comments: true
 category: blog
+show_excerpt: true
+excerpt: How useful is etymology?
 ---
 
 Is it possible to derive the meaning of a word from how it was originally used and how it developed through history?

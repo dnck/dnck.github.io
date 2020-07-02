@@ -5,6 +5,8 @@ date: 2018-02-11
 author: dc
 comments: true
 category: blog
+show_excerpt: true
+excerpt: What do Semantic Fluency Tasks measure? Ask a cognitive scientist.
 ---
 <div class="container-fluid">
 	<div class="row">

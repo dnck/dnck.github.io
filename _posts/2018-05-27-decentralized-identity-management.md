@@ -6,6 +6,8 @@ date: 2018-06-01
 comments: true
 analytics: true
 category: blog
+show_excerpt: true
+excerpt: Is it possible to create a decentralized identity management platform? Here's an idea...
 ---
 <style>
 img {
