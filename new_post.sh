@@ -15,5 +15,7 @@ analytics: true
 keywords:
 description:
 category: blog
+show_excerpt: true
+excerpt: 
 ---
 EOF
