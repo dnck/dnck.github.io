@@ -1,6 +1,6 @@
 ---
 layout: post
-title: gündelik hayatim
+title: gündelik hayatım
 author: dc
 date: 2020-07-15
 comments: true
