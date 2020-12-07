@@ -318,33 +318,45 @@ Create a new bash function in a file, `new-py-project.sh`.
 Copy and paste this code:
 
 ```bash
-#!/bin/sh
+#!/bin/bash
 
-function startvenv(){
-  if [ ! -f ./pyvenv.cfg ]; then
-    python -m venv ./
-    mkdir ./app
-    mkdir ./app/tests
-    cp $HOME/Templates/python_main.py ./simple-main.py
-    cp $HOME/Templates/python_cli.py ./main.py
-    cp $HOME/Templates/python_class.py ./app/app.py
-    cp $HOME/Templates/python_unittest.py ./app/tests/test.py
-    cp $HOME/Templates/python_test_context.py ./app/tests/context.py
-    cp $HOME/Templates/python.dockerfile ./Dockerfile
-    cp $HOME/Templates/python_setup.py ./setup.py
-    cp $HOME/Templates/python_makefile ./Makefile
-    touch ./requirements.txt
-    touch README.md
-    echo Click >> ./requirements.txt
-    echo python-dotenv >> ./requirements.txt
-    source ./bin/activate
-    pip install --upgrade pip
-    pip install -r requirements.txt
-    pip install --editable .
-    app
-    deactivate
-  fi
-}
+
+if [ -d ./$1 ]; then
+  echo "That dir already exists!"
+  exit 1
+else
+  mkdir ./$1
+  cd ./$1
+fi
+if [ ! -f ./pyvenv.cfg ]; then
+  python -m venv ./
+  mkdir ./app
+  mkdir ./app/tests
+  cp $HOME/Templates/python_main.py ./simple-main.py
+  cp $HOME/Templates/python_cli.py ./main.py
+  cp $HOME/Templates/python_class.py ./app/app.py
+  cp $HOME/Templates/python_unittest.py ./app/tests/test.py
+  cp $HOME/Templates/python_test_context.py ./app/tests/context.py
+  cp $HOME/Templates/python.dockerfile ./Dockerfile
+  cp $HOME/Templates/python_setup.py ./setup.py
+  cp $HOME/Templates/python_makefile ./Makefile
+  cp $HOME/Templates/python_gitignore ./.gitignore
+  touch ./requirements.txt
+  touch README.md
+  echo Click >> ./requirements.txt
+  echo python-dotenv >> ./requirements.txt
+  source ./bin/activate
+  pip install --upgrade pip
+  pip install -r requirements.txt
+  pip install --editable .
+  app
+  deactivate
+  rm -rf __pycache__
+  git init
+  git add .
+  git status
+  echo "Created new python project in $1"
+fi
 ```
 
 ## Step 3.
@@ -352,18 +364,20 @@ function startvenv(){
 In your `.bash_aliases` file, put the following line,
 
 ```bash
-alias newvenv='source $HOME/Utilities/new-python-project.sh && startvenv'
+alias python='python3'
+alias pip='pip3'
+alias newpyproj='$HOME/Utilities/new-python-project.sh'
 alias entervenv='source bin/activate'
+
 ```
 
 Now, source your .bash_aliases file, and test out your automation pipeline:
 
 ```bash
-mkdir new-py-project-test && cd new-py-project-test && \
-  newvenv && \
-  entervenv  
+newpyproj my-awesome-app
 ```
 
-You should be able to run the ```app``` command from without your new directory.
+When you `cd` into `my-awesome-app` dir, you should be able to run the ```app```
+command once you enter into the venv with your new `entervenv` alias.
 
 Now, don't waste any more time. Start developing!
