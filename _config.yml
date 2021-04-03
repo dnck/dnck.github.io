@@ -1,32 +1,28 @@
-author: Daniel J. Cook
-title: danjcook.com
-email: cookdj0128@gmail.com
+author: Esra Al
+title: esraal.com
+email: esra.al.mbg@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  cog sci cookies
+  science of consciousness & heart-brain interactions
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://www.danjcook.com" # the base hostname & protocol for your site,
-twitter_username: dan_j_cook
-github_username:  dnck
-linkedin_username: danjohncook
-so_username: "4444691"
-fb_username: Danieljohncook
-ig_username: dan_j_cook
+url: "https://www.esraal.com" # the base hostname & protocol for your site,
+twitter_username: esra_mbg
+github_username:  Esra-Al
+linkedin_username: esra-al-86aa76143
 # Build settings
 markdown: kramdown
-#theme: minima
 plugins:
   - jekyll-feed
-disqus_shortname: dcook
-google_analytics: UA-97378833-1
-rawgitfiles: "https://raw.githubusercontent.com/dnck/dnck.github.io/master"
+disqus_shortname:
+google_analytics:
+rawgitfiles: "https://raw.githubusercontent.com/Esra-Al/Esra-Al.github.io/master"
 mathjax: true
 pages:
   - index.md
   - about.md
   - blog.md
-  - downloads.md
+  - contributions.md
 header_pages:
   - index.md
   - about.md
   - blog.md
-  - downloads.md
+  - contributions.md

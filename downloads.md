@@ -1,4 +1,0 @@
----
-layout: downloadtoc
-title: downloads
----

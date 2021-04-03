@@ -8,7 +8,7 @@ cat << EOF >> "./_posts/$POST_TITLE"
 ---
 layout: post
 title: $1
-author: dc
+author: ea
 date: $(date +'%Y-%m-%d')
 comments: true
 analytics: true
@@ -16,6 +16,6 @@ keywords:
 description:
 category: blog
 show_excerpt: true
-excerpt: 
+excerpt:
 ---
 EOF

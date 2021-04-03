@@ -1,0 +1,90 @@
+[
+   {
+      "publications":[
+         {
+            "title":"Heart–brain interactions shape somatosensory perception and evoked potentials",
+            "authors":"Al, E., Iliopoulos, F., Forschack, N., Nierhaus, T., Grund, M., Motyka, P., … & Villringer, A.",
+            "date":"2020",
+            "journal":" Proceedings of the National Academy of Sciences",
+            "url":"https://www.pnas.org/content/early/2020/04/24/1915629117"
+         },
+         {
+            "title":"Interactions between cardiac activity and conscious somatosensory perception",
+            "authors":"Motyka, P., Grund, M., Forschack, N., Al, E., Villringer, A., & Gaebler, M.",
+            "date":"2020",
+            "journal":" Psychophysiology",
+            "url":"https://onlinelibrary.wiley.com/doi/full/10.1111/psyp.13424"
+         },
+         {
+            "title":"BOLD and EEG signal variability at rest differently relate to aging in the human brain",
+            "authors":"Kumral, D., Sansal, F., Cesnaite, E., Mahjoory, K., Al, E., Gaebler, M., Nikulin, V. V., & Villringer, A.",
+            "date": "2019",
+            "journal":" Neuroimage",
+            "url":"https://www.sciencedirect.com/science/article/pii/S1053811919309644"
+         }
+      ],
+      "preprints":[
+         {
+            "title":"Heart-brain interactions shape somatosensory perception and evoked potentials",
+            "authors":"Al, E., Iliopoulos, F., Forschack, N., Nierhaus, T., Grund, M., Motyka, P., Gaebler, M., Nikulin,, V. V., & Villringer, A.",
+            "date":"2019",
+            "journal":" bioRxiv",
+            "url":"https://www.biorxiv.org/content/10.1101/750315v1.abstract"
+         }
+      ],
+      "oral-presentations":[
+        {
+           "title":"Somatosensory Perception Varies across the Cardiac Cycle",
+           "date":"2018",
+           "conference":"Association for the Scientific Study of Consciousness (ASSC)",
+           "url": "https://theassc.org/"
+        }
+      ],
+      "poster-presentations":[
+          {
+             "title":"Somatosensory Perception Varies across the Cardiac Cycle",
+             "date":"2019",
+             "conference":"MindBrainBody Symposium",
+             "url": "http://www.mindbrainbody.de/"
+          },
+          {
+             "title":"Somatosensory Detection and Localization Across The Cardiac Cycle",
+             "date":"2018",
+             "conference":"CuttingEEG conference",
+             "url": "https://cuttingeeg.org/"
+          },
+          {
+             "title":"Somatosensory Detection and Localization Across The Cardiac Cycle",
+             "date":"2018",
+             "conference":"Society for Neuroscience (SfN)",
+             "url": "https://www.sfn.org/meetings/neuroscience-2018"
+          },
+          {
+             "title":"Do Somatosensory Detection and Localization Vary Across The Cardiac Cycle?",
+             "date":"2017",
+             "conference":"MindBrainBody Symposium",
+             "url": "http://www.mindbrainbody.de/"
+          }
+      ],
+      "press":[
+         {
+            "title":"How your heart influences what you perceive and fear",
+            "date":"2020",
+            "source":"Quanta Magazine",
+            "url": "https://www.quantamagazine.org/how-your-heart-influences-what-you-perceive-and-fear-20200706/"
+         },
+         {
+            "title":"Wie das Herz die Wahrnehmung beeinflusst",
+            "date":"2020",
+            "source":"Max Planck Newsroom",
+            "url": "https://www.mpg.de/wie-das-herz-die-wahrnehmung-beeinflusst"
+         },
+         {
+            "title":"How the heart affects our perception",
+            "date":"2020",
+            "source":"Neuroscience News",
+            "url": "https://neurosciencenews.com/perception-heart-16267/"
+         }
+      ]
+   }
+]

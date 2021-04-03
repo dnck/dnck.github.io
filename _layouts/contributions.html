@@ -3,17 +3,16 @@ layout: page
 ---
 
 <div class="home">
-  <h2 class="post-list-heading">Blog</h2>
+  <h2 class="post-list-heading">Contributions</h2>
   {{ content }}
   {%- if site.posts.size > 0 -%}
       {%- for post in site.posts -%}
-      {% if post.category == "blog" %}
+      {% if post.category == "contributions" %}
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <a href="{{ post.url | relative_url }}" class="blogtoc-item"><strong>{{ post.title }}, </strong></a>
-        <span class="post-meta">{{ post.date | date: date_format }}</span><br>
-        {%- if post.show_excerpt -%}
-          {{ post.excerpt }}<br>
-        {%- endif -%}
+          <p><a href="{{ post.url | relative_url }}" class="blogtoc-item"><strong>{{ post.content }}</strong></a></p>
+          {%- if post.show_excerpt -%}
+            {{ post.excerpt }}<br>
+          {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>

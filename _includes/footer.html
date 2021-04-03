@@ -1,9 +1,6 @@
 <footer class="site-footer">
   <div class="wrapper">
     <div class="footer-container">
-      {%- if site.email -%}
-        <a class="footer-link" href="mailto:{{ site.email }}">...:::emailto:::...</a><br>
-      {%- endif -%}
       {%- if site.github_username -%}
         <a href="https://github.com/{{ site.github_username| cgi_escape | escape }}" target="_blank">
           <svg class="svg-icon">
@@ -20,34 +17,10 @@
           </svg>
         </a>
       {%- endif -%}
-      {%- if site.so_username -%}
-        <a href="https://stackexchange.com/users/{{ site.so_username| cgi_escape | escape }}" target="_blank" >
-          <svg class="svg-icon">
-            <use xlink:href="{{ '/assets/minima-social-icons.svg#stackoverflow' | relative_url }}"></use>
-          </svg>
-        </a>
-      {%- endif -%}
       {%- if site.twitter_username -%}
         <a href="https://www.twitter.com/{{ site.twitter_username| cgi_escape | escape }}" target="_blank">
           <svg class="svg-icon">
             <use xlink:href="{{ '/assets/minima-social-icons.svg#twitter' | relative_url }}">
-            </use>
-          </svg>
-        </a>
-      {%- endif -%}
-      {%- if site.fb_username -%}
-        <a href="https://www.facebook.com/{{ site.fb_username| cgi_escape | escape }}" target="_blank">
-          <svg class="svg-icon">
-            <use xlink:href="{{ '/assets/minima-social-icons.svg#facebook' | relative_url }}">
-            </use>
-          </svg>
-        </a>
-      {%- endif -%}
-
-      {%- if site.ig_username -%}
-        <a href="https://www.instagram.com/{{ site.ig_username| cgi_escape | escape }}" target="_blank">
-          <svg class="svg-icon">
-            <use xlink:href="{{ '/assets/minima-social-icons.svg#instagram' | relative_url }}">
             </use>
           </svg>
         </a>
