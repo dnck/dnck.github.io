@@ -12,7 +12,7 @@ show_excerpt: true
 excerpt: What's life like during corona for me ... in Turkish
 ---
 
-Corona'dan sonra hayatımı değiştirdim. Corona'dan önce her gün çalışıyordum, şimdi çalışmıyorum. Sekiz ya da dokuz saat uyuyorum.
+Corona'dan sonra hayatımı değiştirdim. Corona'dan önce her gün çalışıyordum, şimdi çalışmıyorum. Sekiz saat uyuyorum.
 
 Sabahları bazen kahvaltı yapmıyorum. Ama kahvaltı yaparsam, sağlıklı yemek yiyorum. Peynir, yumurta, zeytin, domates ya da yoğurt ve tam tahıllı ekmekle reçel. Her sabah kahve içiyorum. (Her zaman!) Kahvaltıdan sonra kişisel projeler yapıyorum. Projelerim arasında Türkçe öğrenmek ve bilgisayar programlamak var.
 
@@ -22,4 +22,4 @@ Genellikle akşam yemeği pişiririm. Akşamları bazen bilgisayarda Fortnite oy
 
 Tabii ki, sevgilime zaman ayırıyorum.  
 
-On ikiden ya da on birden sonra uyanıyorum ve her zaman birden önce uyanıyorum.
+On ikiden ya da on birden sonra uyuyorum.
