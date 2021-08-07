@@ -1,10 +1,10 @@
 #!/bin/bash
 
-export POST_TITLE=$(date +'%Y-%m-%d-')$1'.md'
+POST_TITLE="$(date +'%Y-%m-%d-')""${1}"".md"
+NEW_POST_FILE="./_posts/""$POST_TITLE"
+touch "$NEW_POST_FILE"
 
-touch ./_posts/$POST_TITLE
-
-cat << EOF >> "./_posts/$POST_TITLE"
+cat << EOF >> "$NEW_POST_FILE"
 ---
 layout: post
 title: $1
@@ -16,6 +16,6 @@ keywords:
 description:
 category: blog
 show_excerpt: true
-excerpt: 
+excerpt:
 ---
 EOF

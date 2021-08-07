@@ -9,8 +9,14 @@ show_excerpt: true
 excerpt: All about me!
 ---
 
-I'm a pragmatic, technologically-oriented, cognitive scientist working on computer networks and distributed systems.
+I'm a pragmatic cognitive scientist turned software-developer,
+turned devops-engineer, working on computer networks and distributed
+systems.
 
-Inspired by the similarities between the way in which the human mind is organized into a collection of cooperative, independent modules and peer-to-peer networks, after my Master's degree in cognitive neuroscience, I took employment at a software company where I developed a modeling and simulation pipeline of a network architecture. The goal of the simulation was to make the interfaces of the system architecture explicit for modification. After working on this project, I took an employment position working as a DevOps Engineer. Now, I spend most of my work days thinking about data structures & algorithms. I don't really have too much time for blogging and website design, but from time to time, I update this site in my free time.
-
-You can find my cv [here](https://github.com/dnck/dnck.github.io/raw/master/assets/personelle/daniel-cook-cv-07-2020.pdf)
+Inspired by the similarities between the way in which the human mind
+is organized into a collection of cooperative, independent modules
+and peer-to-peer networks, after my Master's degree in cognitive
+science, I worked at a software company on consensus algorithms in
+peer-to-peer networks. After that, I found myself doing a lot of
+devops related tasks, like making black-boxes more open, and caring
+for the entire software development life cycle.
