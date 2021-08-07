@@ -8,15 +8,16 @@ analytics: true
 keywords: python, templates, agile
 description: A comprehensive set of instructions for automating a new Python project
 category: blog
+code: false
 show_excerpt: true
 excerpt: A comprehensive set of instructions for automating a new Python project
 ---
 
-This blog post contains a set of files and bash scripts for creating a new python
-project in a virtual environment. It installs a command line tool for the new
-app, and defines a minimal Dockerfile, and Makefile, which can be used for cloud
-deployments. It's my hope that you find this helpful, and it minimizes the time
-you spend creating new projects that follow best practices.
+This blog post contains a set of files and bash scripts for creating a new
+python project in a virtual environment. It installs a command line tool for
+the new app, and defines a minimal Dockerfile, and Makefile, which can be used
+for building the image. If you find this helpful, or you think it's whack,
+let me know in the comments!
 
 
 ## Step 1.
@@ -39,13 +40,17 @@ We will go through the code of each of these files.
 
 ### python_setup.py
 ```python
+# -*- coding: utf-8 -*-
 import setuptools
+
 
 with open("./README.md", "r") as fh:
     long_description = fh.read()
 
+# Replace with your own project name
+
 setuptools.setup(
-    name="app", # Replace with your own project name
+    name="app",
     version="0.0.1",
     author="Your Name",
     author_email="youremail@somedomain.com",
@@ -320,6 +325,7 @@ Copy and paste this code:
 ```bash
 #!/bin/bash
 
+import Hello
 
 if [ -d ./$1 ]; then
   echo "That dir already exists!"
