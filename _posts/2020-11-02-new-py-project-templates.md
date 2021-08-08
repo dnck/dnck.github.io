@@ -187,8 +187,7 @@ This code is for legacy that does not want to transition to the use of the Click
 module. It is not necessary, but it can be helpful for quick one-off projects.
 
 ### python_makefile
-```txt
-# If you got podman installed, we're going to build with it!
+```
 PODMAN := $(shell command -v podman 2>/dev/null)
 DOCKER := $(shell command -v docker 2>/dev/null)
 ifeq ($(PODMAN), /usr/bin/podman)
