@@ -4,14 +4,19 @@ email: cookdj0128@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   cog sci cookies
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://www.danjcook.com" # the base hostname & protocol for your site,
+url: "https://www.danjcook.com" # the base hostname & protocol for your site
+# twitter username
 twitter_username: dan_j_cook
+# github username
 github_username:  dnck
+# linkedin username
 linkedin_username: danjohncook
+# scienceopen username
 so_username: "4444691"
+# facebook username
 fb_username: Danieljohncook
+# instangram username
 ig_username: dan_j_cook
-# Build settings
 markdown: kramdown
 #theme: minima
 plugins:

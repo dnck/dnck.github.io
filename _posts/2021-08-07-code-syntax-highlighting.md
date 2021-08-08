@@ -5,22 +5,26 @@ author: dc
 date: 2021-08-07
 comments: true
 analytics: true
-keywords:
-description:
+keywords: code, syntax, palette
+description: This posts plays around with the code syntax color palette of darcula
 category: blog
 show_excerpt: true
 excerpt: I got a lot of respect for good design!
 ---
 
 
-After failing to get nice looking code-syntax highlighting, I have a lot of
-respect for the frontend-devs that create beautiful designs with colors.
-As you can see on this page, I'm more of a backend, brute-force dev. Haha.
+After struggling with code-syntax highlighting in css, I have a lot of
+respect for the frontend-devs that create color palettes for programmers.
 
-Anyway, I'm playing around with some syntax highlighting. You can see my
-colors and rules in the _sass/iiibit directory. It's a bit of a mess right
-now, so I'm going to use this page to experiment with different languages
-to see what css variables control the appearance of the code in the <pre>\<code> blocks.
+As you can see on this page, I'm more of a backend, brute-force dev! Haha.
+
+Anyway, in this post, I'll play around with the code syntax color palette. I'm
+using [the Darcula Color Palette](https://draculatheme.com/contribute) with my common languages to get something
+that hopefully isn't horrible on the eyes.
+
+Right now, I have no idea what css variables control the appearance of the code
+in the <pre>\<code> blocks. So, as always, trial-and-error is the best way to
+learn!
 
 First comes Python,
 
@@ -37,7 +41,7 @@ class Foo():
         pass  # inline comment
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """This is a multiline
     comment
     """
@@ -64,7 +68,7 @@ func main() {
 
 The comes c++,
 
-```c++
+```cpp
 #include <iostream>
 
 // TODO: Implement Foo
@@ -89,7 +93,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-And finally, bash,
+And bash,
 
 ```bash
 # this is a comment
@@ -99,8 +103,22 @@ function hello() {
 }
 ```
 
-Oddly, as you can see, my current styles need to be adjusted. I thought I was
-actually getting orange fo comments in python, but look at that, I got them in
-every language except python!! And tbh, I'm feeling rusty on Python. I'm not
-even sure if that py program would run!
+And Docker,
 
+```Dockerfile
+# comment
+FROM docker.io/prom/prometheus
+COPY config/prometheus.yaml /etc/prometheus/
+```
+
+And a Makefile,
+
+```cmake
+.PHONY: help
+help: ## The default task is help.
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+.DEFAULT_GOAL := help
+
+help: ## just say hello
+	 echo "hello world!"
+```
