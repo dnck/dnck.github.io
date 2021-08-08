@@ -6,8 +6,8 @@ title: about
 <div class="row">
   <div class="column">
   <a class='hover_image' href='#'>
-      <img src='https://www.danjcook.com/assets/images/me_box.png'/>
-      <img  src='https://www.danjcook.com/assets/images/me.png' class='hide'/>
+      <img src='https://www.danjcook.com/files/me_box.png'/>
+      <img  src='https://www.danjcook.com/files/me.png' class='hide'/>
   </a>
   </div>
   <div class="column">

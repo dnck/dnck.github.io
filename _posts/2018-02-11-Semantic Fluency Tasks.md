@@ -11,12 +11,12 @@ excerpt: What do Semantic Fluency Tasks measure? Ask a cognitive scientist.
 <div class="container-fluid">
 	<div class="row">
 		<div class = "col-md-6">
- <img src="{{site.url}}/assets/images/linear.png" class="img-fluid">
+ <img src="{{site.url}}/files/linear.png" class="img-fluid">
  <br>
  <strong>Figure 1. Linear naming in the Semantic Fluency Task.</strong>
 	    </div>
 	    <div class = "col-md-6">
-         <img src="{{site.url}}/assets/images/hierarchical.png" class="img-fluid">
+         <img src="{{site.url}}/files/hierarchical.png" class="img-fluid">
     <strong>Figure 2.  Hierarchical clustering in the Semantic Fluency Task. </strong><br><br>
      In the Semantic Fluency Task, you hear a word like "fruit", and then you need to name as many words as possible that belong to that category, relying only on your memory.
 <br><br>
@@ -38,13 +38,13 @@ and repeat.
 
  An alternative to this story is depicted in Figure 3.
 
- <img src="{{site.url}}/assets/images/hierarchical2.png" class="img-fluid">
+ <img src="{{site.url}}/files/hierarchical2.png" class="img-fluid">
      <br><br>
  <strong> Figure 3. Red edges show simultaneous activation of items. Green edges show serial iteration through nodes in a cluster. Black edges show priming from node to cluster. <strong>
 
  Here we still have activation of a single key value, which activates clusters, but after iterating through a cluster, the most recent item primes the next cluster (from oranges to berries), which gives rise to the next dictionary (e.g. cluster of related items). What's parallel about this strategy is that there may be a thread that gets updated while another thread is iterating through items in a cluster. As the thread updates, it starts to weigh more heavily toward a new key target (e.g. a target for the next key in a cluster). In Figure 4., I show this explicitly with blue edges, and a ? node.
 
-  <img src="{{site.url}}/assets/images/hierarchical3.png" class="img-fluid">
+  <img src="{{site.url}}/files/hierarchical3.png" class="img-fluid">
       <br><br>
       <strong>Figure 4. Blue edges denote an updating process for the prime</strong>
 

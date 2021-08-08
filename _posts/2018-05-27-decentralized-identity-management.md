@@ -15,7 +15,7 @@ img {
 }
 </style>
 
-<img src="https://www.danjcook.com/assets/images/Untitled Diagram.png" class="img-fluid">
+<img src="https://www.danjcook.com/assets/images/identity.png" class="img-fluid">
 
 **Figure 1.**
 

@@ -13,12 +13,12 @@ I recently read <a href = "http://juanrloaiza.blogspot.de/2017/08/whos-most-ment
 
 I will summarize what I've learned some time else. But, in general, this looks like a promising method to uncover similarity within linguistic corpuses.
 
-Note: <a href = "https://github.com/dnck/dnck.github.io/blob/master/assets/data/knn_on_sep.py">if you decide to run this code, the function preprocess() is still incredibly time consuming because I suck at sanitizing text.</a>
+Note: <a href = "https://github.com/dnck/dnck.github.io/blob/master/files/knn_on_sep.py">if you decide to run this code, the function preprocess() is still incredibly time consuming because I suck at sanitizing text.</a>
 
 <div class="container-fluid">
 	<div class="row">
 		<div class = "col-md-6">
-			<img src="{{site.url}}/assets/images/stanfordmine.png" class="img-fluid">
+			<img src="{{site.url}}/files/stanfordmine.png" class="img-fluid">
 		</div>
 	</div>
 </div>
@@ -30,7 +30,7 @@ Figure 1. Directed Graph of the nearest neighbors for 35 articles. Scroll down t
 <div class="container-fluid">
 	<div class="row">
 		<div class = "col-md-6">
-			<img src="{{site.url}}/assets/images/stanfordmine2.png" class="img-fluid">
+			<img src="{{site.url}}/files/stanfordmine2.png" class="img-fluid">
 		</div>
 	</div>
 </div>
