@@ -6,11 +6,11 @@ COPY go.mod .
 COPY go.sum .
 COPY dns-tool.go .
 COPY server ./server
-COPY make-client-certs.sh .
+COPY certs ./certs
 
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/* && \
-    /dns-tool/make-client-certs.sh && \
+    /dns-tool/certs/make-client-certs.sh && \
     go build .
 
 FROM docker.io/golang:alpine
