@@ -1,3 +1,4 @@
 .idea/
 dns-tool
-certs
+certs/*.key 
+certs/*.pem 
