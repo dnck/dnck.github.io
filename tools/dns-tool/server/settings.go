@@ -3,9 +3,12 @@ package dnsserver
 import "fmt"
 
 type Settings struct {
-	Address        string
-	Port           int
-	DnsResolverPin string
+	Address            string
+	Port               int
+	ClientCertDir      string
+	DnsResolverAddress string
+	DnsResolverFqdn    string
+	DnsResolverPin     string
 }
 
 func (settings *Settings) formatAddress() string {
