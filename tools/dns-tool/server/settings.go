@@ -5,7 +5,6 @@ import "fmt"
 type Settings struct {
 	Address            string
 	Port               int
-	ClientCertDir      string
 	DnsResolverAddress string
 	DnsResolverFqdn    string
 	DnsResolverPin     string

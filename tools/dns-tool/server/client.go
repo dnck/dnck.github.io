@@ -1,13 +1,19 @@
 package dnsserver
 
 import (
+	"bytes"
 	"crypto/ecdsa"
+	"crypto/rand"
+	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/tls"
 	"crypto/x509"
+	"crypto/x509/pkix"
 	"encoding/base64"
+	"encoding/pem"
 	"errors"
 	"fmt"
+	"math/big"
 	"net"
 	"time"
 )
@@ -23,20 +29,71 @@ type dnsClient struct {
 	tlsConfig *tls.Config
 }
 
-func (settings *Settings) makeDnsClient() (*dnsClient, error) {
-	cert, err := tls.LoadX509KeyPair(settings.ClientCertDir+"/client.pem", settings.ClientCertDir+"/client.key")
+func makeTlsCert() (*tls.Certificate, error) {
+	caCert := &x509.Certificate{
+		SerialNumber: big.NewInt(1),
+		Subject: pkix.Name{
+			Organization:  []string{"N26"},
+			Country:       []string{"DE"},
+			Province:      []string{"Brandenburg"},
+			Locality:      []string{"Berlin"},
+			StreetAddress: []string{"123 Cloud Strasse"},
+			PostalCode:    []string{"12047"},
+		},
+		NotBefore:             time.Now(),
+		NotAfter:              time.Now().AddDate(2, 6, 0),
+		IsCA:                  true,
+		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+		BasicConstraintsValid: true,
+	}
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
-		return nil, errors.New("[settings.makeDnsClient]: cert error")
+		return nil, err
+	}
+	privateKeyPem := new(bytes.Buffer)
+	err = pem.Encode(privateKeyPem, &pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
+	})
+	if err != nil {
+		return nil, err
+	}
+	caCertBytes, err := x509.CreateCertificate(rand.Reader, caCert, caCert, &privateKey.PublicKey, privateKey)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	caCertPem := new(bytes.Buffer)
+	err = pem.Encode(caCertPem, &pem.Block{
+		Type:  "CERTIFICATE",
+		Bytes: caCertBytes,
+	})
+	if err != nil {
+		return nil, err
+	}
+	dnsClientCerts, err := tls.X509KeyPair(caCertPem.Bytes(), privateKeyPem.Bytes())
+	if err != nil {
+		return nil, err
+	}
+	return &dnsClientCerts, nil
+}
+
+func (settings *Settings) makeDnsClient() (*dnsClient, error) {
+	tlsCert, err := makeTlsCert()
+	//tlsCert, err := tls.LoadX509KeyPair("certs/client.pem", "certs/client.key")
+	if err != nil {
+		return nil, err
 	}
 	c := dnsClient{settings.DnsResolverPin,
 		settings.DnsResolverAddress,
 		settings.DnsResolverFqdn,
-		&tls.Config{Certificates: []tls.Certificate{cert}, ServerName: settings.DnsResolverFqdn},
+		&tls.Config{Certificates: []tls.Certificate{*tlsCert}, ServerName: settings.DnsResolverFqdn},
 	}
 	c.tlsConfig.VerifyConnection = c.verifyConnectionState
 	err = c.establishTrust()
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 	return &c, nil
 }
@@ -111,17 +168,17 @@ func (c *dnsClient) sendQuery(msg []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(fmt.Sprintf("[sendQuery] [DEBUG] wrote %d bytes to safeConn", n))
-	buf := make([]byte, 0, 4096) // big buffer for possibly very large domain names
+	fmt.Println(fmt.Sprintf("[dnsClient.sendQuery] [DEBUG] wrote %d bytes to safeConn", n))
+	buf := make([]byte, 4096)
 	tmp := make([]byte, 256)
-	// TODO (dnck): what is the end of a dns message? How can we know it terminated?
 	for {
 		n, err := safeConn.Read(tmp)
 		if err != nil {
-			fmt.Println("[sendQuery] [ERROR]", err.Error())
+			fmt.Println("[dnsClient.sendQuery] [ERROR]", err.Error())
 			break
 		}
 		buf = append(buf, tmp[:n]...)
 	}
+	// fmt.Println(fmt.Printf("[dnsClient.sendQuery] [DEBUG] DNS ANSWER\n%s", hex.Dump(r.Bytes())))
 	return buf, nil
 }

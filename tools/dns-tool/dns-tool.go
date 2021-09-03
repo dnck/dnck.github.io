@@ -14,16 +14,12 @@ var settings dnsserver.Settings
 func init() {
 	flag.StringVar(&settings.Address,
 		"address",
-		"0.0.0.0",
-		"ipv4 address to listen on")
+		"",
+		"address the dns-server listens on")
 	flag.IntVar(&settings.Port,
 		"port",
 		5353,
-		"port to bind to")
-	flag.StringVar(&settings.ClientCertDir,
-		"cert-dir",
-		"certs",
-		"certificate directory for the client certs")
+		"port the dns-server binds to")
 	flag.StringVar(&settings.DnsResolverPin,
 		"resolver-pin",
 		"",

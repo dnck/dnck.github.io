@@ -9,10 +9,7 @@ go build .
 ```
 
 ```bash
-cd certs && \
-  ./make-client-certs.sh && \
-  cd .. && \
-  ./dns-tool
+./dns-tool
 ```
 
 ### Build and run container image
