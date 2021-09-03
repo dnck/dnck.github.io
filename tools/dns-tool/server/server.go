@@ -1,27 +1,22 @@
 package dnsserver
 
 import (
+	"bufio"
+	"encoding/binary"
 	"fmt"
 	"net"
 	"time"
 )
 
-type DnsQuestion struct {
-	ID          string
-	Flags       string
-	QueryDomain string
-	RequestType string
-}
-
 type dnsProxyServer struct {
-	address             string
-	port                int
-	readTimeoutDuration time.Duration
-	dnsStubResolver     *dnsClient
+	address         string
+	port            string
+	timeoutSeconds  int
+	dnsStubResolver *dnsClient
 }
 
 func (proxy *dnsProxyServer) listenAndServe() error {
-	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", proxy.address, proxy.port))
+	ln, err := net.Listen("tcp", net.JoinHostPort(proxy.address, proxy.port))
 	if err != nil {
 		return err
 	}
@@ -34,43 +29,41 @@ func (proxy *dnsProxyServer) listenAndServe() error {
 	}
 }
 
-func (proxy *dnsProxyServer) handle(clientConn net.Conn, dnsClient dnsClient) {
-	fmt.Println("[dnsProxyServer.handle] [DEBUG] dispatching dns-request over tls")
-	buf := make([]byte, 0, 4096) // big buffer for perhaps large domain names in the dns query
-	tmp := make([]byte, 256)
-	err := clientConn.SetReadDeadline(time.Now().Add(proxy.readTimeoutDuration))
+func (proxy *dnsProxyServer) readBytes(conn net.Conn) ([]byte, error) {
+	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(proxy.timeoutSeconds) * time.Second))
+	reader := bufio.NewReader(conn)
+	// TCP DNS messages are prefixed with a two byte length field:
+	// https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2
+	firstTwoBytes, err := reader.Peek(2)
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		return nil, err
 	}
-	for {
-		n, err := clientConn.Read(tmp)
-		if err != nil {
-			fmt.Println("[dnsProxyServer.handle] [ERROR]", err.Error())
-			break
-		}
-		buf = append(buf, tmp[:n]...)
-	}
-	answer, err := dnsClient.sendQuery(buf)
+	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
+	allBytes, err := reader.Peek(2+int(lengthData))
+	debugf(fmt.Sprintf("read %d bytes from frontend", len(allBytes)))
 	if err != nil {
-		return
+		return nil, err
 	}
-	n, err := clientConn.Write(answer)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println(fmt.Sprintf("[dnsProxyServer.handle] [DEBUG] wrote %d bytes to dnsClient connection", n))
+	return allBytes, nil
 }
 
-func (settings *Settings) MakeDnsProxyServer() error {
-	fmt.Println("[MakeDnsProxyServer] [DEBUG] responding to DNS requests @ tcp://localhost:5353")
-	dnsClient, err := settings.makeDnsClient()
+func (proxy *dnsProxyServer) handle(conn net.Conn, dnsClient dnsClient) {
+	infof("received dns query from frontend")
+	buf, err := proxy.readBytes(conn)
 	if err != nil {
-		return err
+		debugf(err.Error())
+		return
 	}
-	proxyServer := dnsProxyServer{settings.Address, settings.Port,
-		2 * time.Second, dnsClient,
+	//fmt.Println(hex.Dump(buf))
+	answer, err := dnsClient.sendQuery(buf)
+	if err != nil {
+		debugf(err.Error())
+		return
 	}
-	return proxyServer.listenAndServe()
+	_, err = conn.Write(answer)
+	if err != nil {
+		debugf(err.Error())
+		return
+	}
+	infof("responded to frontend")
 }

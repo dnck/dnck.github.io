@@ -16,10 +16,14 @@ func init() {
 		"address",
 		"",
 		"address the dns-server listens on")
-	flag.IntVar(&settings.Port,
+	flag.StringVar(&settings.Port,
 		"port",
-		5353,
+		"5353",
 		"port the dns-server binds to")
+	flag.IntVar(&settings.TimeoutSeconds,
+		"timeout",
+		3,
+		"global read/write deadline for proxy server and dns-client")
 	flag.StringVar(&settings.DnsResolverPin,
 		"resolver-pin",
 		"",
@@ -36,7 +40,7 @@ func init() {
 }
 
 func main() {
-	err := settings.MakeDnsProxyServer()
+	err := settings.Run()
 	if err != nil {
 		fmt.Println(err.Error())
 	}
