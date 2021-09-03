@@ -22,7 +22,7 @@ import (
 )
 
 type dnsClient struct {
-	// the sha256 hash of the trusted dns resolver's tls certificate (also known as SPKI)
+	// sha256 hash of the dns resolver's tls certificate
 	certPin string
 	// the trusted dns resolver's address and port and port
 	addressPort string
@@ -61,14 +61,23 @@ func makeSelfSignedCertificate(privateKey *rsa.PrivateKey) ([]byte, error) {
 			StreetAddress: []string{"123 Cloud Street"},
 			PostalCode:    []string{"12047"},
 		},
-		NotBefore:             time.Now(),
-		NotAfter:              time.Now().AddDate(2, 6, 0),
-		IsCA:                  true,
-		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+		NotBefore: time.Now(),
+		NotAfter:  time.Now().AddDate(2, 6, 0),
+		IsCA:      true,
+		ExtKeyUsage: []x509.ExtKeyUsage{
+			x509.ExtKeyUsageClientAuth,
+			x509.ExtKeyUsageServerAuth,
+		},
 		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
 		BasicConstraintsValid: true,
 	}
-	caCertBytes, err := x509.CreateCertificate(rand.Reader, caCert, caCert, &privateKey.PublicKey, privateKey)
+	caCertBytes, err := x509.CreateCertificate(
+		rand.Reader,
+		caCert,
+		caCert,
+		&privateKey.PublicKey,
+		privateKey,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -105,8 +114,8 @@ func makeTlsConfig(dnsResolverFqdn string) (*tls.Config, error) {
 		ServerName: dnsResolverFqdn}, nil
 }
 
-// establishTrust dials the address for the trusted dns resolver and performs a tls handshake to acquire the
-// the sha256 hash of the resolver's tls cert
+// establishTrust dials the address for the trusted dns resolver and performs a
+// tls handshake to acquire the sha256 hash of the resolver's tls cert
 func (d *dnsClient) establishTrust() error {
 	tlsConfig, err := makeTlsConfig(d.commonName)
 	if err != nil {
@@ -143,25 +152,27 @@ func (d *dnsClient) verifyConnection(state tls.ConnectionState) error {
 		base64.StdEncoding.Encode(pin, sum[:])
 		if v.Subject.CommonName == d.commonName {
 			if d.certPin == "" {
-				// This is the first tls connection, so we store the pin in memory (unless passed at run time)
+				// This is the first tls connection, so we store the pin in memory
+				// (unless passed at run time)
 				d.certPin = string(pin)
 				debugf("stored hash of tls server's certificate")
 				return nil
 
 			} else if d.certPin == string(pin) && d.certPin != "" {
 				// we've already established the pin, so we check that they match
-				//log.Println("[dnsClient.verifyConnection] [DEBUG] tls server's pin matched known pin")
+				// log.Println("[dnsClient.verifyConnection] [DEBUG] tls server's pin
+				// matched known pin")
 				return nil
 
 			} else {
 				// the pin has not matched, so we do not trust this connection
-				return errors.New("[dnsClient.verifyConnection] pin mismatch")
+				return errors.New("pin mismatch")
 			}
 		} else {
-			return errors.New("[dnsClient.verifyConnection] tls server's name not found in cert")
+			return errors.New("tls server's name not found in cert")
 		}
 	}
-	return errors.New("[dnsClient.verifyConnection] peer certs missing")
+	return errors.New("peer certs missing")
 }
 
 func (d *dnsClient) getConnection() (*tls.Conn, error) {
@@ -212,6 +223,6 @@ func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(fmt.Printf("[dnsProxyServer.handle] [DEBUG]\n%s", hex.Dump(buf)))
+	// fmt.Println(hex.Dump(buf))
 	return buf, nil
 }
