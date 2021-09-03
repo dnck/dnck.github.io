@@ -39,7 +39,7 @@ func (proxy *dnsProxyServer) readBytes(conn net.Conn) ([]byte, error) {
 		return nil, err
 	}
 	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
-	allBytes, err := reader.Peek(2+int(lengthData))
+	allBytes, err := reader.Peek(2 + int(lengthData))
 	debugf(fmt.Sprintf("read %d bytes from frontend", len(allBytes)))
 	if err != nil {
 		return nil, err

@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	logger = log.New(os.Stdout, "", log.Ldate | log.Lmicroseconds | log.Lshortfile)
-	infof = func(msg string) {
+	logger = log.New(os.Stdout, "", log.Ldate|log.Lmicroseconds|log.Lshortfile)
+	infof  = func(msg string) {
 		err := logger.Output(2, fmt.Sprintf("[INFO] %s", msg))
 		if err != nil {
 			return

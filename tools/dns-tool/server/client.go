@@ -185,7 +185,7 @@ func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
 		return nil, err
 	}
 	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
-	allBytes, err := reader.Peek(2+int(lengthData))
+	allBytes, err := reader.Peek(2 + int(lengthData))
 	debugf(fmt.Sprintf("read %d bytes from tls server", len(allBytes)))
 	if err != nil {
 		return nil, err
