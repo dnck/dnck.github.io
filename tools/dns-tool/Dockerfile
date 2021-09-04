@@ -1,4 +1,4 @@
-FROM docker.io/golang:latest as build
+FROM docker.io/golang:alpine as build
 
 WORKDIR /dns-tool
 
@@ -10,14 +10,14 @@ COPY server ./server
 
 RUN go build .
 
-FROM docker.io/ubuntu:focal
+FROM docker.io/alpine:latest
 
 # For testing in container
-#RUN apk update && apk add bind-tools
+RUN apk update && apk add bind-tools
 
 WORKDIR /dns-tool
 
 COPY --from=build /dns-tool/dns-tool .
 COPY --from=build /dns-tool/run.sh .
 
-ENTRYPOINT ["/dns-tool/run.sh"]
+ENTRYPOINT ["/dns-tool/dns-tool"]

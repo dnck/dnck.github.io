@@ -6,4 +6,4 @@ help: ## The default task is help.
 build: ## Build and tag the image 'dnck.github.io/dns-tool' with docker
 	 sudo docker build -t dnck.github.io/dns-tool .
 
-usage: ## docker run --rm --net=host dnck.github.io/dns-tool
+usage: ## sudo docker run -d --dns 127.0.0.1 --name dns-tool dnck.github.io/dns-tool
