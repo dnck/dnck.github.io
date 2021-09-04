@@ -13,11 +13,11 @@ import (
 // queries to a tls server through its configured dnsStubResolver
 type dnsProxyServer struct {
 	// address - ip the tcp protocol will be server on for frontend clients
-	address         string
+	address string
 	// port the dnsProxyServer will bind-to to serve the tcp dns requests
-	port            string
+	port string
 	// timeoutSeconds - limit to the reads/writes to/from the frontend clients
-	timeoutSeconds  int
+	timeoutSeconds int
 	// dnsStubResolver - client that speaks to the backend tls-tcp dns resolver
 	dnsStubResolver *dnsClient
 }
