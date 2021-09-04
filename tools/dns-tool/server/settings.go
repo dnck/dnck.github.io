@@ -1,9 +1,6 @@
 package dnsserver
 
-import (
-	"fmt"
-)
-
+// Settings are explained in dns-tool.go
 type Settings struct {
 	Address            string
 	Port               string
@@ -13,10 +10,7 @@ type Settings struct {
 	DnsResolverPin     string
 }
 
-func (settings *Settings) joinHostPort() string {
-	return fmt.Sprintf("%s:%v", settings.Address, settings.Port)
-}
-
+// makeDnsClient creates and configures the tls server's client
 func (settings *Settings) makeDnsClient() (*dnsClient, error) {
 	dnsClient := dnsClient{settings.DnsResolverPin,
 		settings.DnsResolverAddress,
@@ -24,6 +18,7 @@ func (settings *Settings) makeDnsClient() (*dnsClient, error) {
 		settings.TimeoutSeconds,
 		nil,
 	}
+	// establishTrust generates the tlsConfig of the dnsClient; if not successful, the program will abort
 	err := dnsClient.establishTrust()
 	if err != nil {
 		return nil, err
@@ -31,6 +26,7 @@ func (settings *Settings) makeDnsClient() (*dnsClient, error) {
 	return &dnsClient, nil
 }
 
+// makeDnsProxyServer makes the dns proxy server and aborts if the tls server client fails its initial handshake
 func (settings *Settings) makeDnsProxyServer() (*dnsProxyServer, error) {
 	dnsClient, err := settings.makeDnsClient()
 	if err != nil {
@@ -42,7 +38,6 @@ func (settings *Settings) makeDnsProxyServer() (*dnsProxyServer, error) {
 }
 
 func (settings *Settings) Run() error {
-	infof("dns proxy running @ tcp://localhost:5353")
 	proxyServer, err := settings.makeDnsProxyServer()
 	if err != nil {
 		return err

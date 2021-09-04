@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// basic logging
 var (
 	logger = log.New(os.Stdout, "", log.Ldate|log.Lmicroseconds|log.Lshortfile)
 	infof  = func(msg string) {
