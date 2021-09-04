@@ -34,7 +34,8 @@ file*
 
 ### Test
 ```bash
-sudo docker exec -it dns-tool dig +tcp www.danjcook.com
+sudo docker exec -it dns-tool dig +tcp www.danjcook.com && \
+  sudo docker logs dns-tool
 ```
 
 ## Build and run Go binary and test
