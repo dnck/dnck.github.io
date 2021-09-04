@@ -122,6 +122,8 @@ serve UDP DNS requests to frontend clients, which is a current limitation.
 
 ### What other improvements do you think would be interesting to add to the project?
 
+**Add Unit-tests and an end-to-end test**
+
 **Pin expiration**
 The current design stores the pin of the TLS Server at start. If the pin is
 non-maliciously changed (due to certificate rotation), then requests will no
@@ -138,3 +140,4 @@ reduce latency for frontend clients.
 **Monitoring/statistics**
 The current design is devoid of metrics collection without which it is difficult
 to determine whether it is meeting any of its SLOs.
+
