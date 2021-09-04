@@ -15,7 +15,7 @@ go build . && \
 ```
 Usage of ./dns-tool:
   -address string
-    	address the dns-server listens on 
+    	address the dns-server listens on
   -port string
     	port the dns-server binds to (default "5353")
   -resolver-addr string
@@ -59,6 +59,9 @@ dig +timeout=10 +tcp -p "$DNS_TOOL_PORT" @"$DNS_TOOL_ADDRESS" www.danjcook.com
 ## Questions
 
 ### Imagine this proxy being deployed in an infrastructure. What would be the security concerns you would raise?
+
+The tls-server client in the current design of the proxy can be provided with a
+
 
 denial-of-server attacks
 

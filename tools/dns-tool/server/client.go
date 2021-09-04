@@ -34,23 +34,44 @@ type dnsClient struct {
 	tlsConfig *tls.Config
 }
 
-func makePrivateKey() (*rsa.PrivateKey, []byte, error) {
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	if err != nil {
-		return nil, nil, err
-	}
-	privateKeyPemBytes := new(bytes.Buffer)
-	err = pem.Encode(privateKeyPemBytes, &pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	return privateKey, privateKeyPemBytes.Bytes(), nil
+type dnsClientCerts struct {
+	PrivateKey  *rsa.PrivateKey
+	PrivateKeyPemBytes     []byte
+	SelfSignedCertPemBytes []byte
+	SelfSignedX509Certs *tls.Certificate
 }
 
-func makeSelfSignedCertificate(privateKey *rsa.PrivateKey) ([]byte, error) {
+// makePrivateKey creates a new rsa public/private key pair. It is a helper function used when generating self-signed
+// certificates.
+func (dc *dnsClientCerts) makePrivateKey() error {
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		return err
+	}
+	dc.PrivateKey = privateKey
+	if err := dc.getPrivateKeyPemBytes(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// getPrivateKeyPemBytes derives the pem encoding of the passed rsa private key.
+// It is a helper function used when generating self-signed certificates.
+func (dc *dnsClientCerts)  getPrivateKeyPemBytes() error {
+	privateKeyPemBytes := new(bytes.Buffer)
+	err := pem.Encode(privateKeyPemBytes, &pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: x509.MarshalPKCS1PrivateKey(dc.PrivateKey),
+	})
+	if err != nil {
+		return err
+	}
+	dc.PrivateKeyPemBytes = privateKeyPemBytes.Bytes()
+	return nil
+}
+
+// makeSelfSignedCertificate
+func (dc *dnsClientCerts) makeSelfSignedCertificate() error {
 	caCert := &x509.Certificate{
 		SerialNumber: big.NewInt(1),
 		Subject: pkix.Name{
@@ -75,11 +96,11 @@ func makeSelfSignedCertificate(privateKey *rsa.PrivateKey) ([]byte, error) {
 		rand.Reader,
 		caCert,
 		caCert,
-		&privateKey.PublicKey,
-		privateKey,
+		&dc.PrivateKey.PublicKey,
+		dc.PrivateKey,
 	)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	caCertBytesPem := new(bytes.Buffer)
 	err = pem.Encode(caCertBytesPem, &pem.Block{
@@ -87,105 +108,132 @@ func makeSelfSignedCertificate(privateKey *rsa.PrivateKey) ([]byte, error) {
 		Bytes: caCertBytes,
 	})
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return caCertBytesPem.Bytes(), nil
+	dc.SelfSignedCertPemBytes = caCertBytesPem.Bytes()
+	return nil
 }
 
-func makeTlsCert() (*tls.Certificate, error) {
-	privateKey, privateKeyPemBytes, err := makePrivateKey()
-	certPemBytes, err := makeSelfSignedCertificate(privateKey)
+func (dc *dnsClientCerts) chainCerts() error {
+	selfSignedChainedTlsCerts, err := tls.X509KeyPair(dc.SelfSignedCertPemBytes, dc.PrivateKeyPemBytes)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	selfSignedTlsCert, err := tls.X509KeyPair(certPemBytes, privateKeyPemBytes)
-	if err != nil {
-		return nil, err
+	dc.SelfSignedX509Certs = &selfSignedChainedTlsCerts
+	return nil
+}
+// makeTlsCert creates a self-signed certificate which can be used in the dns client to establish communication with
+// a tls server
+func (dc *dnsClientCerts) makeTlsCert() error {
+	if err := dc.makePrivateKey(); err != nil {
+
+		return err
 	}
-	return &selfSignedTlsCert, nil
+	if err := dc.makeSelfSignedCertificate(); err != nil {
+		return err
+	}
+	if err := dc.chainCerts(); err != nil {
+		return err
+	}
+	return nil
 }
 
-func makeTlsConfig(dnsResolverFqdn string) (*tls.Config, error) {
-	tlsCert, err := makeTlsCert()
-	if err != nil {
+// makeTlsConfig returns a very basic configuration for communication with a tls server; the returned tls config
+// should be supplemented with a VerifyConnection function (at the very least).
+func (d *dnsClient) makeTlsConfig() (*tls.Config, error) {
+	selfSigner := dnsClientCerts{}
+	if err := selfSigner.makeTlsCert(); err != nil {
 		return nil, err
 	}
-	return &tls.Config{Certificates: []tls.Certificate{*tlsCert},
-		ServerName: dnsResolverFqdn}, nil
+	return &tls.Config{Certificates: []tls.Certificate{*selfSigner.SelfSignedX509Certs}, ServerName: d.commonName}, nil
 }
 
-// establishTrust dials the address for the trusted dns resolver and performs a
-// tls handshake to acquire the sha256 hash of the resolver's tls cert
+// establishTrust configures the tls connection of the dnsClient. It should not be modified after its first use.
 func (d *dnsClient) establishTrust() error {
-	tlsConfig, err := makeTlsConfig(d.commonName)
+	tlsConfig, err := d.makeTlsConfig()
 	if err != nil {
 		return err
 	}
 	tlsConfig.VerifyConnection = d.verifyConnection
-	conn, err := net.Dial("tcp", d.addressPort)
+	d.tlsConfig = tlsConfig
+	tlsConn, err := d.getConnection()
 	if err != nil {
 		return err
 	}
-	safeConn := tls.Client(conn, tlsConfig)
 	defer func() {
-		if err := safeConn.Close(); err != nil {
+		if err := tlsConn.Close(); err != nil {
 			log.Println(err.Error())
 		}
 	}()
-	err = safeConn.Handshake()
+	err = tlsConn.Handshake()
 	if err != nil {
 		return err
 	}
-	d.tlsConfig = tlsConfig
 	debugf("completed first handshake with tls server")
 	return nil
 }
 
+// verifyConnection checks on each tls handshake that the tls server's certificates have not changed; it uses the sha256
+// hash of the trusted tls server's certificate as a "pin". If the pin has not been given at program start, then a pin
+// is stored in memory for the first tls handshake (this is risky and should be avoided). If, on subsequent handshakes,
+// the pin does not match expectations, then an error is returned.
 func (d *dnsClient) verifyConnection(state tls.ConnectionState) error {
 	for _, v := range state.PeerCertificates {
-		pubDer, err := x509.MarshalPKIXPublicKey(v.PublicKey.(*ecdsa.PublicKey))
+		pubKeyBytes, err := x509.MarshalPKIXPublicKey(v.PublicKey.(*ecdsa.PublicKey))
 		if err != nil {
 			return err
 		}
-		sum := sha256.Sum256(pubDer)
-		pin := make([]byte, base64.StdEncoding.EncodedLen(len(sum)))
-		base64.StdEncoding.Encode(pin, sum[:])
+		checkSum := sha256.Sum256(pubKeyBytes)
+		pin := make([]byte, base64.StdEncoding.EncodedLen(len(checkSum)))
+		base64.StdEncoding.Encode(pin, checkSum[:])
+		// If the name on the certificate matches the name of the server we trust, we will also check that the
+		// hash of the certificate matches our expectations; if not, we return an error.
 		if v.Subject.CommonName == d.commonName {
 			if d.certPin == "" {
-				// This is the first tls connection, so we store the pin in memory
-				// (unless passed at run time)
+				// Unless the pin was passed at run time, then this block never gets executed; however, if this is the
+				// first tls connection, and the dnsClient was not provided with a pin, this block stores the pin in
+				// memory for later checking.
 				d.certPin = string(pin)
-				debugf("stored hash of tls server's certificate")
+				debugf("stored pin of tls server's certificate")
 				return nil
 
 			} else if d.certPin == string(pin) && d.certPin != "" {
-				// we've already established the pin, so we check that they match
+				// This block will only execute if either 1. the dnsClient was provided with the pin at program start,
+				// or 2. it stored the pin on its first tls connection/handshake; Thereafter, we check that the pin
+				// matches the stored pin on each handshake, returning nil to indicate that the pin matches and it was
+				// not the empty string.
 				// log.Println("[dnsClient.verifyConnection] [DEBUG] tls server's pin
-				// matched known pin")
 				return nil
-
 			} else {
-				// the pin has not matched, so we do not trust this connection
+				// The pin has not matched, so we do not trust this connection and return an error.
 				return errors.New("pin mismatch")
 			}
 		} else {
-			return errors.New("tls server's name not found in cert")
+			// We did not find the name of the trusted tls server on the certificates, so we return an error.
+			return errors.New("tls server's name not found in certificate")
 		}
 	}
-	return errors.New("peer certs missing")
+	// Unlikely, but we return an error if the certificates were not in the tls connection state
+	return errors.New("peer certificate missing")
 }
 
+// getConnection returns the dnsClient's configured connection to the tls server. After acquiring the connection and
+// using it, the callee should be careful to close it. If either the dial fails, or setting a
 func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	conn, err := net.Dial("tcp", d.addressPort)
 	if err != nil {
 		return nil, err
 	}
 	tlsConn := tls.Client(conn, d.tlsConfig)
-	err = tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
-	if err != nil {
-		return nil, err
-	}
 	return tlsConn, nil
+}
+
+func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
+	err := tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {

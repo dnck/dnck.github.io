@@ -15,15 +15,15 @@ func init() {
 	flag.StringVar(&settings.Address,
 		"address",
 		"",
-		"address the dns-server listens on")
+		"address the proxy server listens on")
 	flag.StringVar(&settings.Port,
 		"port",
-		"5353",
-		"port the dns-server binds to")
+		"53",
+		"port the proxy server binds to")
 	flag.IntVar(&settings.TimeoutSeconds,
 		"timeout",
 		3,
-		"global read/write deadline for proxy server and dns-client")
+		"global read/write deadline for proxy server and tls-server client")
 	flag.StringVar(&settings.DnsResolverPin,
 		"resolver-pin",
 		"",
