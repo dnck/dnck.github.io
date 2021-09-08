@@ -80,7 +80,7 @@ func (c *dnsClientCerts) makeSelfSignedCertificate() error {
 	caCert := &x509.Certificate{
 		SerialNumber: big.NewInt(1),
 		Subject: pkix.Name{
-			Organization:  []string{"N26"},
+			Organization:  []string{"Foobar"},
 			Country:       []string{"DE"},
 			Province:      []string{"Brandenburg"},
 			Locality:      []string{"Berlin"},
