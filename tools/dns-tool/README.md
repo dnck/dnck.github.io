@@ -1,8 +1,16 @@
+---
+layout: post
+title: dns-proxy-server
+date: 2021-09-01
+---
+
 # dns-tool
 
 The Go binary `dns-tool` is a proxy server that routes un-encrypted DNS quries over
 TCP to a TLS DNS server. As such, it handles the encryption of a DNS quries for
 frontend clients and returns them cleartext answers from a trusted DNS resolver.
+
+[Code](https://github.com/dnck/dnck.github.io/tree/master/tools/dns-tool)
 
 ### Usage
 

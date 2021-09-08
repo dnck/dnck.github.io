@@ -11,6 +11,6 @@ title: about
   </a>
   </div>
   <div class="column">
-    I'm a pragmatic cognitive scientist turned software-developer, turned devops-engineer, working on computer networks and distributed systems... <a href="{{ "/blog/2017/05/28/launch-blog.html" | relative_url }}">read more</a>
+    I'm a pragmatic DevOps Engineer working on computer networks and distributed systems... <a href="{{ "/blog/2017/05/28/launch-blog.html" | relative_url }}">read more</a>
   </div>
 </div>
