@@ -43,6 +43,7 @@ func (proxy *dnsProxyServer) listenAndServe() error {
 // readBytes reads tcp dns messages from the tcp connection. Note that tcp
 // dns messages are prefixed with two bytes indicating the message length
 // (https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2)
+// TODO (dnck): remove
 func (proxy *dnsProxyServer) readBytes(conn net.Conn) ([]byte, error) {
 	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(proxy.timeoutSeconds) * time.Second))
 	reader := bufio.NewReader(conn)

@@ -241,6 +241,7 @@ func (d *dnsClient) verifyConnection(state tls.ConnectionState) error {
 // getConnection returns the dnsClient's configured connection to the tls server.
 // After acquiring the connection and using it, the callee should be careful
 // to close it. If the dial fails, an error is returned
+// TODO (dnck): replace with a return of a tls.Conn rather than tls.Client
 func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	conn, err := net.Dial("tcp", d.addressPort)
 	if err != nil {
@@ -250,6 +251,8 @@ func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	return tlsConn, nil
 }
 
+// setTlsConnDeadline is this even used?
+// TODO (dnck): remove
 func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
 	err := tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
 	if err != nil {
@@ -261,6 +264,7 @@ func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
 // readBytes reads tcp dns messages from the tls connection. Note that tcp dns
 // messages are prefixed with two bytes indicating the length of the message
 // (https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2)
+// TODO (dnck): remove
 func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
 	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
 	reader := bufio.NewReader(conn)
@@ -280,6 +284,7 @@ func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
 // sendQuery dispatches the frontend server's tcp dns request over tls to the
 // trusted dns server and returns
 // the response to the frontend for serving the original client
+// TODO (dnck): remove
 func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
 	tlsConn, err := d.getConnection()
 	if err != nil {
@@ -303,6 +308,7 @@ func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
 	return buf, nil
 }
 
+// Send pipes the ordinary conn to the tls connection. It replaces sendQuery.
 func (d *dnsClient) Send(conn net.Conn) error {
 	tlsConn, err := tls.Dial("tcp", d.addressPort, d.tlsConfig)
 	if err != nil {
@@ -318,6 +324,8 @@ func (d *dnsClient) Send(conn net.Conn) error {
 	return nil
 }
 
+// chanFromConn returns a channel of bytes of the underlying conns data; any sends will be pushed into the
+// channel
 func chanFromConn(conn net.Conn) chan []byte {
 	c := make(chan []byte)
 	go func() {
@@ -339,16 +347,19 @@ func chanFromConn(conn net.Conn) chan []byte {
 
 	return c
 }
-func Pipe(conn1 net.Conn, conn2 net.Conn) {
-	chan1 := chanFromConn(conn1)
-	chan2 := chanFromConn(conn2)
+
+// Pipe creates channels for the connections and proxies them
+// TODO (dnck): add doc string
+func Pipe(conn net.Conn, tlsConn net.Conn) {
+	chan1 := chanFromConn(conn)
+	chan2 := chanFromConn(tlsConn)
 	for {
 		select {
 		case b1 := <-chan1:
 			if b1 == nil {
 				return
 			} else {
-				_, err := conn2.Write(b1)
+				_, err := tlsConn.Write(b1)
 				if err != nil {
 					return
 				}
@@ -358,7 +369,7 @@ func Pipe(conn1 net.Conn, conn2 net.Conn) {
 			if b2 == nil {
 				return
 			} else {
-				_, err := conn1.Write(b2)
+				_, err := conn.Write(b2)
 				if err != nil {
 					return
 				}
