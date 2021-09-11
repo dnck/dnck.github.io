@@ -302,3 +302,68 @@ func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
 	// fmt.Println(hex.Dump(buf))
 	return buf, nil
 }
+
+func (d *dnsClient) Send(conn net.Conn) error {
+	tlsConn, err := tls.Dial("tcp", d.addressPort, d.tlsConfig)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := tlsConn.Close(); err != nil {
+			log.Println(err.Error())
+			return
+		}
+	}()
+	Pipe(conn, tlsConn)
+	return nil
+}
+
+func chanFromConn(conn net.Conn) chan []byte {
+	c := make(chan []byte)
+	go func() {
+		b := make([]byte, 1024)
+		for {
+			n, err := conn.Read(b)
+			if n > 0 {
+				res := make([]byte, n)
+				// Copy the buffer; so it doesn't get changed while read by the recipient.
+				copy(res, b[:n])
+				c <- res
+			}
+			if err != nil {
+				c <- nil
+				break
+			}
+		}
+	}()
+
+	return c
+}
+func Pipe(conn1 net.Conn, conn2 net.Conn) {
+	chan1 := chanFromConn(conn1)
+	chan2 := chanFromConn(conn2)
+	for {
+		select {
+		case b1 := <-chan1:
+			if b1 == nil {
+				return
+			} else {
+				_, err := conn2.Write(b1)
+				if err != nil {
+					return
+				}
+				debugf("dispatched query to tls server")
+			}
+		case b2 := <-chan2:
+			if b2 == nil {
+				return
+			} else {
+				_, err := conn1.Write(b2)
+				if err != nil {
+					return
+				}
+				infof("responded to frontend")
+			}
+		}
+	}
+}

@@ -35,7 +35,8 @@ func (proxy *dnsProxyServer) listenAndServe() error {
 		if err != nil {
 			return err
 		}
-		go proxy.handle(clientConn, *proxy.dnsStubResolver)
+		//go proxy.handle(clientConn, *proxy.dnsStubResolver)
+		go proxy.pipeHandle(clientConn)
 	}
 }
 
@@ -80,4 +81,12 @@ func (proxy *dnsProxyServer) handle(conn net.Conn, dnsClient dnsClient) {
 		return
 	}
 	infof("responded to frontend")
+}
+
+func (proxy *dnsProxyServer) pipeHandle(conn net.Conn) {
+	err := proxy.dnsStubResolver.Send(conn)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
