@@ -1,7 +1,6 @@
 package dnsserver
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/ecdsa"
 	"crypto/rand"
@@ -11,10 +10,8 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/base64"
-	"encoding/binary"
 	"encoding/pem"
 	"errors"
-	"fmt"
 	"log"
 	"math/big"
 	"net"
@@ -251,62 +248,62 @@ func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	return tlsConn, nil
 }
 
-// setTlsConnDeadline is this even used?
-// TODO (dnck): remove
-func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
-	err := tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
-	if err != nil {
-		return err
-	}
-	return nil
-}
+//// setTlsConnDeadline is this even used?
+//// TODO (dnck): remove
+//func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
+//	err := tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
+//	if err != nil {
+//		return err
+//	}
+//	return nil
+//}
 
-// readBytes reads tcp dns messages from the tls connection. Note that tcp dns
-// messages are prefixed with two bytes indicating the length of the message
-// (https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2)
-// TODO (dnck): remove
-func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
-	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
-	reader := bufio.NewReader(conn)
-	firstTwoBytes, err := reader.Peek(2)
-	if err != nil {
-		return nil, err
-	}
-	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
-	allBytes, err := reader.Peek(2 + int(lengthData))
-	debugf(fmt.Sprintf("read %d bytes from tls server", len(allBytes)))
-	if err != nil {
-		return nil, err
-	}
-	return allBytes, nil
-}
+//// readBytes reads tcp dns messages from the tls connection. Note that tcp dns
+//// messages are prefixed with two bytes indicating the length of the message
+//// (https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2)
+//// TODO (dnck): remove
+//func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
+//	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
+//	reader := bufio.NewReader(conn)
+//	firstTwoBytes, err := reader.Peek(2)
+//	if err != nil {
+//		return nil, err
+//	}
+//	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
+//	allBytes, err := reader.Peek(2 + int(lengthData))
+//	debugf(fmt.Sprintf("read %d bytes from tls server", len(allBytes)))
+//	if err != nil {
+//		return nil, err
+//	}
+//	return allBytes, nil
+//}
 
-// sendQuery dispatches the frontend server's tcp dns request over tls to the
-// trusted dns server and returns
-// the response to the frontend for serving the original client
-// TODO (dnck): remove
-func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
-	tlsConn, err := d.getConnection()
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if err := tlsConn.Close(); err != nil {
-			log.Println(err.Error())
-		}
-	}()
-	_, err = tlsConn.Write(msg)
-	if err != nil {
-		return nil, err
-	}
-	debugf("dispatched query to tls server")
-	buf, err := d.readBytes(tlsConn)
-	if err != nil {
-		return nil, err
-	}
-	// fmt.Println(hex.Dump(buf))
-	return buf, nil
-}
+//// sendQuery dispatches the frontend server's tcp dns request over tls to the
+//// trusted dns server and returns
+//// the response to the frontend for serving the original client
+//// TODO (dnck): remove
+//func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
+//	tlsConn, err := d.getConnection()
+//	if err != nil {
+//		return nil, err
+//	}
+//	defer func() {
+//		if err := tlsConn.Close(); err != nil {
+//			log.Println(err.Error())
+//		}
+//	}()
+//	_, err = tlsConn.Write(msg)
+//	if err != nil {
+//		return nil, err
+//	}
+//	debugf("dispatched query to tls server")
+//	buf, err := d.readBytes(tlsConn)
+//	if err != nil {
+//		return nil, err
+//	}
+//	// fmt.Println(hex.Dump(buf))
+//	return buf, nil
+//}
 
 // Send pipes the ordinary conn to the tls connection. It replaces sendQuery.
 func (d *dnsClient) Send(conn net.Conn) error {
