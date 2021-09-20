@@ -8,6 +8,7 @@ type Settings struct {
 	DnsResolverAddress string
 	DnsResolverFqdn    string
 	DnsResolverPin     string
+	Debug 						bool 
 }
 
 // makeDnsClient creates and configures the tls server's client
@@ -17,6 +18,7 @@ func (settings *Settings) makeDnsClient() (*dnsClient, error) {
 		settings.DnsResolverFqdn,
 		settings.TimeoutSeconds,
 		nil,
+		settings.Debug,
 	}
 	// establishTrust generates the tlsConfig of the dnsClient; if not successful, the program will abort
 	err := dnsClient.establishTrust()

@@ -10,8 +10,10 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/pem"
 	"errors"
+	"fmt"
 	"log"
 	"math/big"
 	"net"
@@ -31,6 +33,8 @@ type dnsClient struct {
 	timeoutSeconds int
 	// tlsConfig is configured when the dnsClient establishTrust method is called
 	tlsConfig *tls.Config
+	// Debug bool - indicates whether to print the query
+	Debug bool
 }
 
 // dnsClientCerts is a container for holding keys and certificates for the
@@ -238,7 +242,6 @@ func (d *dnsClient) verifyConnection(state tls.ConnectionState) error {
 // getConnection returns the dnsClient's configured connection to the tls server.
 // After acquiring the connection and using it, the callee should be careful
 // to close it. If the dial fails, an error is returned
-// TODO (dnck): replace with a return of a tls.Conn rather than tls.Client
 func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	conn, err := net.Dial("tcp", d.addressPort)
 	if err != nil {
@@ -247,63 +250,6 @@ func (d *dnsClient) getConnection() (*tls.Conn, error) {
 	tlsConn := tls.Client(conn, d.tlsConfig)
 	return tlsConn, nil
 }
-
-//// setTlsConnDeadline is this even used?
-//// TODO (dnck): remove
-//func (d *dnsClient) setTlsConnDeadline(tlsConn *tls.Conn) error {
-//	err := tlsConn.SetDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
-//	if err != nil {
-//		return err
-//	}
-//	return nil
-//}
-
-//// readBytes reads tcp dns messages from the tls connection. Note that tcp dns
-//// messages are prefixed with two bytes indicating the length of the message
-//// (https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2)
-//// TODO (dnck): remove
-//func (d *dnsClient) readBytes(conn *tls.Conn) ([]byte, error) {
-//	_ = conn.SetReadDeadline(time.Now().Add(time.Duration(d.timeoutSeconds) * time.Second))
-//	reader := bufio.NewReader(conn)
-//	firstTwoBytes, err := reader.Peek(2)
-//	if err != nil {
-//		return nil, err
-//	}
-//	lengthData := binary.BigEndian.Uint16(firstTwoBytes)
-//	allBytes, err := reader.Peek(2 + int(lengthData))
-//	debugf(fmt.Sprintf("read %d bytes from tls server", len(allBytes)))
-//	if err != nil {
-//		return nil, err
-//	}
-//	return allBytes, nil
-//}
-
-//// sendQuery dispatches the frontend server's tcp dns request over tls to the
-//// trusted dns server and returns
-//// the response to the frontend for serving the original client
-//// TODO (dnck): remove
-//func (d *dnsClient) sendQuery(msg []byte) ([]byte, error) {
-//	tlsConn, err := d.getConnection()
-//	if err != nil {
-//		return nil, err
-//	}
-//	defer func() {
-//		if err := tlsConn.Close(); err != nil {
-//			log.Println(err.Error())
-//		}
-//	}()
-//	_, err = tlsConn.Write(msg)
-//	if err != nil {
-//		return nil, err
-//	}
-//	debugf("dispatched query to tls server")
-//	buf, err := d.readBytes(tlsConn)
-//	if err != nil {
-//		return nil, err
-//	}
-//	// fmt.Println(hex.Dump(buf))
-//	return buf, nil
-//}
 
 // Send pipes the ordinary conn to the tls connection. It replaces sendQuery.
 func (d *dnsClient) Send(conn net.Conn) error {
@@ -321,52 +267,51 @@ func (d *dnsClient) Send(conn net.Conn) error {
 	return nil
 }
 
-// chanFromConn returns a channel of bytes of the underlying conns data; any sends will be pushed into the
+// chanFromConn returns a channel of bytes of the underlying net.Conn data; any sends will be pushed into the
 // channel
 func chanFromConn(conn net.Conn) chan []byte {
-	c := make(chan []byte)
+	byteChan := make(chan []byte)
 	go func() {
-		b := make([]byte, 1024)
+		buf := make([]byte, 1024)
 		for {
-			n, err := conn.Read(b)
+			n, err := conn.Read(buf)
 			if n > 0 {
 				res := make([]byte, n)
 				// Copy the buffer; so it doesn't get changed while read by the recipient.
-				copy(res, b[:n])
-				c <- res
+				copy(res, buf[:n])
+				byteChan <- res
 			}
 			if err != nil {
-				c <- nil
+				byteChan <- nil
 				break
 			}
 		}
 	}()
-
-	return c
+	return byteChan
 }
 
-// Pipe creates channels for the connections and proxies them
-// TODO (dnck): add doc string
+// Pipe reads/writes messages in channels for a frontend tcp net.Conn and backend tls net.Conn
 func Pipe(conn net.Conn, tlsConn net.Conn) {
-	chan1 := chanFromConn(conn)
-	chan2 := chanFromConn(tlsConn)
+	frontendConnChan := chanFromConn(conn)
+	backendConnChan := chanFromConn(tlsConn)
 	for {
 		select {
-		case b1 := <-chan1:
-			if b1 == nil {
+		case plainTextQuery := <-frontendConnChan:
+			if plainTextQuery == nil {
 				return
 			} else {
-				_, err := tlsConn.Write(b1)
+				_, err := tlsConn.Write(plainTextQuery)
+				fmt.Println(hex.Dump(plainTextQuery))
 				if err != nil {
 					return
 				}
 				debugf("dispatched query to tls server")
 			}
-		case b2 := <-chan2:
-			if b2 == nil {
+		case plainTextResponse := <-backendConnChan:
+			if plainTextResponse == nil {
 				return
 			} else {
-				_, err := conn.Write(b2)
+				_, err := conn.Write(plainTextResponse)
 				if err != nil {
 					return
 				}

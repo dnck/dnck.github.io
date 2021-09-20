@@ -36,6 +36,10 @@ func init() {
 		"resolver-fqdn",
 		"cloudflare-dns.com",
 		"the trusted dns resolver's common name")
+	flag.BoolVar(&settings.Debug,
+		"debug",
+		false,
+		"print the DNS query")
 	flag.Parse()
 }
 
