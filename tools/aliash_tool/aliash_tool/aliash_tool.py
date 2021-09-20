@@ -37,6 +37,7 @@ def create_bash_script(filename):
             "",#DATE
         )
         f.write("{}".format(header))
+    os.chmod(filename, 0o755)
 
 def update_file(filename):
     with open(filename, "r") as f:
@@ -62,180 +63,198 @@ class AliashTool():
     them as shown below.
 
     Args:
-        msg (str): Human readable string describing the exception.
+        msg (str): Human readable str describing the exception.
         code (:obj:`int`, optional): Error code.
 
     Attributes:
-        msg (str): Human readable string describing the exception.
+        msg (str): Human readable str describing the exception.
         code (int): Exception error code.
 
     """
     def __init__(self, home_dir, script_dir):
         self.home_dir = home_dir
         self.script_dir = script_dir
-        self.bash_aliases_file = self.join_home_dir(".bash_aliases")
-        self._get_current_aliases()
+        self.alias_definition_file = self.join_home_dir(".bash_aliases")
         pass
 
-    def join_home_dir(self, filename):
+    def join_home_dir(self, filename) -> str:
         return os.path.join(self.home_dir, filename)
 
-    def join_script_dir(self, filename):
+    def join_script_dir(self, filename) -> str:
         return os.path.join(self.script_dir, filename)
 
-    def test_aliash_tool(self):
-        """Class methods are similar to regular functions.
 
-        Returns:
-            True
+    def _get_current_scripts_in_script_dir(self) -> list:
+        return [os.path.join(self.script_dir, i) for i in os.listdir(
+            self.script_dir) if i.endswith(".sh")]
 
-        """
-        return True
-
-    def _remove_bash_aliases(self, alias):
-        remove_alias = "alias {}={}".format(alias, self.join_script_dir(alias+".sh"))
-        bash_aliases = [i.strip() for i in read_file(
-            self.bash_aliases_file).split("\n") if not i == ""
+    def _get_current_alias_definitions_from_file(self) -> list:
+        alias_defintions = [line.strip() for line in read_file(
+            self.alias_definition_file).split("\n") if not line == ""
         ]
-        bash_aliases.remove(remove_alias)
-        f = tempfile.NamedTemporaryFile(mode='w+t', delete=False)
-        new_file = f.name
-        for line in bash_aliases:
-            if not line == "":
-                f.write(line+"\n")
-        f.close()
-        shutil.move(self.bash_aliases_file, self.bash_aliases_file+".bak")
-        shutil.move(new_file, self.bash_aliases_file)
+        return alias_defintions
 
-    def _append_bash_aliases(self, new_alias):
-        new_line = "alias {}={}".format(new_alias, self.join_script_dir(new_alias+".sh"))
-        bash_aliases = [i.strip() for i in read_file(
-            self.bash_aliases_file).split("\n") if not i == ""
-        ]
-        if not new_line in bash_aliases:
-            bash_aliases.append(new_line)
-        bash_aliases.sort()
-        f = tempfile.NamedTemporaryFile(mode='w+t', delete=False)
-        new_file = f.name
-        for line in bash_aliases:
-            if not line == "":
-                f.write(line+"\n")
-        f.close()
-        shutil.move(self.bash_aliases_file, self.bash_aliases_file+".bak")
-        shutil.move(new_file, self.bash_aliases_file)
+    def _get_current_aliases_in_alias_definition_file(self) -> list:
+        alias_definition_file_aliases = []
+        alias_defs = self._get_current_alias_definitions_from_file()
+        for a in alias_defs:
+            if "=" in a:
+                alias_def = a.split("=")
+                alias = alias_def[0].split("alias ")[1]
+                alias_definition_file_aliases.append(alias)
+        return alias_definition_file_aliases
 
-    def _get_current_aliases(self) -> dict:
-        bash_aliases = read_file(self.bash_aliases_file)
+    def _get_current_scripts_in_alias_definition_file(self) -> list:
+        alias_definition_file_scripts = []
+        alias_defs = self._get_current_alias_definitions_from_file()
+        for a in alias_defs:
+            if "=" in a:
+                alias_def = a.split("=")
+                filename = alias_def[1]
+                alias_definition_file_scripts.append(filename)
+        return alias_definition_file_scripts
+
+    def _get_db(self) -> dict:
+        """Returns {'alias': 'alias_script_path'}"""
         db = {}
-        for line in bash_aliases.split("\n"):
-            if "=" in line:
-                alias_filename = line.split("=")
+        alias_defs = self._get_current_alias_definitions_from_file()
+        for a in alias_defs:
+            if "=" in a:
+                alias_filename = a.split("=")
                 alias = alias_filename[0][6:].split(" ")[0]
                 filename = alias_filename[1]
                 if db.get(alias) is None:
                     db[alias] = filename
                 else:
                     print("ERROR: duplicate alias")
-        self.db = db
+        return db
 
-    def add_alias(self, filename):
-        """Create a new alias
+    def _format_alias_definition(self, alias) -> str:
+        return "alias {}={}".format(
+            alias,
+            self.join_script_dir(alias+".sh")
+        )
 
-        Returns:
-            True
+    def _clean_script_dir(self):
+        scripts_in_dir = self._get_current_scripts_in_script_dir()
+        scripts_in_alias_file = \
+            self._get_current_scripts_in_alias_definition_file()
+        for s in scripts_in_dir:
+            if not s in scripts_in_alias_file:
+                os.remove(s)
 
-        """
-        if not filename.endswith(".sh"):
-            print("ERROR: new alias filename must be a bash script")
-            return
-        # only add the alias if it does not exist as alias and there's
-        # not a filename already in the script dir
-        new_alias = self.db.get(filename[:-3])
-        if new_alias is None:
-            if not filename in os.listdir(self.script_dir):
-                new_alias = filename[:-3]
-                new_filename = self.join_script_dir(filename)
-                create_bash_script(new_filename)
-                os.chmod(new_filename, 0o755)
-                self.db[new_alias] = new_filename
-                self._append_bash_aliases(new_alias)
-                self._get_current_aliases()
-                print("SUCCESS: added new alias file to script dir")
-            else:
-                print("ERROR: filename already exists in script_dir")
-        else:
-            print("ERROR: alias already exists with that name")
+    def _remove_alias_definition(self, alias):
+        """Delete an alias definition from .bash_aliases"""
+        remove_alias = self._format_alias_definition(alias)
+        alias_definitions = self._get_current_alias_definitions_from_file()
+        alias_definitions.remove(remove_alias)
+        f = tempfile.NamedTemporaryFile(mode='w+t', delete=False)
+        new_file = f.name
+        for line in alias_definitions:
+            if not line == "":
+                f.write(line+"\n")
+        f.close()
+        shutil.move(
+            self.alias_definition_file,
+            self.alias_definition_file+".bak"
+        )
+        shutil.move(new_file, self.alias_definition_file)
+        self._clean_script_dir()
+
+    def _append_bash_alias_file(self, new_alias):
+        """Append an alias definition from .bash_aliases"""
+
+        new_alias_definition = self._format_alias_definition(new_alias)
+        alias_definitions = self._get_current_alias_definitions_from_file()
+
+        if not new_alias_definition in alias_definitions:
+            alias_definitions.append(new_alias_definition)
+
+        alias_definitions.sort()
+
+        f = tempfile.NamedTemporaryFile(mode='w+t', delete=False)
+        new_file = f.name
+        for line in alias_definitions:
+            if not line == "":
+                f.write(line+"\n")
+        f.close()
+
+        shutil.move(self.alias_definition_file,
+            self.alias_definition_file+".bak"
+        )
+        shutil.move(new_file, self.alias_definition_file)
+
+    def _is_alias_in_script_dir(self, alias) -> bool:
+        return os.path.isfile(self.join_script_dir(alias+".sh"))
+
+    def _is_alias_in_alias_definition_file(self, alias) -> bool:
+        current_aliases = self._get_current_aliases_in_alias_definition_file()
+        if alias not in current_aliases:
+            return False
         return True
 
-    # TODO (dnck) implement
-    def remove_alias(self, alias):
-        """Remove an existing alias
-
+    def add_alias(self, alias):
+        """Create a new alias .sh file in the script_dir and add it to
+        .bash_aliases file
         Returns:
             True
+        """
+        if self._is_alias_in_script_dir(alias):
+            print("ERROR: alias already exists with that name")
+            return True
+        else:
+            self._append_bash_alias_file(alias)
+            new_filename = self.join_script_dir(alias+".sh")
+            create_bash_script(new_filename)
+            print("SUCCESS: added new alias file to script dir")
+        return True
 
+    def remove_alias(self, alias):
+        """Remove an existing alias definition and its script file
+        Returns:
+            True
         """
         # only add the alias if it does not exist as alias and there's
         # not a filename already in the script dir
-        old_alias_file = self.db.get(alias)
+        db = self._get_db()
+        old_alias_file = db.get(alias)
         if not old_alias_file is None:
-            self._remove_bash_aliases(alias)
-            self._get_current_aliases()
+            self._remove_alias_definition(alias)
             print("SUCCESS: removed old alias from .bash_aliases")
         else:
             print("ERROR: alias does not exist with that name")
         return True
 
     def help_alias(self, alias):
-        """Show the help string from an alias definition
+        """Show the help str from an alias definition
 
         Returns:
             True
 
         """
         # only show help if the alias does exist
-        if self.db.get(alias) is None:
+        db = self._get_db()
+        if db.get(alias) is None:
             print("ERROR: alias key {} not in db".format(alias))
         else:
             try:
-                script = read_file(self.join_script_dir(alias+".sh"))
+                script = read_file(db.get(alias))
                 print(script)
             except:
-                print("ERROR: reading filename {}".format(alias+".sh"))
+                print("ERROR: reading filename {}".format(db.get(alias)))
         return True
 
-    def find_alias(self, tag):
+    def find_alias(self, tag) -> dict:
         """Find alias with a tag
-
         Returns:
             True
-
         """
+        db = self._get_db()
         found_aliases = {}
-        for alias in self.db:
+        for alias in db:
             if tag in alias:
-                found_aliases.update({alias: self.db[alias]})
-        if len(found_aliases):
-            for k,v in found_aliases.items():
-                print(k, v)
-        else:
-            print("no aliases found")
-        return True
-
-    # TODO (dnck) implement
-    def tag_alias(self, alias, tag):
-        """Tag an alias
-
-        Returns:
-            True
-
-        """
-        # only tag alias if the alias does exist
-        if self.db.get(alias) is None:
-            print("no")
-        else:
-            print("ok")
-        return True
+                found_aliases.update({alias: db[alias]})
+        return found_aliases
 
     def edit_alias(self, alias):
         """Edit an alias
@@ -244,8 +263,12 @@ class AliashTool():
             True
 
         """
+        if not self._is_alias_in_script_dir(alias):
+            print("ERROR: alias script does not exist with that name")
+            return True
         # only show edit if the alias does exist
-        if self.db.get(alias) is None:
+        db = self._get_db()
+        if db.get(alias) is None:
             print("ERROR: alias key {} not in db".format(alias))
         else:
             try:
@@ -259,20 +282,39 @@ class AliashTool():
                 shutil.move(f.name, filename)
                 os.chmod(filename, 0o755)
             except:
-                print("ERROR: reading filename {}".format(alias+".sh"))
+                print("ERROR: writing filename {}".format(alias+".sh"))
         return True
 
-    # TODO (dnck) implement
-    def rename_alias(self, old_name, new_new):
+    def rename_alias(self, old_name, new_name):
         """Rename an alias
 
         Returns:
             True
 
         """
-        # only rename the alias if new name does not exist
-        if self.db.get(filename[:-3]) is None:
-            print("ok")
-        else:
-            print("no")
+        if self._is_alias_in_script_dir(new_name):
+            print("ERROR: alias already exists with that name in script dir")
+            return True
+        if not self._is_alias_in_script_dir(old_name):
+            print("ERROR: alias does not exist with that name in script dir")
+            return True
+        if not self._is_alias_in_alias_definition_file(old_name):
+            print("ERROR: alias does not exist with that name in alias file")
+            return True
+        self.add_alias(new_name)
+        shutil.copy(
+            self.join_script_dir(old_name+".sh"),
+            self.join_script_dir(new_name+".sh")
+        )
+        self.remove_alias(old_name)
+        return True
+
+
+    def test_aliash_tool(self):
+        """Class methods are similar to regular functions.
+
+        Returns:
+            True
+
+        """
         return True

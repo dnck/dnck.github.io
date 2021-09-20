@@ -36,18 +36,18 @@ def test(ctx):
     assert ctx.obj.cli.test_aliash_tool()
 
 @cli.command()
-@click.argument('filename')
+@click.argument('alias')
 @click.pass_context
-def add_alias(ctx, filename):
+def add(ctx, alias):
     """
-    Create a new [FILENAME] and put its alias in .bash_aliases
+    Create a new [ALIAS] and put its alias in .bash_aliases
     """
-    assert ctx.obj.cli.add_alias(filename)
+    assert ctx.obj.cli.add_alias(alias)
 
 @cli.command()
 @click.pass_context
 @click.argument('alias')
-def remove_alias(ctx, alias):
+def remove(ctx, alias):
     """
     Remove an [ALIAS] from .bash_aliases
     """
@@ -56,7 +56,7 @@ def remove_alias(ctx, alias):
 @cli.command()
 @click.pass_context
 @click.argument('alias')
-def edit_alias(ctx, alias):
+def edit(ctx, alias):
     """
     Edit an [ALIAS] in the script_dir (requires nano)
     """
@@ -66,7 +66,7 @@ def edit_alias(ctx, alias):
 @click.pass_context
 @click.argument('alias')
 @click.argument('new_name')
-def rename_alias(ctx, alias, new_name):
+def rename(ctx, alias, new_name):
     """Rename an [ALIAS] in .bash_aliases"""
     assert ctx.obj.cli.rename_alias(alias, new_name)
 
@@ -74,23 +74,37 @@ def rename_alias(ctx, alias, new_name):
 @click.pass_context
 @click.argument('alias')
 @click.argument('tag')
-def tag_alias(ctx, alias, tag):
+def tag(ctx, alias, tag):
     """Tag an [ALIAS] in .bash_aliases"""
     assert ctx.obj.cli.tag_alias(alias, tag)
 
 @cli.command()
 @click.pass_context
 @click.argument('tag')
-def find_alias(ctx, tag):
+def find(ctx, tag):
     """
     Find an alias in .bash_aliases using a [TAG]
     """
-    assert ctx.obj.cli.find_alias(tag)
+    found_aliases = ctx.obj.cli.find_alias(tag)
+    if len(found_aliases):
+        for k,v in found_aliases.items():
+            print(k, v)
+    else:
+        print("no aliases found")
 
 @cli.command()
 @click.pass_context
 @click.argument('alias')
-def help_alias(ctx, alias):
+def insert(ctx, alias):
+    """
+    Display help for an [ALIAS] in .bash_aliases
+    """
+    assert ctx.obj.cli.insert_alias(alias)
+
+@cli.command()
+@click.pass_context
+@click.argument('alias')
+def help(ctx, alias):
     """
     Display help for an [ALIAS] in .bash_aliases
     """
