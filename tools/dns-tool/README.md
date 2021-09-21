@@ -148,4 +148,3 @@ reduce latency for frontend clients.
 **Monitoring/statistics**
 The current design is devoid of metrics collection without which it is difficult
 to determine whether it is meeting any of its SLOs.
-

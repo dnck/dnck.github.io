@@ -9,16 +9,12 @@ import subprocess
 import shutil
 
 # Implementation constants
-SCRIPT_DIRNAME, SCRIPT_FILENAME = os.path.split(os.path.abspath(__file__))
-PROJECT_ROOT_DIR = os.path.dirname(SCRIPT_DIRNAME)
 
 BASH_SCRIPT_HEADER = """#!/bin/bash
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #     FILE:{}
 #     DESCRIPTION:{}
 #     USAGE:{}
-#     AUTHOR:{}
-#     DATE:{}
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
@@ -33,26 +29,9 @@ def create_bash_script(filename):
             filename,
             "",#DESCRIPTION
             "",#USAGE
-            "",#AUTHOR
-            "",#DATE
         )
         f.write("{}".format(header))
     os.chmod(filename, 0o755)
-
-def update_file(filename):
-    with open(filename, "r") as f:
-        s = f.read()
-    print(s)
-
-def remove_file(filename):
-    with open(filename, "r") as f:
-        s = f.read()
-    print(s)
-
-def rename_file(filename):
-    with open(filename, "r") as f:
-        s = f.read()
-    print(s)
 
 # Classes, methods, functions, and variables
 class AliashTool():
@@ -71,18 +50,16 @@ class AliashTool():
         code (int): Exception error code.
 
     """
-    def __init__(self, home_dir, script_dir):
+    def __init__(self, home_dir, script_dir, bash_aliases_file):
         self.home_dir = home_dir
         self.script_dir = script_dir
-        self.alias_definition_file = self.join_home_dir(".bash_aliases")
-        pass
+        self.alias_definition_file = bash_aliases_file
 
     def join_home_dir(self, filename) -> str:
         return os.path.join(self.home_dir, filename)
 
     def join_script_dir(self, filename) -> str:
         return os.path.join(self.script_dir, filename)
-
 
     def _get_current_scripts_in_script_dir(self) -> list:
         return [os.path.join(self.script_dir, i) for i in os.listdir(
@@ -135,13 +112,19 @@ class AliashTool():
             self.join_script_dir(alias+".sh")
         )
 
+    def remove_file(self, filename):
+        old_script_dir = os.path.join(self.home_dir, "Utilities/tmp")
+        new_filename = filename.replace(self.script_dir, old_script_dir)
+        shutil.move(filename, new_filename)
+
     def _clean_script_dir(self):
         scripts_in_dir = self._get_current_scripts_in_script_dir()
         scripts_in_alias_file = \
             self._get_current_scripts_in_alias_definition_file()
         for s in scripts_in_dir:
             if not s in scripts_in_alias_file:
-                os.remove(s)
+                # actually just renames it
+                self.remove_file(s)
 
     def _remove_alias_definition(self, alias):
         """Delete an alias definition from .bash_aliases"""
@@ -308,7 +291,6 @@ class AliashTool():
         )
         self.remove_alias(old_name)
         return True
-
 
     def test_aliash_tool(self):
         """Class methods are similar to regular functions.

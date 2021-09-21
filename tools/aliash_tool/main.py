@@ -6,8 +6,16 @@ follows the structure of Click command line interface. You can read more about
 Click here, https://click.palletsprojects.com/en/7.x/
 """
 import click
+import os
+
+from pathlib import Path
 
 from aliash_tool import aliash_tool
+
+
+HOME_DIR = str(Path.home())
+SCRIPT_DIR = os.path.join(HOME_DIR, "Utilities")
+BASH_ALIASES_FILE = os.path.join(HOME_DIR, ".bash_aliases")
 
 
 class CommandLineApp():
@@ -16,7 +24,11 @@ class CommandLineApp():
     It uses the Click module instead of argparse.
     """
     def __init__(self):
-        self.cli = aliash_tool.AliashTool("/home/dnck", "/home/dnck/Utilities")
+        self.cli = aliash_tool.AliashTool(
+            home_dir=HOME_DIR, # home directory default ~/
+            script_dir=SCRIPT_DIR, # script directory default ~/Utilities
+            bash_aliases_file=BASH_ALIASES_FILE, # default ~/.bash_aliases
+        )
 
 @click.group()
 @click.pass_context
