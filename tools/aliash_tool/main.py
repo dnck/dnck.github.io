@@ -72,14 +72,6 @@ def rename(ctx, alias, new_name):
 
 @cli.command()
 @click.pass_context
-@click.argument('alias')
-@click.argument('tag')
-def tag(ctx, alias, tag):
-    """Tag an [ALIAS] in .bash_aliases"""
-    assert ctx.obj.cli.tag_alias(alias, tag)
-
-@cli.command()
-@click.pass_context
 @click.argument('tag')
 def find(ctx, tag):
     """
@@ -91,15 +83,6 @@ def find(ctx, tag):
             print(k, v)
     else:
         print("no aliases found")
-
-@cli.command()
-@click.pass_context
-@click.argument('alias')
-def insert(ctx, alias):
-    """
-    Display help for an [ALIAS] in .bash_aliases
-    """
-    assert ctx.obj.cli.insert_alias(alias)
 
 @cli.command()
 @click.pass_context

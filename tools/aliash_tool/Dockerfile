@@ -22,4 +22,4 @@ COPY --from=aliash_tool_base_image /root/.local /root/.local
 COPY --from=aliash_tool_base_image /aliash_tool /aliash_tool
 WORKDIR aliash_tool
 ENV PATH=/root/.local/bin:$PATH
-ENTRYPOINT ["aliash_tool"]
+ENTRYPOINT ["aliash"]
