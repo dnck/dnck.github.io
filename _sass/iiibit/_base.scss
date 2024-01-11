@@ -28,8 +28,6 @@ body {
   flex-direction: column;
 }
 
-
-
 /**
  * Set `margin-bottom` to maintain vertical rhythm
  */
@@ -40,16 +38,12 @@ ul, ol, dl, figure,
   margin-bottom: $spacing-unit / 2;
 }
 
-
-
 /**
  * `main` element
  */
 main {
   display: block; /* Default value of `display` of `main` element is 'inline' in IE 11. */
 }
-
-
 
 /**
  * Images
@@ -58,10 +52,10 @@ img {
   max-width: 100%;
   vertical-align: middle;
 }
+
 .img-container {
   text-align: center;
 }
-
 
 /**
  * Figures
@@ -70,11 +64,9 @@ figure > img {
   display: block;
 }
 
-figcaption {
-  font-size: $small-font-size;
+.figcaption {
+  @include relative-font-size(.75);
 }
-
-
 
 /**
  * Lists
@@ -90,16 +82,12 @@ li {
   }
 }
 
-
-
 /**
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
   font-weight: $base-font-weight;
 }
-
-
 
 /**
  * Links
@@ -126,9 +114,6 @@ a {
     }
   }
 }
-
-
-
 
 /**
  * Blockquotes
@@ -197,7 +182,7 @@ blockquote {
     box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
+/* Create two equal columns that float next to each other */
 .column {
     float: left;
     width: 50%;

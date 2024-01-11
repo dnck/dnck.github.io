@@ -1,0 +1,81 @@
+.paginate {
+  @include relative-font-size(1.75);
+
+  .title {
+    @include relative-font-size(2.0);
+    @include relative-font-weight(1.0);
+  }
+
+  .date {
+    @include relative-font-size(1.25);
+  }
+
+  .excerpt {
+    @include relative-font-size(1.25);
+  }
+
+  .subscribe {
+    @include relative-font-size(1.0);
+  }
+}
+
+
+.post-meta {
+  @include relative-font-size(.875);
+  color: $grey;
+}
+
+.post-link {
+  display: block;
+  @include relative-font-size(1.5);
+}
+
+/**
+ * Posts
+ */
+.post-header {
+  // font-family: $header-font-family;
+  margin-bottom: $spacing-unit;
+}
+
+.post-title {
+  @include relative-font-size(2.0);
+  letter-spacing: -1px;
+  line-height: 1;
+  font-family: $header-font-family;
+  color: $brand-color;
+  @include media-query($on-laptop) {
+    @include relative-font-size(2.0);
+  }
+}
+
+.post-content {
+  margin-bottom: $spacing-unit;
+
+  h2 {
+    @include relative-font-size(1.75);
+    font-family: $header-font-family;
+    color: $brand-color;
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.75);
+    }
+  }
+
+  h3 {
+    @include relative-font-size(1.5);
+    font-family: $header-font-family;
+    color: $brand-color;
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.5);
+    }
+  }
+
+  h4 {
+    @include relative-font-size(1.25);
+    font-family: $header-font-family;
+    color: $brand-color;
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.125);
+    }
+  }
+}

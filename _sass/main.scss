@@ -5,30 +5,32 @@
 
 // Define defaults for each variable.
 //$base-font-family: sans-serif, -apple-system, BlinkMacSystemFont, 'Roboto Slab', "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
-$base-font-family: 'Ubuntu', sans-serif;
-$base-font-size:   18px !default;
-$base-font-weight: 400 !default;
-$small-font-size:  $base-font-size * 0.875 !default;
-$base-line-height: 1.5 !default;
+$base-font-family:       'Ubuntu', sans-serif;
+$base-font-size:         16px !default;
+$base-font-weight:       400 !default;
 
-$spacing-unit:     25px !default;
-$text-color:       $lavender !default;
-$background-color: $black !default;
-$brand-color:      $limegreen !default;
+$base-line-height:       1.5 !default;
 
-$link-color:       $magenta-light !default;
-$link-color-visited: $magenta-dark !default;
+$spacing-unit:           25px !default;
 
-$header-font-family: 'Orbitron', sans-serif;
-$header-font-color: $deepskyblue !default;
-$footer-font-color: $deepskyblue !default;
+$background-color:       $black !default;
 
-$table-text-align: left !default;
+$text-color:             $white !default;
+$brand-color:            $white !default;
+$link-color:             $white !default;
+$link-color-visited:     $white !default;
+
+$header-font-family:     'Ubuntu', sans-serif;
+$header-font-color:      $white !default;
+
+$footer-font-color:      $white !default;
+
+$table-text-align:       left !default;
 
 // Width of the content area
-$content-width:    800px !default;
-$on-palm:          600px !default;
-$on-laptop:        800px !default;
+$content-width:          1200px !default;
+$on-laptop:              1000px !default;
+$on-palm:                800px !default;
 
 
 @mixin media-query($device) {
@@ -41,11 +43,17 @@ $on-laptop:        800px !default;
   font-size: $base-font-size * $ratio;
 }
 
+@mixin relative-font-weight($ratio) {
+  font-weight: $base-font-weight * $ratio;
+}
+
 // Import partials.
 @import
   "iiibit/colors",
   "iiibit/base",
   "iiibit/layout",
+  "iiibit/page",
+  "iiibit/post",
   "iiibit/syntax-highlighting",
   "iiibit/hover",
   "iiibit/glitch"

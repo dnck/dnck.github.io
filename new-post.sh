@@ -53,8 +53,7 @@ done
 # echo "Optional Flag 2: $description"
 # echo "Optional Flag 3: $excerpt"
 
-POST_TITLE="$(date +'%Y-%m-%d-')""${POST_TITLE}"".md"
-NEW_POST_FILE="./_posts/""$POST_TITLE"
+NEW_POST_FILE="./_posts/""$(date +'%Y-%m-%d-')""${POST_TITLE}"".md"
 
 # description
 function create_post() {

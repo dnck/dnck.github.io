@@ -1,18 +1,22 @@
 ---
-layout: page
+layout: doctype
 ---
 
-<div class="home">
-  {{ content }}
-  {%- if site.posts.size > 0 -%}
-      {%- for post in site.posts -%}
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <a href="{{ post.url | relative_url }}" class="blogtoc-item"><strong>{{ post.title }}, </strong></a>
-        <span class="post-meta">{{ post.date | date: date_format }}</span><br>
-        {%- if post.show_excerpt -%}
-          {{ post.excerpt }}<br>
-        {%- endif -%}
-      {%- endfor -%}
-    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
-  {%- endif -%}
+{%- if site.posts.size > 0 -%}
+<div class="paginate">
+{%- for post in site.posts -%}
+{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+<span class="paginate date">{{ post.date | date: date_format }}</span><br>
+<a href="{{ post.url | relative_url }}" class="paginate title">{{ post.title }}</a>
+<br>
+{%- if post.show_excerpt -%}
+<p class="paginate excerpt">
+{{ post.excerpt }}
+</p>
+{%- endif -%}
+{%- endfor -%}
+<p><a href="{{ '/feed.xml' | relative_url }}" class="paginate subscribe">
+Subscribe via RSS
+</a></p>
 </div>
+{%- endif -%}

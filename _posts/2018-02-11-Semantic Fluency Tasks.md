@@ -13,7 +13,7 @@ excerpt: What do Semantic Fluency Tasks measure? Ask a cognitive scientist.
 		<div class = "col-md-6">
  <img src="{{site.url}}/files/linear.png" class="img-fluid">
  <br>
- <strong>Figure 1. Linear naming in the Semantic Fluency Task.</strong>
+ <p class="figcaption">Figure 1. Linear naming in the Semantic Fluency Task.</p>
 	    </div>
 	    <div class = "col-md-6">
          <img src="{{site.url}}/files/hierarchical.png" class="img-fluid">

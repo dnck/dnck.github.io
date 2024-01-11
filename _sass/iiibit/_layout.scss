@@ -10,7 +10,7 @@
 }
 
 .site-title {
-  @include relative-font-size(1.50);
+  @include relative-font-size(1.75);
   font-weight: 300;
   font-family: $header-font-family;
   line-height: $base-line-height * $base-font-size * 2.25;
@@ -35,6 +35,7 @@
     display: none;
   }
   .page-link {
+    @include relative-font-size(1.50);
     font-family: $header-font-family;
     color: $header-font-color;
     font-weight: bold;
@@ -131,94 +132,4 @@
   @include relative-font-size(0.8);
   color: $footer-font-color;
   font-family: $header-font-family;
-}
-
-/**
- * Page content
- */
-.page-content {
-  padding: $spacing-unit 0;
-  flex: 1;
-}
-
-.page-heading {
-  @include relative-font-size(2);
-}
-
-.post-list-heading {
-  font-family: $header-font-family;
-  @include relative-font-size(1.75);
-}
-
-.post-list {
-  margin-left: 0;
-  list-style: none;
-
-  > li {
-    margin-bottom: $spacing-unit;
-  }
-}
-
-.post-meta {
-  font-size: $small-font-size;
-  color: $grey;
-}
-
-.post-link {
-  display: block;
-  @include relative-font-size(1.5);
-}
-
-.blogtoc-item {
-  font-family: $header-font-family;
-}
-
-/**
- * Posts
- */
-.post-header {
-  // font-family: $header-font-family;
-  margin-bottom: $spacing-unit;
-}
-
-.post-title {
-  @include relative-font-size(2.0);
-  letter-spacing: -1px;
-  line-height: 1;
-  font-family: $header-font-family;
-  color: $brand-color;
-  @include media-query($on-laptop) {
-    @include relative-font-size(2.0);
-  }
-}
-
-.post-content {
-  margin-bottom: $spacing-unit;
-
-  h2 {
-    @include relative-font-size(1.75);
-    font-family: $header-font-family;
-    color: $brand-color;
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.75);
-    }
-  }
-
-  h3 {
-    @include relative-font-size(1.5);
-    font-family: $header-font-family;
-    color: $brand-color;
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.5);
-    }
-  }
-
-  h4 {
-    @include relative-font-size(1.25);
-    font-family: $header-font-family;
-    color: $brand-color;
-    @include media-query($on-laptop) {
-      @include relative-font-size(1.125);
-    }
-  }
 }

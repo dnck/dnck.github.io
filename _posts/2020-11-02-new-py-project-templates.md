@@ -1,16 +1,16 @@
 ---
 layout: post
-title: new-py-project-templates
+title: My Cookie-Cutter for New Python Projects
 author: dc
 date: 2020-11-02
 comments: true
 analytics: true
 keywords: python, templates, agile
-description: A comprehensive set of instructions for automating a new Python project
+description: A comprehensive set of instructions for automating a new Python project before I knew about cookie-cutter...
 category: blog
 code: false
 show_excerpt: true
-excerpt: A comprehensive set of instructions for automating a new Python project
+excerpt: A comprehensive set of instructions for automating a new Python project before I knew about cookie-cutter...
 ---
 
 This blog post contains a set of files and bash scripts for creating a new

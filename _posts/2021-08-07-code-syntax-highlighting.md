@@ -1,6 +1,6 @@
 ---
 layout: post
-title: code-syntax-highlighting
+title: Code Syntax Highlights with CSS
 author: dc
 date: 2021-08-07
 comments: true

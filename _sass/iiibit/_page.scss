@@ -1,0 +1,13 @@
+.page-content {
+  padding: $spacing-unit 0;
+  flex: 1;
+}
+
+.page-heading {
+  @include relative-font-size(2);
+}
+
+.post-list-heading {
+  font-family: $header-font-family;
+  @include relative-font-size(1.75);
+}
